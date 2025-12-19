@@ -1,0 +1,52 @@
+/* Landing Screen Styles */
+.landing-screen {
+    background: linear-gradient(165deg, #3B82F6 0%, #60A5FA 50%, #93C5FD 100%);
+}
+
+.landing-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+}
+
+.landing-icon {
+    width: 100px;
+    height: 100px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+    animation: float 3s ease-in-out infinite;
+}
+
+.landing-icon svg {
+    width: 56px;
+    height: 56px;
+    fill: white;
+}
+
+.landing-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: white;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.landing-subtitle {
+    font-size: 16px;
+    color: rgba(255,255,255,0.9);
+    text-align: center;
+    line-height: 1.6;
+}
+
+.landing-action {
+    padding: 24px;
+    width: 100%;
+}

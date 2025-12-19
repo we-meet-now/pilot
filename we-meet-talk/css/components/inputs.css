@@ -1,0 +1,71 @@
+/* Input Components */
+.input-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    display: block;
+}
+
+.text-input {
+    width: 100%;
+    padding: 18px 20px;
+    font-size: 17px;
+    font-family: inherit;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card);
+}
+
+.text-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.quick-names {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: var(--bg);
+    border-radius: 12px;
+}
+
+.search-bar svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--text-light);
+}
+
+.search-bar input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--text-light);
+}
+
+.search-bar input:focus {
+    outline: none;
+}
+
+.chat-input {
+    flex: 1;
+    padding: 12px 16px;
+    background: var(--bg);
+    border: none;
+    border-radius: 50px;
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.chat-input:focus {
+    outline: none;
+}

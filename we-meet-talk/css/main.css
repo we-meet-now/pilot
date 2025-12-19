@@ -1,0 +1,39 @@
+/* Main CSS - Import all stylesheets in correct order */
+
+/* 1. Base styles (must come first) */
+@import url('./variables.css');
+@import url('./reset.css');
+@import url('./layout.css');
+
+/* 2. Components (reusable UI elements) */
+@import url('./components/buttons.css');
+@import url('./components/inputs.css');
+@import url('./components/cards.css');
+@import url('./components/headers.css');
+@import url('./components/avatars.css');
+@import url('./components/badges.css');
+@import url('./components/tabs.css');
+@import url('./components/navigation.css');
+@import url('./components/toast.css');
+@import url('./components/auth-notice.css');
+
+/* 3. Screens (page-specific styles) */
+@import url('./screens/landing.css');
+@import url('./screens/summary.css');
+@import url('./screens/name-input.css');
+@import url('./screens/home.css');
+@import url('./screens/save.css');
+@import url('./screens/auth.css');
+@import url('./screens/complete.css');
+@import url('./screens/service-intro.css');
+@import url('./screens/mypage.css');
+@import url('./screens/phone-signup.css');
+@import url('./screens/create-meeting.css');
+
+/* 4. Tabs (tab content styles) */
+@import url('./tabs/info.css');
+@import url('./tabs/calendar.css');
+@import url('./tabs/vote.css');
+@import url('./tabs/settle.css');
+@import url('./tabs/photos.css');
+@import url('./tabs/chat.css');

@@ -1,0 +1,48 @@
+/* Complete Screen Styles */
+.complete-screen {
+    background: linear-gradient(165deg, #3B82F6 0%, #2563EB 50%, #1D4ED8 100%);
+}
+
+.complete-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    text-align: center;
+}
+
+.complete-icon {
+    width: 100px;
+    height: 100px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.complete-icon svg {
+    width: 50px;
+    height: 50px;
+    stroke: white;
+    stroke-width: 3;
+    fill: none;
+}
+
+.complete-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 8px;
+}
+
+.complete-subtitle {
+    font-size: 15px;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.6;
+    margin-bottom: 32px;
+}

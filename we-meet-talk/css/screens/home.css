@@ -1,0 +1,157 @@
+/* Home Screen (Map) Styles */
+.map-container {
+    flex: 1;
+    position: relative;
+    background: #E8F4E8;
+    min-height: 250px;
+}
+
+.map-placeholder {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background:
+        linear-gradient(90deg, #d4e4d4 1px, transparent 1px),
+        linear-gradient(#d4e4d4 1px, transparent 1px),
+        #E8F4E8;
+    background-size: 30px 30px;
+}
+
+.my-location-marker {
+    position: absolute;
+    top: 40%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+}
+
+.marker-pulse {
+    width: 60px;
+    height: 60px;
+    background: rgba(59, 130, 246, 0.2);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse-ring 2s ease-out infinite;
+}
+
+.marker-dot {
+    width: 16px;
+    height: 16px;
+    background: #3B82F6;
+    border: 3px solid white;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 1;
+}
+
+.destination-marker {
+    position: absolute;
+    top: 25%;
+    right: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dest-icon {
+    width: 36px;
+    height: 36px;
+    background: #3B82F6;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.dest-icon::after {
+    content: '★';
+    transform: rotate(45deg);
+}
+
+.dest-label {
+    margin-top: 8px;
+    padding: 6px 12px;
+    background: white;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    white-space: nowrap;
+}
+
+.route-line {
+    position: absolute;
+    top: 32%;
+    left: 32%;
+    width: 120px;
+    height: 3px;
+    background: repeating-linear-gradient(90deg, #3B82F6, #3B82F6 8px, transparent 8px, transparent 12px);
+    transform: rotate(-20deg);
+}
+
+.home-bottom-sheet {
+    background: var(--card);
+    border-radius: 24px 24px 0 0;
+    padding: 12px 20px 100px;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+}
+
+.sheet-handle {
+    width: 40px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 0 auto 16px;
+}
+
+.members-status {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.member-status-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 70px;
+}
+
+.member-status-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.member-name {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.member-time {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.today-meeting-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.today-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+}

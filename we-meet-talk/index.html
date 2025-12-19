@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>오보톡 - 모임을 온전히 담는 공간</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="phone-frame">
+        <!-- Screen 1: Landing -->
+        <div class="screen landing-screen active" id="screen-landing">
+            <div class="landing-content">
+                <div class="landing-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                </div>
+                <span class="landing-badge">초대받은 모임이 있어요</span>
+                <h1 class="landing-title">대학 동기 모임</h1>
+                <p class="landing-subtitle">민지님이 당신을 초대했어요<br>12월 21일 토요일 저녁</p>
+            </div>
+            <div class="landing-action">
+                <button class="btn-primary" onclick="goToScreen('summary')">모임 확인하기</button>
+            </div>
+        </div>
+
+        <!-- Screen 2: Summary -->
+        <div class="screen" id="screen-summary">
+            <header class="summary-header">
+                <button class="back-btn" onclick="goToScreen('landing')">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <h1 class="header-title">모임 정보</h1>
+            </header>
+            <div class="summary-content">
+                <div class="meeting-card">
+                    <div class="meeting-cover">
+                        <span class="meeting-type-badge">정기 모임</span>
+                        <div class="meeting-title-area">
+                            <h2 class="meeting-title">대학 동기 모임</h2>
+                            <p class="meeting-host">주최: 민지</p>
+                        </div>
+                    </div>
+                    <div class="meeting-details">
+                        <div class="detail-row">
+                            <div class="detail-icon">
+                                <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label">날짜</span>
+                                <p class="detail-value">12월 21일 (토)</p>
+                                <span class="detail-sub">오후 6시 30분</span>
+                            </div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-icon">
+                                <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label">장소</span>
+                                <p class="detail-value">강남역 근처</p>
+                                <span class="detail-sub">투표로 결정 예정</span>
+                            </div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-icon">
+                                <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label">참여자</span>
+                                <p class="detail-value">현재 5명 참여</p>
+                                <div class="avatar-stack">
+                                    <div class="avatar" style="background:#FF6B35">민</div>
+                                    <div class="avatar" style="background:#667EEA">수</div>
+                                    <div class="avatar" style="background:#00D4AA">지</div>
+                                    <div class="avatar" style="background:#F59E0B">현</div>
+                                    <div class="avatar" style="background:#EF4444">서</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="summary-footer">
+                <button class="btn-later" onclick="goToScreen('service-intro')" style="width:100%;padding:16px 32px;background:#E0F2FE;color:#0284C7;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;margin-bottom:12px;">다음번에 참여하기</button>
+                <button class="btn-join" onclick="goToScreen('name')">이 모임에 참여하기</button>
+            </footer>
+        </div>
+
+        <!-- Screen 3: Name -->
+        <div class="screen" id="screen-name">
+            <header class="summary-header">
+                <button class="back-btn" onclick="goToScreen('summary')">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+            </header>
+            <div class="name-content">
+                <h1 class="name-title">반가워요! 👋<br>이름이 어떻게 되세요?</h1>
+                <p class="name-subtitle">모임에서 사용할 이름을 알려주세요.<br>다른 참여자들에게 보여지는 이름이에요.</p>
+                <div>
+                    <label class="input-label">이름 또는 닉네임</label>
+                    <input type="text" class="text-input" id="name-input" placeholder="예: 도희" oninput="checkNameInput()">
+                    <div class="quick-names">
+                        <span class="quick-name" onclick="setQuickName('도희')">도희</span>
+                        <span class="quick-name" onclick="setQuickName('익명')">익명</span>
+                    </div>
+                </div>
+                <button class="btn-next" id="btn-name-next" onclick="goToScreen('main')" style="margin-top: auto;">참여하기</button>
+            </div>
+        </div>
+
+        <!-- Screen 4: Main -->
+        <div class="screen" id="screen-main">
+            <header class="main-header">
+                <div class="main-header-left">
+                    <button class="back-btn" onclick="handleMainBack()" style="width:36px;height:36px">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                    </button>
+                    <div class="main-header-info">
+                        <h2>대학 동기 모임</h2>
+                        <span>6명 참여 중</span>
+                    </div>
+                </div>
+            </header>
+            <nav class="tab-nav">
+                <button class="tab-btn" onclick="switchTab('info', this)">정보</button>
+                <button class="tab-btn" onclick="switchTab('calendar', this)">캘린더</button>
+                <button class="tab-btn" onclick="switchTab('vote', this)">투표<span class="badge">1</span></button>
+                <button class="tab-btn" onclick="switchTab('settle', this)">정산</button>
+                <button class="tab-btn" onclick="switchTab('photos', this)">사진</button>
+            </nav>
+            <div class="tab-content">
+                <!-- Info Tab -->
+                <div class="tab-panel" id="tab-info">
+                    <div class="notice-card">
+                        <div class="notice-header">
+                            <span class="notice-badge">📢 공지</span>
+                            <span class="notice-time">방금 전</span>
+                        </div>
+                        <p class="notice-content">안녕! 오랜만에 모이는 거라 다들 시간 잘 맞춰서 와줘~ 장소는 투표로 정할게!</p>
+                    </div>
+                    <div class="info-card">
+                        <p style="font-size:15px;font-weight:600;margin-bottom:12px">📅 모임 정보</p>
+                        <p style="font-size:14px;color:var(--text-secondary);margin-bottom:4px">일시</p>
+                        <p style="font-size:15px;font-weight:500;margin-bottom:12px">12월 21일 (토) 오후 6:30</p>
+                        <p style="font-size:14px;color:var(--text-secondary);margin-bottom:4px">장소</p>
+                        <p style="font-size:15px;font-weight:500">투표 진행 중</p>
+                    </div>
+                    <div class="info-card">
+                        <p style="font-size:15px;font-weight:600;margin-bottom:12px">👥 참여자 (6명)</p>
+                        <div class="avatar-stack">
+                            <div class="avatar" style="background:#FF6B35">민</div>
+                            <div class="avatar" style="background:#667EEA">수</div>
+                            <div class="avatar" style="background:#00D4AA">지</div>
+                            <div class="avatar" style="background:#F59E0B">현</div>
+                            <div class="avatar" style="background:#EF4444">서</div>
+                            <div class="avatar" style="background:#8B5CF6">도</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Calendar Tab -->
+                <div class="tab-panel" id="tab-calendar">
+                    <div class="calendar-header">
+                        <h3 class="calendar-title">📅 OO톡방 공유 캘린더</h3>
+                        <p class="calendar-desc">각자의 캘린더를 공유해서 모두가 가능한 날을 찾아요</p>
+                    </div>
+                    
+                    <!-- 캘린더 연동 상태 -->
+                    <div class="calendar-sync-status">
+                        <div class="sync-item synced">
+                            <div class="sync-avatar" style="background:#FF6B35">민</div>
+                            <span class="sync-name">민지</span>
+                            <span class="sync-badge done">연동완료</span>
+                        </div>
+                        <div class="sync-item synced">
+                            <div class="sync-avatar" style="background:#667EEA">수</div>
+                            <span class="sync-name">수현</span>
+                            <span class="sync-badge done">연동완료</span>
+                        </div>
+                        <div class="sync-item synced">
+                            <div class="sync-avatar" style="background:#00D4AA">지</div>
+                            <span class="sync-name">지우</span>
+                            <span class="sync-badge done">연동완료</span>
+                        </div>
+                        <div class="sync-item">
+                            <div class="sync-avatar" style="background:#F59E0B">현</div>
+                            <span class="sync-name">현수</span>
+                            <span class="sync-badge pending">대기중</span>
+                        </div>
+                        <div class="sync-item synced">
+                            <div class="sync-avatar" style="background:#8B5CF6">도</div>
+                            <span class="sync-name">나</span>
+                            <span class="sync-badge done">연동완료</span>
+                        </div>
+                    </div>
+
+                    <!-- 캘린더 뷰 -->
+                    <div class="calendar-container">
+                        <div class="calendar-month-header">
+                            <button class="cal-nav-btn" onclick="changeMonth(-1)">‹</button>
+                            <span class="cal-month-title">2024년 12월</span>
+                            <button class="cal-nav-btn" onclick="changeMonth(1)">›</button>
+                        </div>
+                        <div class="calendar-weekdays">
+                            <span class="weekday sun">Sun</span>
+                            <span class="weekday">Mon</span>
+                            <span class="weekday">Tue</span>
+                            <span class="weekday">Wed</span>
+                            <span class="weekday">Thu</span>
+                            <span class="weekday">Fri</span>
+                            <span class="weekday sat">Sat</span>
+                        </div>
+                        <div class="calendar-days">
+                            <div class="cal-day other">1</div>
+                            <div class="cal-day busy">2</div>
+                            <div class="cal-day busy">3</div>
+                            <div class="cal-day">4</div>
+                            <div class="cal-day">5</div>
+                            <div class="cal-day busy">6</div>
+                            <div class="cal-day sat">7</div>
+                            
+                            <div class="cal-day sun">8</div>
+                            <div class="cal-day busy">9</div>
+                            <div class="cal-day">10</div>
+                            <div class="cal-day busy">11</div>
+                            <div class="cal-day">12</div>
+                            <div class="cal-day available" onclick="selectCalDay(this)">13</div>
+                            <div class="cal-day available selected" onclick="selectCalDay(this)">14</div>
+                            
+                            <div class="cal-day sun">15</div>
+                            <div class="cal-day busy">16</div>
+                            <div class="cal-day">17</div>
+                            <div class="cal-day">18</div>
+                            <div class="cal-day busy">19</div>
+                            <div class="cal-day available" onclick="selectCalDay(this)">20</div>
+                            <div class="cal-day available best" onclick="selectCalDay(this)">21</div>
+                            
+                            <div class="cal-day sun">22</div>
+                            <div class="cal-day busy">23</div>
+                            <div class="cal-day busy">24</div>
+                            <div class="cal-day busy">25</div>
+                            <div class="cal-day">26</div>
+                            <div class="cal-day">27</div>
+                            <div class="cal-day available" onclick="selectCalDay(this)">28</div>
+                            
+                            <div class="cal-day sun">29</div>
+                            <div class="cal-day busy">30</div>
+                            <div class="cal-day busy">31</div>
+                            <div class="cal-day other"></div>
+                            <div class="cal-day other"></div>
+                            <div class="cal-day other"></div>
+                            <div class="cal-day other"></div>
+                        </div>
+                    </div>
+
+                    <!-- 범례 -->
+                    <div class="calendar-legend">
+                        <div class="legend-item">
+                            <span class="legend-dot available"></span>
+                            <span>모두 가능</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot best"></span>
+                            <span>추천일</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot busy"></span>
+                            <span>선약 있음</span>
+                        </div>
+                    </div>
+
+                    <!-- 선택된 날짜 정보 -->
+                    <div class="calendar-selected-info">
+                        <p class="selected-date">12월 21일 (토)</p>
+                        <p class="selected-status">✓ 4명 모두 가능한 날이에요!</p>
+                        <div class="available-members">
+                            <div class="sync-avatar small" style="background:#FF6B35">민</div>
+                            <div class="sync-avatar small" style="background:#667EEA">수</div>
+                            <div class="sync-avatar small" style="background:#00D4AA">지</div>
+                            <div class="sync-avatar small" style="background:#8B5CF6">도</div>
+                            <span class="waiting-text">+현수 대기중</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-vote" onclick="confirmCalendarDate()">일정 확인하기</button>
+                </div>
+                <!-- Vote Tab -->
+                <div class="tab-panel" id="tab-vote">
+                    <div class="vote-card">
+                        <h3 class="vote-title">🍽️ 장소 투표</h3>
+                        <p class="vote-meta">민지님이 생성 · 6명 중 3명 참여</p>
+                        <div class="vote-options">
+                            <div class="vote-option" onclick="selectVote(this)">
+                                <div class="vote-radio"></div>
+                                <div class="vote-option-content">
+                                    <p class="vote-option-title">역전할머니맥주 강남점</p>
+                                    <span class="vote-option-sub">강남역 3번 출구 도보 3분</span>
+                                </div>
+                                <span class="vote-count">2표</span>
+                            </div>
+                            <div class="vote-option" onclick="selectVote(this)">
+                                <div class="vote-radio"></div>
+                                <div class="vote-option-content">
+                                    <p class="vote-option-title">포장마차 골목</p>
+                                    <span class="vote-option-sub">강남역 10번 출구 도보 5분</span>
+                                </div>
+                                <span class="vote-count">1표</span>
+                            </div>
+                            <div class="vote-option" onclick="selectVote(this)">
+                                <div class="vote-radio"></div>
+                                <div class="vote-option-content">
+                                    <p class="vote-option-title">온더보더 강남점</p>
+                                    <span class="vote-option-sub">강남역 11번 출구 도보 2분</span>
+                                </div>
+                                <span class="vote-count">0표</span>
+                            </div>
+                        </div>
+                        <div class="soft-vote">
+                            <button class="soft-vote-btn" onclick="selectSoftVote(this)"><span class="emoji">👍</span>괜찮아요</button>
+                            <button class="soft-vote-btn" onclick="selectSoftVote(this)"><span class="emoji">🤷</span>상관없어요</button>
+                            <button class="soft-vote-btn" onclick="selectSoftVote(this)"><span class="emoji">😅</span>힘들어요</button>
+                        </div>
+                        <button class="btn-vote" onclick="submitVote()">투표하기</button>
+                    </div>
+                    <div class="ai-tip">
+                        <div class="ai-tip-icon">
+                            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        </div>
+                        <p class="ai-tip-text"><strong>AI 추천</strong><br>모두의 이동 거리를 고려하면 역전할머니맥주가 가장 공평해요</p>
+                    </div>
+                </div>
+                <!-- Settlement Tab -->
+                <div class="tab-panel" id="tab-settle">
+                    <div class="settlement-summary">
+                        <p class="settlement-label">총 정산 금액</p>
+                        <p class="settlement-amount">₩180,000</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width:66%"></div></div>
+                        <div class="progress-text"><span>4명 완료</span><span>2명 남음</span></div>
+                    </div>
+                    <div class="settlement-list">
+                        <div class="settlement-item">
+                            <div class="settlement-avatar" style="background:#FF6B35">민</div>
+                            <div class="settlement-info"><p class="settlement-name">민지 (총무)</p><p class="settlement-detail">받을 금액: ₩150,000</p></div>
+                            <span class="settlement-status done">수금 중</span>
+                        </div>
+                        <div class="settlement-item">
+                            <div class="settlement-avatar" style="background:#667EEA">수</div>
+                            <div class="settlement-info"><p class="settlement-name">수현</p><p class="settlement-detail">₩30,000</p></div>
+                            <span class="settlement-status done">완료</span>
+                        </div>
+                        <div class="settlement-item">
+                            <div class="settlement-avatar" style="background:#00D4AA">지</div>
+                            <div class="settlement-info"><p class="settlement-name">지우</p><p class="settlement-detail">₩30,000</p></div>
+                            <span class="settlement-status done">완료</span>
+                        </div>
+                        <div class="settlement-item">
+                            <div class="settlement-avatar" style="background:#F59E0B">현</div>
+                            <div class="settlement-info"><p class="settlement-name">현수</p><p class="settlement-detail">₩30,000</p></div>
+                            <span class="settlement-status done">완료</span>
+                        </div>
+                        <div class="settlement-item">
+                            <div class="settlement-avatar" style="background:#EF4444">서</div>
+                            <div class="settlement-info"><p class="settlement-name">서연</p><p class="settlement-detail">₩30,000</p></div>
+                            <span class="settlement-status pending">미완료</span>
+                        </div>
+                        <div class="settlement-item">
+                            <div class="settlement-avatar" style="background:#8B5CF6">도</div>
+                            <div class="settlement-info"><p class="settlement-name">도희 (나)</p><p class="settlement-detail">₩30,000</p></div>
+                            <span class="settlement-status pending">미완료</span>
+                        </div>
+                    </div>
+                    <button class="btn-vote" style="margin-top:16px" onclick="showToast('송금 페이지로 이동합니다')">💸 정산하기</button>
+                </div>
+                <!-- Photos Tab -->
+                <div class="tab-panel" id="tab-photos">
+                    <div class="photos-header">
+                        <h3 class="photos-title">📸 모임 사진</h3>
+                        <span class="photos-count">3장</span>
+                    </div>
+                    <div class="photos-grid">
+                        <div class="photo-item" style="background:linear-gradient(135deg,#667eea,#764ba2)"></div>
+                        <div class="photo-item" style="background:linear-gradient(135deg,#f093fb,#f5576c)"></div>
+                        <div class="photo-item" style="background:linear-gradient(135deg,#4facfe,#00f2fe)"></div>
+                        <div class="photo-item"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+                        <div class="photo-item"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+                        <div class="photo-item"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+                    </div>
+                    <button class="upload-btn" onclick="showToast('사진이 업로드되었습니다')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        사진 업로드
+                    </button>
+                </div>
+                <!-- Chat Tab (기본 화면) -->
+                <div class="tab-panel active" id="tab-chat" style="padding:0;flex-direction:column;height:calc(100% - 50px);display:flex">>
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="system-message">도희님이 참여했습니다</div>
+                        <div class="message">
+                            <div class="message-avatar" style="background:#FF6B35">민</div>
+                            <div class="message-content">
+                                <span class="message-name">민지</span>
+                                <div class="message-bubble">도희야 반가워! 오랜만이다 ㅎㅎ</div>
+                                <span class="message-time">오후 3:24</span>
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="message-avatar" style="background:#667EEA">수</div>
+                            <div class="message-content">
+                                <span class="message-name">수현</span>
+                                <div class="message-bubble">ㅋㅋ 진짜 오랜만! 다들 잘 지냈어?</div>
+                                <span class="message-time">오후 3:25</span>
+                            </div>
+                        </div>
+                        <div class="message sent">
+                            <div class="message-avatar" style="background:#8B5CF6">도</div>
+                            <div class="message-content">
+                                <div class="message-bubble">안녕 다들! 나도 반가워 😊</div>
+                                <span class="message-time">오후 3:27</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" class="chat-input" placeholder="메시지 입력..." id="chat-input" onkeypress="if(event.key==='Enter')sendMessage()">
+                        <button class="send-btn" onclick="sendMessage()">
+                            <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <nav class="bottom-nav">
+                <button class="nav-item" onclick="goToScreen('home')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>홈</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('mycalendar')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>캘린더</span>
+                </button>
+                <button class="nav-item active" onclick="showChatDefault()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>톡</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('gallery')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>갤러리</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('save')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>마이</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Screen 5: Home (지도 + 출발시간) -->
+        <div class="screen" id="screen-home">
+            <header class="home-header">
+                <div class="search-bar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="text" placeholder="Search for places" readonly>
+                </div>
+            </header>
+            
+            <!-- 지도 영역 -->
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <div class="map-grid"></div>
+                    <!-- 내 위치 마커 -->
+                    <div class="my-location-marker">
+                        <div class="marker-pulse"></div>
+                        <div class="marker-dot"></div>
+                    </div>
+                    <!-- 약속 장소 마커 -->
+                    <div class="destination-marker">
+                        <div class="dest-icon">★</div>
+                        <div class="dest-label">역전할머니맥주 강남점</div>
+                    </div>
+                    <!-- 경로 라인 -->
+                    <div class="route-line"></div>
+                </div>
+            </div>
+
+            <!-- 출발 위치 & 멤버 상태 -->
+            <div class="home-bottom-sheet">
+                <div class="sheet-handle"></div>
+                <div class="departure-header">
+                    <span class="departure-label">출발 위치: 우리집</span>
+                    <button class="change-btn" onclick="showToast('출발지 변경')">변경</button>
+                </div>
+
+                <!-- 멤버별 상태 -->
+                <div class="members-status">
+                    <div class="member-status-item me">
+                        <div class="member-avatar" style="background:#8B5CF6">도</div>
+                        <div class="member-status-info">
+                            <span class="member-name">나</span>
+                            <span class="member-time">15분</span>
+                        </div>
+                        <button class="departure-btn ready" onclick="startDeparture(this)">출발하기</button>
+                    </div>
+                    <div class="member-status-item">
+                        <div class="member-avatar" style="background:#FF6B35">민</div>
+                        <div class="member-status-info">
+                            <span class="member-name">민지</span>
+                            <span class="member-time">20분</span>
+                        </div>
+                        <span class="status-badge moving">이동중</span>
+                    </div>
+                    <div class="member-status-item">
+                        <div class="member-avatar" style="background:#667EEA">수</div>
+                        <div class="member-status-info">
+                            <span class="member-name">수현</span>
+                            <span class="member-time">25분</span>
+                        </div>
+                        <span class="status-badge preparing">준비중</span>
+                    </div>
+                    <div class="member-status-item">
+                        <div class="member-avatar" style="background:#00D4AA">지</div>
+                        <div class="member-status-info">
+                            <span class="member-name">지우</span>
+                            <span class="member-time">-</span>
+                        </div>
+                        <span class="status-badge waiting">대기</span>
+                    </div>
+                </div>
+
+                <!-- 오늘 모임 정보 -->
+                <div class="today-meeting-info">
+                    <div class="today-label">오늘 우리가 만날 장소</div>
+                    <button class="view-more-btn" onclick="goToScreen('main')">더보기</button>
+                </div>
+                <div class="today-meeting-card" onclick="goToScreen('main')">
+                    <div class="today-meeting-icon">🍺</div>
+                    <div class="today-meeting-detail">
+                        <p class="today-meeting-name">역전할머니맥주 강남점</p>
+                        <p class="today-meeting-address">강남역 3번 출구 도보 3분</p>
+                    </div>
+                    <div class="today-meeting-time">6:30 PM</div>
+                </div>
+            </div>
+
+            <nav class="bottom-nav">
+                <button class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>홈</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('mycalendar')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>캘린더</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('main');showChatDefault()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>톡</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('gallery')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>갤러리</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('save')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>마이</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Screen 6: Gallery (모임별 사진) -->
+        <div class="screen" id="screen-gallery">
+            <header class="main-header" style="justify-content: center; position: relative;">
+                <button class="back-btn" onclick="goToScreen('main')" style="position:absolute;left:16px;width:36px;height:36px">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <div class="main-header-info" style="text-align:center">
+                    <h2>갤러리</h2>
+                </div>
+            </header>
+            
+            <div style="flex:1;overflow-y:auto;padding-bottom:80px;" id="gallery-container">
+                <!-- 모임별 사진 섹션 - 동적으로 생성됨 -->
+            </div>
+
+            <nav class="bottom-nav">
+                <button class="nav-item" onclick="goToScreen('home')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>홈</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('mycalendar')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>캘린더</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('main');showChatDefault()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>톡</span>
+                </button>
+                <button class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>갤러리</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('save')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>마이</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Screen 7: My Calendar (개인 캘린더) -->
+        <div class="screen" id="screen-mycalendar">
+            <header class="main-header" style="justify-content: center; position: relative;">
+                <button class="back-btn" onclick="goToScreen('main')" style="position:absolute;left:16px;width:36px;height:36px">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <div class="main-header-info" style="text-align:center">
+                    <h2>내 캘린더</h2>
+                </div>
+            </header>
+            
+            <div style="flex:1;overflow-y:auto;padding-bottom:80px;">
+                <!-- 월 네비게이션 -->
+                <div class="my-cal-month-nav">
+                    <button class="cal-nav-btn" onclick="showToast('11월')">‹</button>
+                    <span class="my-cal-month">2024년 12월</span>
+                    <button class="cal-nav-btn" onclick="showToast('1월')">›</button>
+                </div>
+
+                <!-- 미니 캘린더 -->
+                <div class="my-cal-container">
+                    <div class="calendar-weekdays">
+                        <span class="weekday sun">S</span>
+                        <span class="weekday">M</span>
+                        <span class="weekday">T</span>
+                        <span class="weekday">W</span>
+                        <span class="weekday">T</span>
+                        <span class="weekday">F</span>
+                        <span class="weekday sat">S</span>
+                    </div>
+                    <div class="my-cal-days">
+                        <div class="my-day sun">1</div>
+                        <div class="my-day">2</div>
+                        <div class="my-day">3</div>
+                        <div class="my-day">4</div>
+                        <div class="my-day">5</div>
+                        <div class="my-day">6</div>
+                        <div class="my-day sat">7</div>
+                        
+                        <div class="my-day sun">8</div>
+                        <div class="my-day">9</div>
+                        <div class="my-day">10</div>
+                        <div class="my-day">11</div>
+                        <div class="my-day">12</div>
+                        <div class="my-day">13</div>
+                        <div class="my-day sat">14</div>
+                        
+                        <div class="my-day sun today">15</div>
+                        <div class="my-day">16</div>
+                        <div class="my-day">17</div>
+                        <div class="my-day">18</div>
+                        <div class="my-day">19</div>
+                        <div class="my-day">20</div>
+                        <div class="my-day sat has-event" onclick="scrollToEvent('event-21')">21</div>
+                        
+                        <div class="my-day sun">22</div>
+                        <div class="my-day">23</div>
+                        <div class="my-day">24</div>
+                        <div class="my-day has-event" onclick="scrollToEvent('event-25')">25</div>
+                        <div class="my-day">26</div>
+                        <div class="my-day">27</div>
+                        <div class="my-day sat">28</div>
+                        
+                        <div class="my-day sun">29</div>
+                        <div class="my-day">30</div>
+                        <div class="my-day has-event" onclick="scrollToEvent('event-31')">31</div>
+                        <div class="my-day other"></div>
+                        <div class="my-day other"></div>
+                        <div class="my-day other"></div>
+                        <div class="my-day other"></div>
+                    </div>
+                </div>
+
+                <!-- 이번 달 모임 목록 -->
+                <div class="my-events-section" id="my-events-list">
+                    <h3 class="my-events-title">이번 달 모임</h3>
+                    <!-- 동적으로 생성됨 -->
+                </div>
+
+                <!-- 다가오는 모임 -->
+                <div class="upcoming-section" id="upcoming-events-list">
+                    <h3 class="my-events-title">📌 다가오는 모임</h3>
+                    <!-- 동적으로 생성됨 -->
+                </div>
+            </div>
+
+            <nav class="bottom-nav">
+                <button class="nav-item" onclick="goToScreen('home')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>홈</span>
+                </button>
+                <button class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>캘린더</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('main');showChatDefault()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>톡</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('gallery')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>갤러리</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('save')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>마이</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Screen 8: My Page (마이페이지) -->
+        <div class="screen" id="screen-save">
+            <header class="main-header" style="justify-content: center; position: relative;">
+                <button class="back-btn" onclick="goToScreen('main')" style="position:absolute;left:16px;width:36px;height:36px">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <div class="main-header-info" style="text-align:center">
+                    <h2>마이 페이지</h2>
+                </div>
+            </header>
+            
+            <div style="flex:1;overflow-y:auto;padding-bottom:80px;">
+                <!-- 프로필 섹션 -->
+                <div class="mypage-profile">
+                    <div class="profile-avatar">
+                        <div class="avatar-image">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </div>
+                        <div class="avatar-edit">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        </div>
+                    </div>
+                    <h3 class="profile-name">도토리</h3>
+                    <p class="profile-email">dotori@example.com</p>
+                    <button class="btn-logout" onclick="handleLogout()" style="display: none;">로그아웃</button>
+                </div>
+
+                <!-- 메뉴 리스트 -->
+                <div class="mypage-menu">
+                    <div class="menu-item" onclick="showToast('회원정보')">
+                        <span class="menu-label">회원정보</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                    </div>
+                    <div class="menu-item" onclick="showToast('지도 설정')">
+                        <span class="menu-label">지도 설정</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                    </div>
+                    <div class="menu-item" onclick="showToast('친구/채팅방 설정')">
+                        <span class="menu-label">친구/채팅방 설정</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                    </div>
+                    <div class="menu-item" onclick="showToast('알림/푸시 설정')">
+                        <span class="menu-label">알림/푸시 설정</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                    </div>
+                    <div class="menu-item" onclick="showToast('캘린더 설정')">
+                        <span class="menu-label">캘린더 설정</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                    </div>
+                    <div class="menu-item" onclick="goToScreen('create-step1')" style="background:linear-gradient(135deg,#FFF7ED 0%,#FFEDD5 100%);border:1px solid #FED7AA;">
+                        <span class="menu-label" style="font-weight:600;color:var(--primary);">🎉 모임 주최하러가기</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="bottom-nav">
+                <button class="nav-item" onclick="goToScreen('home')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>홈</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('mycalendar')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>캘린더</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('main');showChatDefault()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>톡</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('gallery')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>갤러리</span>
+                </button>
+                <button class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>마이</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Screen 9: Auth -->
+        <div class="screen" id="screen-auth">
+            <header class="summary-header">
+                <button class="back-btn" onclick="goToScreen('save')">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+            </header>
+            <div class="auth-content">
+                <h1 class="auth-title">간편하게 시작하기</h1>
+                <p class="auth-subtitle">3초면 가입 완료!<br>복잡한 입력 없이 바로 시작해요</p>
+                <div class="auth-options">
+                    <button class="auth-btn" onclick="loginWithKakao()">
+                        <div class="auth-btn-icon kakao">
+                            <svg width="24" height="24" viewBox="0 0 24 24"><path fill="#3C1E1E" d="M12 3c-5.52 0-10 3.59-10 8 0 2.69 1.78 5.06 4.46 6.43-.13.47-.85 3.04-.87 3.25 0 0-.02.18.09.25.11.07.24.02.24.02.32-.05 3.72-2.43 4.3-2.86.58.09 1.18.13 1.78.13 5.52 0 10-3.59 10-8s-4.48-8-10-8z"/></svg>
+                        </div>
+                        <div class="auth-btn-text"><p class="auth-btn-title">카카오로 시작하기</p><p class="auth-btn-desc">가장 빠른 방법</p></div>
+                    </button>
+                    <button class="auth-btn" onclick="loginWithGoogle()">
+                        <div class="auth-btn-icon google">
+                            <svg width="24" height="24" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                        </div>
+                        <div class="auth-btn-text"><p class="auth-btn-title">Google로 시작하기</p><p class="auth-btn-desc">Gmail 계정으로</p></div>
+                    </button>
+                    <button class="auth-btn" onclick="loginWithPhone()">
+                        <div class="auth-btn-icon phone">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                        </div>
+                        <div class="auth-btn-text"><p class="auth-btn-title">전화번호로 시작하기</p><p class="auth-btn-desc">인증번호로 간편하게</p></div>
+                    </button>
+                </div>
+                <button class="btn-skip" style="margin-top:24px" onclick="continueAsGuest()">게스트로 계속하기</button>
+            </div>
+        </div>
+
+        <!-- Screen 7: Complete -->
+        <div class="screen complete-screen" id="screen-complete">
+            <div class="complete-content">
+                <div class="complete-icon">
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <h1 class="complete-title">가입 완료! 🎉</h1>
+                <p class="complete-subtitle">이제 모든 모임을 오보톡에서<br>편하게 관리할 수 있어요</p>
+                <div class="complete-card">
+                    <p class="complete-card-title">저장된 모임</p>
+                    <p class="complete-card-value">대학 동기 모임</p>
+                </div>
+                <button class="btn-complete" onclick="goToScreen('main')">모임으로 돌아가기</button>
+            </div>
+        </div>
+
+        <!-- Screen 8: Service Introduction (서비스 소개) -->
+        <div class="screen" id="screen-service-intro">
+            <header class="summary-header" style="background:transparent;position:absolute;top:0;left:0;right:0;z-index:10;">
+                <button class="back-btn" onclick="goToScreen('summary')">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+            </header>
+            <div class="service-intro-content">
+                <div class="intro-logo">
+                    <h1 style="font-size:48px;margin:0;">📱</h1>
+                    <h2 style="margin:8px 0;font-size:28px;font-weight:700;">오보톡</h2>
+                    <p style="color:var(--text-secondary);font-size:14px;">모임을 온전히 담는 공간</p>
+                </div>
+
+                <div class="intro-features">
+                    <div class="intro-feature-item">
+                        <div class="intro-feature-icon" style="background:#FFF7ED;">📅</div>
+                        <div class="intro-feature-text">
+                            <h3>일정 조율이 쉬워요</h3>
+                            <p>모두의 캘린더를 공유해서<br>가능한 날을 한눈에 확인</p>
+                        </div>
+                    </div>
+
+                    <div class="intro-feature-item">
+                        <div class="intro-feature-icon" style="background:#F0FDF4;">💰</div>
+                        <div class="intro-feature-text">
+                            <h3>정산이 간편해요</h3>
+                            <p>누가 얼마를 냈는지<br>자동으로 계산해드려요</p>
+                        </div>
+                    </div>
+
+                    <div class="intro-feature-item">
+                        <div class="intro-feature-icon" style="background:#EFF6FF;">📸</div>
+                        <div class="intro-feature-text">
+                            <h3>추억을 함께 모아요</h3>
+                            <p>모임 사진을 한곳에 모아<br>언제든 다시 볼 수 있어요</p>
+                        </div>
+                    </div>
+
+                    <div class="intro-feature-item">
+                        <div class="intro-feature-icon" style="background:#FDF2F8;">🗳️</div>
+                        <div class="intro-feature-text">
+                            <h3>투표로 결정해요</h3>
+                            <p>장소, 시간, 메뉴까지<br>모두 함께 정할 수 있어요</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="intro-footer">
+                    <button class="btn-intro-start" onclick="goToScreen('landing')" style="
+                        width:100%;
+                        padding:18px 32px;
+                        background:var(--primary);
+                        color:white;
+                        border:none;
+                        border-radius:12px;
+                        font-size:17px;
+                        font-weight:700;
+                        cursor:pointer;
+                        margin-bottom:12px;
+                    ">오보톡 시작하기</button>
+                    <button class="btn-create-meeting" onclick="goToScreen('create-step1')" style="
+                        width:100%;
+                        padding:16px 32px;
+                        background:#F0F9FF;
+                        color:#0284C7;
+                        border:2px solid #0284C7;
+                        border-radius:12px;
+                        font-size:16px;
+                        font-weight:600;
+                        cursor:pointer;
+                        margin-bottom:16px;
+                    ">모임 주최하기</button>
+                    <p style="text-align:center;font-size:13px;color:var(--text-light);">
+                        이미 계정이 있으신가요? <a href="#" onclick="goToScreen('auth');return false;" style="color:var(--primary);font-weight:600;text-decoration:none;">로그인</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 9: Phone Signup (전화번호 가입) -->
+        <div class="screen" id="screen-phone-signup">
+            <header class="main-header" style="justify-content: center; position: relative;">
+                <button class="back-btn" onclick="goToScreen('auth')" style="position:absolute;left:16px;width:36px;height:36px">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <div class="main-header-info" style="text-align:center">
+                    <h2>회원가입</h2>
+                </div>
+            </header>
+
+            <div class="signup-content">
+                <h1 class="signup-title">반가워요! 👋</h1>
+                <p class="signup-subtitle">간단한 정보만 입력하면<br>바로 시작할 수 있어요</p>
+
+                <form class="signup-form" onsubmit="submitPhoneSignup(event)">
+                    <div class="form-group">
+                        <label class="form-label">이름</label>
+                        <input type="text" id="signup-name" class="form-input" placeholder="이름을 입력해주세요" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">이메일</label>
+                        <input type="email" id="signup-email" class="form-input" placeholder="example@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">전화번호</label>
+                        <input type="tel" id="signup-phone" class="form-input" placeholder="01012345678" maxlength="13" oninput="formatPhoneNumber(this)" required>
+                        <p class="form-hint">숫자만 입력하세요 (자동으로 - 추가됩니다)</p>
+                    </div>
+
+                    <button type="submit" class="btn-signup-submit">가입하기</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Screen 10: Create Meeting - Step 1 (날짜/시간 선택) -->
+        <div class="screen" id="screen-create-step1">
+            <header class="main-header" style="justify-content: center; position: relative;">
+                <button class="back-btn" onclick="goToScreen('save')" style="position:absolute;left:16px;width:36px;height:36px">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <div class="main-header-info" style="text-align:center">
+                    <h2>모임 만들기</h2>
+                </div>
+            </header>
+
+            <div class="create-content">
+                <!-- Scrollable Area -->
+                <div class="create-scroll-area">
+                    <!-- Progress indicator -->
+                    <div class="create-progress">
+                        <div class="progress-step active">1</div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step">2</div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step">3</div>
+                    </div>
+
+                    <h1 class="create-title">주최자님, 언제 모이나요? 📅</h1>
+                    <p class="create-subtitle">모임 날짜와 시간을 선택해주세요</p>
+
+                    <!-- Date Picker -->
+                    <div class="date-picker-section">
+                        <label class="form-label">날짜 선택</label>
+                        <input type="date" id="meeting-date" class="date-input" required>
+                    </div>
+
+                    <!-- Time Picker -->
+                    <div class="time-picker-section">
+                        <label class="form-label">시간 선택</label>
+                        <div class="time-picker-grid">
+                            <button type="button" class="time-chip" onclick="selectTime(this, '10:00')">오전 10:00</button>
+                            <button type="button" class="time-chip" onclick="selectTime(this, '11:00')">오전 11:00</button>
+                            <button type="button" class="time-chip" onclick="selectTime(this, '12:00')">오후 12:00</button>
+                            <button type="button" class="time-chip" onclick="selectTime(this, '13:00')">오후 1:00</button>
+                            <button type="button" class="time-chip" onclick="selectTime(this, '14:00')">오후 2:00</button>
+                            <button type="button" class="time-chip" onclick="selectTime(this, '15:00')">오후 3:00</button>
+                            <button type="button" class="time-chip" onclick="selectTime(this, '18:00')">오후 6:00</button>
+                            <button type="button" class="time-chip" onclick="selectTime(this, '19:00')">오후 7:00</button>
+                            <button type="button" class="time-chip" onclick="selectTime(this, '20:00')">오후 8:00</button>
+                        </div>
+                        <button type="button" class="btn-custom-time" onclick="showCustomTimeInput()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                            직접 입력하기
+                        </button>
+                        <input type="time" id="meeting-time-custom" class="time-input-custom" style="display:none;">
+                    </div>
+                </div>
+
+                <!-- Fixed Button Area -->
+                <div class="create-button-area">
+                    <button class="btn-create-next" onclick="goToCreateStep2()" disabled id="btn-step1-next">다음</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 11: Create Meeting - Step 2 (모임 종류 선택) -->
+        <div class="screen" id="screen-create-step2">
+            <header class="main-header" style="justify-content: center; position: relative;">
+                <button class="back-btn" onclick="goToScreen('create-step1')" style="position:absolute;left:16px;width:36px;height:36px">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <div class="main-header-info" style="text-align:center">
+                    <h2>모임 만들기</h2>
+                </div>
+            </header>
+
+            <div class="create-content">
+                <!-- Scrollable Area -->
+                <div class="create-scroll-area">
+                    <!-- Progress indicator -->
+                    <div class="create-progress">
+                        <div class="progress-step completed">✓</div>
+                        <div class="progress-line active"></div>
+                        <div class="progress-step active">2</div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step">3</div>
+                    </div>
+
+                    <h1 class="create-title">어떤 모임인가요? 🎉</h1>
+                    <p class="create-subtitle">모임 유형을 선택하거나 직접 입력해주세요</p>
+
+                    <!-- AI Recommendations -->
+                    <div class="ai-recommendations">
+                        <div class="ai-rec-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            <div class="ai-rec-text">
+                                <span class="ai-rec-title">모임 AI 매니저의 추천</span>
+                                <span class="ai-rec-desc">시간, 계절 정보를 기반으로 추천한 정보입니다.</span>
+                            </div>
+                        </div>
+                        <div class="meeting-type-grid" id="ai-meeting-types">
+                            <!-- AI 추천 모임 동적 생성 -->
+                        </div>
+                        <button type="button" class="btn-more-types" id="btn-more-meeting-types" onclick="showMoreMeetingTypes()">
+                            더 많은 모임 보기
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                    </div>
+
+                    <!-- Custom Input -->
+                    <div class="custom-type-section">
+                        <label class="form-label">직접 입력하기</label>
+                        <input type="text" id="meeting-type-custom" class="form-input" placeholder="예: 대학 동기 모임, 가족 식사, 스터디" maxlength="20">
+                    </div>
+                </div>
+
+                <!-- Fixed Button Area -->
+                <div class="create-button-area">
+                    <button class="btn-create-next" onclick="goToCreateStep3()" disabled id="btn-step2-next">다음</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 12: Create Meeting - Step 3 (장소 선택) -->
+        <div class="screen" id="screen-create-step3">
+            <header class="main-header" style="justify-content: center; position: relative;">
+                <button class="back-btn" onclick="goToScreen('create-step2')" style="position:absolute;left:16px;width:36px;height:36px">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <div class="main-header-info" style="text-align:center">
+                    <h2>모임 만들기</h2>
+                </div>
+            </header>
+
+            <div class="create-content">
+                <!-- Scrollable Area -->
+                <div class="create-scroll-area">
+                    <!-- Progress indicator -->
+                    <div class="create-progress">
+                        <div class="progress-step completed">✓</div>
+                        <div class="progress-line active"></div>
+                        <div class="progress-step completed">✓</div>
+                        <div class="progress-line active"></div>
+                        <div class="progress-step active">3</div>
+                    </div>
+
+                    <h1 class="create-title">어디에서 만나나요? 📍</h1>
+                    <p class="create-subtitle">모임 장소를 선택해주세요</p>
+
+                    <!-- Location Options -->
+                    <div class="location-options">
+                        <button type="button" class="location-option-btn" onclick="showLocationSearch()">
+                            <div class="option-icon" style="background:#FFF7ED;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                            </div>
+                            <div class="option-text">
+                                <h3>생각해둔 곳이 있어요</h3>
+                                <p>장소를 검색해서 선택할게요</p>
+                            </div>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                        </button>
+
+                        <button type="button" class="location-option-btn" onclick="showAILocationRecommendations()">
+                            <div class="option-icon" style="background:#F0FDF4;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            </div>
+                            <div class="option-text">
+                                <h3>아직 정하지 않았어요</h3>
+                                <p>AI가 추천해주는 장소를 볼래요</p>
+                            </div>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                        </button>
+                    </div>
+
+                    <!-- Location Search (hidden by default) -->
+                    <div class="location-search-section" id="location-search" style="display:none;">
+                        <label class="form-label">장소 검색</label>
+                        <div class="search-input-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                            <input type="text" id="location-search-input" class="form-input" placeholder="장소명이나 주소를 입력하세요">
+                        </div>
+                        <div class="search-results" id="location-search-results">
+                            <!-- 검색 결과 동적 생성 -->
+                        </div>
+                    </div>
+
+                    <!-- AI Location Recommendations (hidden by default) -->
+                    <div class="ai-location-section" id="ai-locations" style="display:none;">
+                        <div class="location-permission-notice">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <p>내 주변 위치를 기반으로 추천해드려요</p>
+                            <button class="btn-allow-location" onclick="requestLocationPermission()">위치 정보 허용</button>
+                        </div>
+                        <div class="ai-location-grid" id="ai-location-recommendations">
+                            <!-- AI 추천 장소 동적 생성 -->
+                        </div>
+                        <button type="button" class="btn-more-types" onclick="showMoreLocations()">
+                            더 많은 장소 보기
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Fixed Button Area -->
+                <div class="create-button-area">
+                    <button class="btn-create-next" onclick="completeMeetingCreation()" disabled id="btn-step3-next">모임 만들기 완료</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <!-- JavaScript Files -->
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+    <!-- Firebase Config -->
+    <script src="js/config/firebase.js"></script>
+
+    <!-- 1. Utilities -->
+    <script src="js/utils/constants.js"></script>
+    <script src="js/utils/helpers.js"></script>
+    <script src="js/utils/auth.js"></script>
+
+    <!-- 2. Components -->
+    <script src="js/components/toast.js"></script>
+    <script src="js/components/confetti.js"></script>
+    <script src="js/components/tabs.js"></script>
+
+    <!-- 3. Features -->
+    <script src="js/features/auth.js"></script>
+    <script src="js/features/name-input.js"></script>
+    <script src="js/features/vote.js"></script>
+    <script src="js/features/calendar.js"></script>
+    <script src="js/features/my-calendar.js"></script>
+    <script src="js/features/gallery.js"></script>
+    <script src="js/features/chat.js"></script>
+    <script src="js/features/departure.js"></script>
+    <script src="js/features/create-meeting.js"></script>
+
+    <!-- 4. Router -->
+    <script src="js/router.js"></script>
+
+    <!-- 5. Main -->
+    <script src="js/main.js"></script>
+</body>
+</html>

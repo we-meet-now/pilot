@@ -1,0 +1,42 @@
+/* Tab Navigation Component */
+.tab-nav {
+    display: flex;
+    background: var(--card);
+    padding: 8px;
+    gap: 4px;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 10px 12px;
+    background: transparent;
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.tab-btn.active {
+    background: var(--primary);
+    color: white;
+}
+
+.tab-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 70px;
+}
+
+.tab-panel {
+    display: none;
+    padding: 16px;
+}
+
+.tab-panel.active {
+    display: block;
+}

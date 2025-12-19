@@ -1,0 +1,330 @@
+Line,Category,Subcategory,Selector,Description
+11,Variables & Reset,CSS Variables,:root,CSS custom properties definition
+28,Layout,Base Styles,body,Body base styles
+37,Layout,Frame,.phone-frame,Phone mockup frame container
+47,Layout,Screen,.screen,Screen base styles
+53,Layout,Screen,.screen.active,Active screen display
+45,Variables & Reset,Animations,@keyframes fadeIn,Fade in animation
+49,Variables & Reset,Animations,@keyframes pulse,Pulse animation
+53,Variables & Reset,Animations,@keyframes float,Float animation
+981,Variables & Reset,Animations,@keyframes pulse-ring,Pulse ring animation
+1596,Variables & Reset,Animations,@keyframes confetti-fall,Confetti animation
+68,Screens,Landing,.landing-screen,Landing/intro screen
+71,Screens,Landing,.landing-content,Landing content container
+79,Screens,Landing,.landing-icon,Large icon box
+91,Screens,Landing,.landing-icon svg,Icon SVG
+92,Components,Badges,.landing-badge,Intro badge
+101,Screens,Landing,.landing-title,Landing title
+108,Screens,Landing,.landing-subtitle,Landing subtitle
+114,Screens,Landing,.landing-action,Landing action area
+118,Components,Buttons,.btn-primary,Main action button
+132,Screens,Summary,.summary-header,Summary header
+138,Components,Buttons,.back-btn,Back button
+150,Components,Buttons,.back-btn svg,Back button icon
+151,Components,Labels,.header-title,Header title text
+152,Screens,Summary,.summary-content,Scrollable content
+157,Components,Cards,.meeting-card,Meeting card container
+163,Components,Cards,.meeting-cover,Meeting card cover
+171,Components,Cards,.meeting-cover::before,Overlay gradient
+177,Components,Badges,.meeting-type-badge,Meeting type badge
+187,Components,Cards,.meeting-title-area,Title area
+188,Components,Cards,.meeting-title,Meeting title
+189,Components,Cards,.meeting-host,Host name
+190,Components,Cards,.meeting-details,Details section
+191,Tabs,Settlement,.detail-row,Detail row
+198,Tabs,Settlement,.detail-row:last-child,Last detail row
+199,Components,Labels,.detail-icon,Icon for detail
+208,Components,Labels,.detail-icon svg,Detail icon SVG
+209,Components,Labels,.detail-content,Detail content
+210,Components,Labels,.detail-label,Small label
+211,Components,Labels,.detail-value,Detail value
+212,Components,Labels,.detail-sub,Subtitle
+213,Components,Avatars,.avatar-stack,Avatar stacking
+214,Components,Avatars,.avatar,Avatar circle
+227,Components,Avatars,.avatar:first-child,First avatar
+228,Screens,Summary,.summary-footer,Summary footer
+233,Components,Buttons,.btn-join,Join button
+246,Screens,Name Input,.name-content,Name input content
+252,Screens,Name Input,.name-title,Name input title
+258,Screens,Name Input,.name-subtitle,Name input subtitle
+264,Components,Forms,.input-label,Input label
+271,Components,Forms,.text-input,Text input field
+280,Components,Forms,.text-input:focus,Input focus
+284,Components,Forms,.quick-names,Quick names container
+289,Components,Forms,.quick-name,Quick name option
+298,Components,Forms,.quick-name:hover,Quick name hover
+302,Screens,Name Input,.name-footer,Name input footer
+303,Components,Buttons,.btn-next,Next button
+307,Components,Buttons,.btn-next.active,Active next button
+314,Components,Headers,.main-header,Main app header
+322,Components,Headers,.main-header-left,Header left side
+323,Components,Headers,.main-header-info h2,Header title
+324,Components,Headers,.main-header-info span,Header subtitle
+334,Components,Navigation,.tab-nav,Tab navigation
+342,Components,Navigation,.tab-btn,Tab button
+354,Components,Navigation,.tab-btn.active,Active tab
+358,Components,Badges,.tab-btn .badge,Tab badge
+369,Components,Badges,.tab-btn.active .badge,Active badge
+373,Components,Navigation,.tab-content,Tab content
+378,Components,Navigation,.tab-panel,Tab panel
+382,Components,Navigation,.tab-panel.active,Active panel
+385,Tabs,Info,.info-card,Info card
+392,Tabs,Info,.notice-card,Notice card
+399,Tabs,Info,.notice-header,Notice header
+405,Tabs,Info,.notice-badge,Notice badge
+413,Tabs,Info,.notice-time,Notice timestamp
+414,Tabs,Info,.notice-content,Notice content
+417,Tabs,Vote,.vote-card,Vote card
+423,Tabs,Vote,.vote-title,Vote title
+424,Tabs,Vote,.vote-meta,Vote metadata
+425,Tabs,Vote,.vote-options,Options container
+426,Tabs,Vote,.vote-option,Individual option
+436,Tabs,Vote,.vote-option:hover,Option hover
+437,Tabs,Vote,.vote-option.selected,Selected option
+441,Tabs,Vote,.vote-radio,Radio button
+450,Tabs,Vote,.vote-option.selected .vote-radio,Selected radio
+454,Tabs,Vote,.vote-option.selected .vote-radio::after,Radio checkmark
+461,Tabs,Vote,.vote-option-content,Option content
+462,Tabs,Vote,.vote-option-title,Option title
+463,Tabs,Vote,.vote-option-sub,Option subtitle
+464,Tabs,Vote,.vote-count,Vote count
+465,Tabs,Vote,.soft-vote,Soft vote container
+472,Tabs,Vote,.soft-vote-btn,Soft vote button
+483,Tabs,Vote,.soft-vote-btn:hover,Soft vote hover
+484,Tabs,Vote,.soft-vote-btn.selected,Soft vote selected
+489,Tabs,Vote,.soft-vote-btn .emoji,Emoji styling
+490,Tabs,Vote,.btn-vote,Vote button
+502,Tabs,Vote,.ai-tip,AI tip box
+512,Tabs,Vote,.ai-tip-icon,Tip icon
+521,Tabs,Vote,.ai-tip-icon svg,Tip icon SVG
+522,Tabs,Vote,.ai-tip-text,Tip text
+523,Tabs,Vote,.ai-tip-text strong,Bold tip text
+526,Tabs,Settle,.settlement-summary,Settlement summary
+533,Tabs,Settle,.settlement-amount,Amount display
+534,Tabs,Settle,.settlement-label,Amount label
+535,Tabs,Settle,.progress-bar,Progress container
+542,Tabs,Settle,.progress-fill,Progress fill
+547,Tabs,Settle,.progress-text,Progress percentage
+554,Tabs,Settle,.settlement-list,Settlement list
+560,Tabs,Settle,.settlement-item,Settlement item
+567,Tabs,Settle,.settlement-item:last-child,Last settlement
+568,Tabs,Settle,.settlement-avatar,Person avatar
+579,Tabs,Settle,.settlement-info,Person info
+580,Tabs,Settle,.settlement-name,Person name
+581,Tabs,Settle,.settlement-detail,Amount detail
+582,Tabs,Settle,.settlement-status,Status indicator
+588,Tabs,Settle,.settlement-status.done,Paid status
+589,Tabs,Settle,.settlement-status.pending,Unpaid status
+592,Tabs,Photos,.photos-header,Photos header
+597,Tabs,Photos,.photos-title,Photos title
+598,Tabs,Photos,.photos-count,Photo count
+599,Tabs,Photos,.photos-grid,Grid layout
+606,Tabs,Photos,.photo-item,Photo item
+613,Tabs,Photos,.photo-item svg,Photo icon
+614,Tabs,Photos,.upload-btn,Upload button
+628,Tabs,Photos,.upload-btn:hover,Upload hover
+629,Tabs,Photos,.upload-btn svg,Upload icon
+632,Tabs,Calendar,.calendar-header,Calendar header
+633,Tabs,Calendar,.calendar-title,Calendar title
+634,Tabs,Calendar,.calendar-desc,Calendar description
+636,Tabs,Calendar,.calendar-sync-status,Sync status
+643,Tabs,Calendar,.sync-item,Sync item
+650,Tabs,Calendar,.sync-avatar,Sync avatar
+661,Tabs,Calendar,.sync-avatar.small,Small sync avatar
+662,Tabs,Calendar,.sync-name,Person name
+663,Tabs,Calendar,.sync-badge,Sync badge
+668,Tabs,Calendar,.sync-badge.done,Done badge
+669,Tabs,Calendar,.sync-badge.pending,Pending badge
+671,Tabs,Calendar,.calendar-container,Main calendar
+678,Tabs,Calendar,.calendar-month-header,Month header
+684,Tabs,Calendar,.cal-nav-btn,Navigation button
+694,Tabs,Calendar,.cal-month-title,Month title
+696,Tabs,Calendar,.calendar-weekdays,Weekday headers
+702,Tabs,Calendar,.weekday,Weekday text
+709,Tabs,Calendar,.weekday.sun,Sunday color
+710,Tabs,Calendar,.weekday.sat,Saturday color
+712,Tabs,Calendar,.calendar-days,Days grid
+717,Tabs,Calendar,.cal-day,Day cell
+728,Tabs,Calendar,.cal-day.other,Other month
+729,Tabs,Calendar,.cal-day.sun,Sunday
+730,Tabs,Calendar,.cal-day.sat,Saturday
+731,Tabs,Calendar,.cal-day.busy,Busy indicator
+736,Tabs,Calendar,.cal-day.available,Available
+741,Tabs,Calendar,.cal-day.available:hover,Available hover
+744,Tabs,Calendar,.cal-day.available.best,Best available
+749,Tabs,Calendar,.cal-day.selected,Selected
+755,Tabs,Calendar,.calendar-legend,Legend section
+761,Tabs,Calendar,.legend-item,Legend item
+768,Tabs,Calendar,.legend-dot,Color dot
+773,Tabs,Calendar,.legend-dot.available,Available color
+774,Tabs,Calendar,.legend-dot.best,Best color
+775,Tabs,Calendar,.legend-dot.busy,Busy color
+777,Tabs,Calendar,.calendar-selected-info,Selected info
+785,Tabs,Calendar,.selected-date,Date display
+786,Tabs,Calendar,.selected-status,Status
+787,Tabs,Calendar,.available-members,Available members
+793,Tabs,Calendar,.waiting-text,Waiting text
+796,Tabs,Calendar,.my-cal-month-nav,My calendar nav
+803,Tabs,Calendar,.my-cal-month,My calendar month
+805,Tabs,Calendar,.my-cal-container,My calendar
+809,Tabs,Calendar,.my-cal-days,My calendar days
+814,Tabs,Calendar,.my-day,My day cell
+823,Tabs,Calendar,.my-day.sun,My Sunday
+824,Tabs,Calendar,.my-day.sat,My Saturday
+825,Tabs,Calendar,.my-day.other,My other month
+826,Tabs,Calendar,.my-day.today,My today
+831,Tabs,Calendar,.my-day.has-event::after,My event indicator
+840,Tabs,Calendar,.my-day.today.has-event::after,My today event
+842,Tabs,Calendar,.my-events-section,My events
+845,Tabs,Calendar,.my-events-title,My events title
+852,Tabs,Calendar,.my-event-card,Event card
+864,Tabs,Calendar,.my-event-card:hover,Card hover
+866,Tabs,Calendar,.my-event-date,Date box
+877,Tabs,Calendar,.event-day,Day number
+878,Tabs,Calendar,.event-dow,Day of week
+880,Tabs,Calendar,.my-event-info,Event info
+881,Tabs,Calendar,.my-event-name,Event name
+882,Tabs,Calendar,.my-event-detail,Event detail
+883,Tabs,Calendar,.my-event-members,Members
+884,Tabs,Calendar,.member-count,Member count
+886,Tabs,Calendar,.my-event-status,Event status
+892,Tabs,Calendar,.my-event-status.confirmed,Confirmed
+893,Tabs,Calendar,.my-event-status.pending,Pending
+895,Tabs,Calendar,.upcoming-section,Upcoming
+898,Tabs,Calendar,.upcoming-card,Upcoming card
+907,Tabs,Calendar,.upcoming-dday,D-day
+919,Tabs,Calendar,.upcoming-info,Upcoming info
+920,Tabs,Calendar,.upcoming-name,Upcoming name
+921,Tabs,Calendar,.upcoming-date,Upcoming date
+922,Tabs,Calendar,.upcoming-btn,Upcoming button
+934,Screens,Home,.home-header,Home header
+938,Screens,Home,.search-bar,Search bar
+946,Screens,Home,.search-bar svg,Search icon
+947,Screens,Home,.search-bar input,Search input
+955,Screens,Home,.search-bar input:focus,Search focus
+957,Screens,Home,.map-container,Map area
+963,Screens,Home,.map-placeholder,Map placeholder
+973,Screens,Home,.my-location-marker,Location marker
+979,Screens,Home,.marker-pulse,Marker pulse
+990,Variables & Reset,Animations,@keyframes pulse-ring,Pulse ring animation
+994,Screens,Home,.marker-dot,Marker dot
+1004,Screens,Home,.destination-marker,Destination marker
+1012,Screens,Home,.dest-icon,Destination icon
+1025,Screens,Home,.dest-icon::after,Icon after
+1029,Screens,Home,.dest-label,Destination label
+1039,Screens,Home,.route-line,Route line
+1049,Screens,Home,.home-bottom-sheet,Bottom sheet
+1055,Screens,Home,.sheet-handle,Sheet handle
+1062,Screens,Home,.departure-header,Departure header
+1068,Screens,Home,.departure-label,Departure label
+1069,Components,Buttons,.change-btn,Change button
+1077,Screens,Home,.members-status,Members status
+1085,Screens,Home,.member-status-item,Status item
+1092,Screens,Home,.member-avatar,Member avatar
+1103,Screens,Home,.member-status-info,Status info
+1108,Screens,Home,.member-name,Member name
+1109,Screens,Home,.member-time,Member time
+1110,Components,Buttons,.departure-btn,Departure button
+1118,Components,Buttons,.departure-btn.ready,Ready state
+1122,Components,Buttons,.departure-btn.departed,Departed state
+1126,Components,Badges,.status-badge,Status badge
+1132,Components,Badges,.status-badge.moving,Moving status
+1133,Components,Badges,.status-badge.preparing,Preparing status
+1134,Components,Badges,.status-badge.waiting,Waiting status
+1136,Screens,Home,.today-meeting-info,Today meeting
+1142,Screens,Home,.today-label,Today label
+1143,Components,Buttons,.view-more-btn,View more button
+1150,Screens,Home,.today-meeting-card,Meeting card
+1159,Screens,Home,.today-meeting-icon,Meeting icon
+1169,Screens,Home,.today-meeting-detail,Meeting detail
+1170,Screens,Home,.today-meeting-name,Meeting name
+1171,Screens,Home,.today-meeting-address,Meeting address
+1172,Screens,Home,.today-meeting-time,Meeting time
+1179,Screens,Home,.gallery-section,Gallery section
+1183,Screens,Home,.gallery-section-header,Gallery header
+1189,Screens,Home,.gallery-section-title,Gallery title
+1190,Screens,Home,.gallery-section-date,Gallery date
+1191,Screens,Home,.gallery-section-count,Photo count
+1192,Screens,Home,.gallery-grid,Gallery grid
+1197,Screens,Home,.gallery-item,Gallery item
+1203,Screens,Home,.gallery-item:hover,Gallery hover
+1204,Screens,Home,.gallery-item:first-child,First item
+1209,Screens,Home,.gallery-item.more-photos,More photos
+1220,Screens,Profile,.mypage-profile,Profile section
+1228,Screens,Profile,.profile-avatar,Avatar container
+1232,Screens,Profile,.avatar-image,Avatar image
+1242,Screens,Profile,.avatar-image svg,Avatar SVG
+1247,Screens,Profile,.avatar-edit,Edit button
+1260,Screens,Profile,.avatar-edit svg,Edit icon
+1265,Screens,Profile,.profile-name,User name
+1270,Screens,Profile,.profile-email,User email
+1275,Screens,Profile,.mypage-menu,Menu section
+1278,Screens,Profile,.menu-item,Menu item
+1287,Screens,Profile,.menu-item:hover,Menu hover
+1290,Screens,Profile,.menu-item:last-child,Last item
+1293,Screens,Profile,.menu-label,Menu label
+1297,Screens,Profile,.menu-item svg,Menu icon
+1304,Tabs,Chat,.chat-messages,Messages
+1312,Tabs,Chat,.message,Message
+1313,Tabs,Chat,.message.sent,Sent message
+1314,Tabs,Chat,.message-avatar,Message avatar
+1326,Tabs,Chat,.message-content,Message content
+1327,Tabs,Chat,.message.sent .message-content,Sent content
+1328,Tabs,Chat,.message-name,Sender name
+1329,Tabs,Chat,.message-bubble,Message bubble
+1338,Tabs,Chat,.message.sent .message-bubble,Sent bubble
+1344,Tabs,Chat,.message-time,Timestamp
+1345,Tabs,Chat,.system-message,System message
+1354,Tabs,Chat,.chat-input-area,Input area
+1361,Tabs,Chat,.chat-input,Input field
+1370,Tabs,Chat,.chat-input:focus,Input focus
+1371,Tabs,Chat,.send-btn,Send button
+1382,Tabs,Chat,.send-btn svg,Send icon
+1385,Components,Navigation,.bottom-nav,Bottom nav
+1396,Components,Navigation,.nav-item,Nav item
+1406,Components,Navigation,.nav-item.active,Active nav
+1407,Components,Navigation,.nav-item svg,Nav icon
+1408,Components,Navigation,.nav-item span,Nav label
+1411,Screens,Save,.save-content,Save content
+1418,Screens,Save,.save-icon,Save icon
+1428,Screens,Save,.save-icon svg,Icon SVG
+1429,Screens,Save,.save-title,Save title
+1430,Screens,Save,.save-subtitle,Save subtitle
+1437,Screens,Save,.save-benefits,Benefits list
+1438,Screens,Save,.benefit-item,Benefit item
+1448,Screens,Save,.benefit-icon,Benefit icon
+1457,Screens,Save,.benefit-icon svg,Icon SVG
+1458,Screens,Save,.benefit-text,Benefit text
+1459,Screens,Save,.benefit-title,Benefit title
+1460,Screens,Save,.benefit-desc,Benefit description
+1461,Screens,Save,.save-actions,Actions
+1462,Components,Buttons,.btn-save,Save button
+1474,Components,Buttons,.btn-skip,Skip button
+1485,Screens,Auth,.auth-content,Auth content
+1491,Screens,Auth,.auth-title,Auth title
+1492,Screens,Auth,.auth-subtitle,Auth subtitle
+1498,Screens,Auth,.auth-options,Auth options
+1499,Components,Buttons,.auth-btn,Auth button
+1509,Components,Buttons,.auth-btn:hover,Auth hover
+1510,Screens,Auth,.auth-btn-icon,Auth icon
+1518,Screens,Auth,.auth-btn-icon.kakao,Kakao icon
+1519,Screens,Auth,.auth-btn-icon.google,Google icon
+1520,Screens,Auth,.auth-btn-icon.phone,Phone icon
+1521,Screens,Auth,.auth-btn-icon svg,Icon SVG
+1522,Screens,Auth,.auth-btn-text,Button text
+1523,Screens,Auth,.auth-btn-title,Button title
+1524,Screens,Auth,.auth-btn-desc,Button description
+1527,Screens,Complete,.complete-screen,Complete screen
+1530,Screens,Complete,.complete-content,Complete content
+1539,Screens,Complete,.complete-icon,Complete icon
+1550,Screens,Complete,.complete-icon svg,Icon SVG
+1551,Screens,Complete,.complete-title,Complete title
+1552,Screens,Complete,.complete-subtitle,Complete subtitle
+1558,Screens,Complete,.complete-card,Complete card
+1565,Screens,Complete,.complete-card-title,Card title
+1566,Screens,Complete,.complete-card-value,Card value
+1567,Components,Buttons,.btn-complete,Complete button
+1580,Components,Toast,.toast,Toast notification
+1594,Components,Toast,.toast.show,Visible toast
+1600,Components,Toast,.confetti,Confetti element
+1605,Variables & Reset,Animations,@keyframes confetti-fall,Confetti animation

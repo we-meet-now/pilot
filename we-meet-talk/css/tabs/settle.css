@@ -1,0 +1,73 @@
+/* Settlement Tab Styles */
+.settlement-summary {
+    background: linear-gradient(135deg, var(--secondary) 0%, #3D4063 100%);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 12px;
+    color: white;
+}
+
+.settlement-amount {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.settlement-label {
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+.progress-bar {
+    height: 6px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 3px;
+    margin-top: 16px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+}
+
+.progress-text {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.settlement-list {
+    background: var(--card);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.settlement-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border-bottom: 1px solid var(--border);
+}
+
+.settlement-item:last-child {
+    border-bottom: none;
+}
+
+.settlement-info {
+    flex: 1;
+}
+
+.settlement-name {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.settlement-detail {
+    font-size: 12px;
+    color: var(--text-secondary);
+}

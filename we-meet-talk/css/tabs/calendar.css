@@ -1,0 +1,249 @@
+/* Calendar Tab Styles */
+.calendar-sync-status {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 12px 0;
+    margin-bottom: 16px;
+}
+
+.sync-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 56px;
+}
+
+.sync-name {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.calendar-container {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+    margin-bottom: 12px;
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.weekday {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-light);
+    padding: 4px;
+}
+
+.weekday.sun {
+    color: #EF4444;
+}
+
+.weekday.sat {
+    color: #3B82F6;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+.cal-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.cal-day.other {
+    color: var(--text-light);
+    opacity: 0.3;
+}
+
+.cal-day.sun {
+    color: #EF4444;
+}
+
+.cal-day.sat {
+    color: #3B82F6;
+}
+
+.cal-day.busy {
+    color: var(--text-light);
+    text-decoration: line-through;
+    background: #FEE2E2;
+}
+
+.cal-day.available {
+    background: #DBEAFE;
+    color: #1D4ED8;
+    font-weight: 600;
+}
+
+.cal-day.available:hover {
+    background: #BFDBFE;
+}
+
+.cal-day.available.best {
+    background: #FEF3C7;
+    border: 2px solid #F59E0B;
+    color: #B45309;
+}
+
+.cal-day.selected {
+    background: var(--primary) !important;
+    color: white !important;
+    font-weight: 600;
+}
+
+.calendar-legend {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 4px;
+}
+
+.legend-dot.available {
+    background: #DBEAFE;
+}
+
+.legend-dot.best {
+    background: #FEF3C7;
+    border: 2px solid #F59E0B;
+}
+
+.legend-dot.busy {
+    background: #FEE2E2;
+}
+
+.calendar-selected-info {
+    background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+    border: 1px solid #BBF7D0;
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.selected-date {
+    font-size: 18px;
+    font-weight: 700;
+    color: #166534;
+    margin-bottom: 4px;
+}
+
+.selected-status {
+    font-size: 13px;
+    color: #15803D;
+    margin-bottom: 12px;
+}
+
+.available-members {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.waiting-text {
+    font-size: 11px;
+    color: var(--text-light);
+    margin-left: 4px;
+}
+
+/* My Calendar Screen Styles */
+.my-cal-container {
+    background: var(--card);
+    padding: 0 16px 16px;
+}
+
+.my-cal-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.my-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    border-radius: 50%;
+    position: relative;
+}
+
+.my-day.sun {
+    color: #EF4444;
+}
+
+.my-day.sat {
+    color: #3B82F6;
+}
+
+.my-day.other {
+    opacity: 0.3;
+}
+
+.my-day.today {
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+}
+
+.my-day.has-event::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    width: 6px;
+    height: 6px;
+    background: var(--primary);
+    border-radius: 50%;
+}
+
+.my-day.today.has-event::after {
+    background: white;
+}
+
+.my-events-section {
+    padding: 20px 16px;
+}
+
+.my-events-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--text);
+}
+
+.upcoming-section {
+    padding: 0 16px 20px;
+}

@@ -1,0 +1,105 @@
+/* Auth Notice Components */
+/* 로그인 안내 컴포넌트 */
+
+.calendar-login-notice {
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.login-notice-card {
+    background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+    border: 1px solid #BAE6FD;
+    border-radius: var(--radius);
+    padding: 24px;
+    text-align: center;
+}
+
+.notice-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.notice-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+.notice-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.btn-login {
+    padding: 12px 32px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-login:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-login:active {
+    transform: translateY(0);
+}
+
+.btn-profile-login {
+    margin-top: 12px;
+    padding: 10px 24px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-profile-login:hover {
+    background: var(--primary-light);
+}
+
+/* 로그인 후 상태 표시 */
+.user-status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 8px;
+}
+
+/* 로그아웃 버튼 */
+.btn-logout {
+    margin-top: 16px;
+    padding: 10px 24px;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-logout:hover {
+    background: var(--bg);
+    border-color: var(--text-secondary);
+    color: var(--text);
+}

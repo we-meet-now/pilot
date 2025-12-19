@@ -1,0 +1,384 @@
+/* Card Components */
+.info-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow);
+}
+
+.notice-card {
+    background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
+    border: 1px solid #FED7AA;
+    border-radius: var(--radius);
+    padding: 14px;
+    margin-bottom: 12px;
+}
+
+.notice-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.notice-content {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.notice-time {
+    font-size: 11px;
+    color: var(--text-light);
+}
+
+.meeting-card {
+    background: var(--card);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+}
+
+.meeting-cover {
+    height: 140px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+}
+
+.meeting-cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+}
+
+.meeting-title-area {
+    position: relative;
+    z-index: 1;
+}
+
+.meeting-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+}
+
+.meeting-host {
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+}
+
+.meeting-details {
+    padding: 20px;
+}
+
+.vote-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+}
+
+.vote-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.vote-meta {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
+.ai-tip {
+    background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+    border: 1px solid #BBF7D0;
+    border-radius: var(--radius);
+    padding: 14px;
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.ai-tip-icon {
+    width: 36px;
+    height: 36px;
+    background: #10B981;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ai-tip-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: white;
+    fill: none;
+}
+
+.ai-tip-text {
+    font-size: 13px;
+    color: #166534;
+}
+
+.ai-tip-text strong {
+    font-weight: 600;
+}
+
+.my-event-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    background: var(--card);
+    border-radius: var(--radius);
+    margin-bottom: 10px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease;
+}
+
+.my-event-date {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.event-day {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.event-dow {
+    font-size: 11px;
+    opacity: 0.9;
+}
+
+.my-event-info {
+    flex: 1;
+}
+
+.my-event-name {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.my-event-detail {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.my-event-members {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.member-count {
+    font-size: 11px;
+    color: var(--text-light);
+    margin-left: 4px;
+}
+
+.my-event-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.my-event-status {
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.my-event-status.confirmed {
+    background: #DCFCE7;
+    color: #16A34A;
+}
+
+.my-event-status.pending {
+    background: #FEF3C7;
+    color: #CA8A04;
+}
+
+.btn-goto-chat {
+    padding: 6px 14px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-goto-chat:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(255,107,53,0.3);
+}
+
+.btn-goto-chat:active {
+    transform: translateY(0);
+}
+
+.upcoming-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
+    border: 1px solid #FED7AA;
+    border-radius: var(--radius);
+}
+
+.upcoming-dday {
+    width: 50px;
+    height: 50px;
+    background: var(--primary);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.upcoming-info {
+    flex: 1;
+}
+
+.upcoming-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.upcoming-date {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.today-meeting-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    background: var(--bg);
+    border-radius: var(--radius);
+    cursor: pointer;
+}
+
+.today-meeting-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--card);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.today-meeting-detail {
+    flex: 1;
+}
+
+.today-meeting-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.today-meeting-address {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.today-meeting-time {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    background: var(--card);
+    border-radius: var(--radius);
+    margin-bottom: 10px;
+    box-shadow: var(--shadow);
+}
+
+.benefit-icon {
+    width: 44px;
+    height: 44px;
+    background: rgba(255,107,53,0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.benefit-icon svg {
+    width: 22px;
+    height: 22px;
+    stroke: var(--primary);
+    fill: none;
+}
+
+.benefit-text {
+    flex: 1;
+}
+
+.benefit-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.benefit-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.complete-card {
+    width: 100%;
+    background: rgba(255,255,255,0.15);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 32px;
+}
+
+.complete-card-title {
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 4px;
+}
+
+.complete-card-value {
+    font-size: 17px;
+    font-weight: 600;
+    color: white;
+}

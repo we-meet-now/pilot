@@ -1,0 +1,2709 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>오보톡 - 모임을 온전히 담는 공간</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3B82F6;
+            --primary-light: #60A5FA;
+            --secondary: #2D3047;
+            --accent: #00D4AA;
+            --bg: #FAFAFA;
+            --card: #FFFFFF;
+            --text: #1A1A2E;
+            --text-secondary: #6B7280;
+            --text-light: #9CA3AF;
+            --border: #E5E7EB;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --radius: 16px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #1a1a2e;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .phone-frame {
+            width: 100%;
+            max-width: 390px;
+            height: 844px;
+            background: var(--bg);
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+        }
+        .screen {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            animation: fadeIn 0.3s ease;
+        }
+        .screen.active { display: flex; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* Landing Screen */
+        .landing-screen {
+            background: linear-gradient(165deg, #3B82F6 0%, #60A5FA 50%, #93C5FD 100%);
+        }
+        .landing-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+        }
+        .landing-icon {
+            width: 100px;
+            height: 100px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 32px;
+            animation: float 3s ease-in-out infinite;
+        }
+        .landing-icon svg { width: 56px; height: 56px; fill: white; }
+        .landing-badge {
+            background: rgba(255,255,255,0.25);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 500;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .landing-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .landing-subtitle {
+            font-size: 16px;
+            color: rgba(255,255,255,0.9);
+            text-align: center;
+            line-height: 1.6;
+        }
+        .landing-action {
+            padding: 24px;
+            width: 100%;
+        }
+        .btn-primary {
+            width: 100%;
+            padding: 18px;
+            background: white;
+            color: var(--primary);
+            font-size: 17px;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        /* Summary Screen */
+        .summary-header {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--card);
+            border: none;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+        .back-btn svg { width: 20px; height: 20px; stroke: var(--text); fill: none; }
+        .header-title { font-size: 18px; font-weight: 600; }
+        .summary-content {
+            flex: 1;
+            padding: 0 20px 20px;
+            overflow-y: auto;
+        }
+        .meeting-card {
+            background: var(--card);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+        }
+        .meeting-cover {
+            height: 140px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+        }
+        .meeting-cover::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+        }
+        .meeting-type-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            color: white;
+        }
+        .meeting-title-area { position: relative; z-index: 1; }
+        .meeting-title { font-size: 22px; font-weight: 700; color: white; }
+        .meeting-host { font-size: 14px; color: rgba(255,255,255,0.8); }
+        .meeting-details { padding: 20px; }
+        .detail-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .detail-row:last-child { border-bottom: none; }
+        .detail-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .detail-icon svg { width: 20px; height: 20px; stroke: white; fill: none; }
+        .detail-content { flex: 1; }
+        .detail-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 2px; }
+        .detail-value { font-size: 15px; font-weight: 500; }
+        .detail-sub { font-size: 12px; color: var(--text-light); }
+        .avatar-stack { display: flex; margin-top: 8px; }
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid var(--card);
+            margin-left: -8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
+        .avatar:first-child { margin-left: 0; }
+        .summary-footer {
+            padding: 20px;
+            background: var(--card);
+            border-top: 1px solid var(--border);
+        }
+        .btn-join {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            font-size: 17px;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+        }
+
+        /* Name Screen */
+        .name-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 24px 40px;
+        }
+        .name-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+        .name-subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 32px;
+        }
+        .input-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            display: block;
+        }
+        .text-input {
+            width: 100%;
+            padding: 18px 20px;
+            font-size: 17px;
+            font-family: inherit;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--card);
+        }
+        .text-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .quick-names {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .quick-name {
+            padding: 10px 18px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        .quick-name:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .name-footer { margin-top: auto; }
+        .btn-next {
+            width: 100%;
+            padding: 18px;
+            background: var(--secondary);
+            color: white;
+            font-size: 17px;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        .btn-next.active {
+            opacity: 1;
+            pointer-events: auto;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        }
+
+        /* Main Screen */
+        .main-header {
+            background: var(--card);
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+        }
+        .main-header-left { display: flex; align-items: center; gap: 12px; }
+        .main-header-info h2 { font-size: 16px; font-weight: 600; }
+        .main-header-info span { font-size: 12px; color: var(--text-secondary); }
+        .tab-nav {
+            display: flex;
+            background: var(--card);
+            padding: 8px;
+            gap: 4px;
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 10px 12px;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        .tab-btn .badge {
+            display: inline-flex;
+            min-width: 16px;
+            height: 16px;
+            padding: 0 5px;
+            background: #EF4444;
+            color: white;
+            font-size: 10px;
+            border-radius: 8px;
+            margin-left: 4px;
+        }
+        .tab-btn.active .badge {
+            background: white;
+            color: var(--primary);
+        }
+        .tab-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 70px;
+        }
+        .tab-panel {
+            display: none;
+            padding: 16px;
+        }
+        .tab-panel.active { display: block; }
+
+        /* Cards */
+        .info-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+        }
+        .notice-card {
+            background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
+            border: 1px solid #FED7AA;
+            border-radius: var(--radius);
+            padding: 14px;
+            margin-bottom: 12px;
+        }
+        .notice-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .notice-badge {
+            background: var(--primary);
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 50px;
+        }
+        .notice-time { font-size: 11px; color: var(--text-light); }
+        .notice-content { font-size: 14px; line-height: 1.6; }
+
+        /* Vote */
+        .vote-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow);
+        }
+        .vote-title { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+        .vote-meta { font-size: 12px; color: var(--text-secondary); margin-bottom: 16px; }
+        .vote-options { display: flex; flex-direction: column; gap: 10px; }
+        .vote-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+        }
+        .vote-option:hover { border-color: var(--primary-light); }
+        .vote-option.selected {
+            border-color: var(--primary);
+            background: rgba(255,107,53,0.05);
+        }
+        .vote-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .vote-option.selected .vote-radio {
+            border-color: var(--primary);
+            background: var(--primary);
+        }
+        .vote-option.selected .vote-radio::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+        }
+        .vote-option-content { flex: 1; }
+        .vote-option-title { font-size: 14px; font-weight: 500; }
+        .vote-option-sub { font-size: 12px; color: var(--text-secondary); }
+        .vote-count { font-size: 12px; color: var(--text-light); }
+        .soft-vote {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+        .soft-vote-btn {
+            flex: 1;
+            padding: 12px 8px;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            text-align: center;
+        }
+        .soft-vote-btn:hover { border-color: var(--primary-light); }
+        .soft-vote-btn.selected {
+            border-color: var(--primary);
+            background: rgba(255,107,53,0.1);
+            color: var(--primary);
+        }
+        .soft-vote-btn .emoji { font-size: 18px; display: block; margin-bottom: 4px; }
+        .btn-vote {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+        .ai-tip {
+            background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+            border: 1px solid #BBF7D0;
+            border-radius: var(--radius);
+            padding: 14px;
+            margin-top: 12px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .ai-tip-icon {
+            width: 36px;
+            height: 36px;
+            background: #10B981;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ai-tip-icon svg { width: 18px; height: 18px; stroke: white; fill: none; }
+        .ai-tip-text { font-size: 13px; color: #166534; }
+        .ai-tip-text strong { font-weight: 600; }
+
+        /* Settlement */
+        .settlement-summary {
+            background: linear-gradient(135deg, var(--secondary) 0%, #3D4063 100%);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 12px;
+            color: white;
+        }
+        .settlement-amount { font-size: 28px; font-weight: 700; }
+        .settlement-label { font-size: 13px; opacity: 0.8; }
+        .progress-bar {
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+            margin-top: 16px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 3px;
+        }
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        .settlement-list {
+            background: var(--card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .settlement-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            border-bottom: 1px solid var(--border);
+        }
+        .settlement-item:last-child { border-bottom: none; }
+        .settlement-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+        }
+        .settlement-info { flex: 1; }
+        .settlement-name { font-size: 14px; font-weight: 500; }
+        .settlement-detail { font-size: 12px; color: var(--text-secondary); }
+        .settlement-status {
+            padding: 5px 10px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .settlement-status.done { background: rgba(16,185,129,0.1); color: var(--success); }
+        .settlement-status.pending { background: rgba(245,158,11,0.1); color: var(--warning); }
+
+        /* Photos */
+        .photos-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .photos-title { font-size: 15px; font-weight: 600; }
+        .photos-count { font-size: 13px; color: var(--text-secondary); }
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .photo-item {
+            aspect-ratio: 1;
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .photo-item svg { width: 24px; height: 24px; stroke: var(--text-light); fill: none; }
+        .upload-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px;
+            background: var(--card);
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            margin-top: 12px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        .upload-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .upload-btn svg { width: 20px; height: 20px; }
+
+        /* Calendar Tab Styles */
+        .calendar-header { margin-bottom: 16px; }
+        .calendar-title { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+        .calendar-desc { font-size: 13px; color: var(--text-secondary); }
+        
+        .calendar-sync-status {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 12px 0;
+            margin-bottom: 16px;
+        }
+        .sync-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            min-width: 56px;
+        }
+        .sync-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+        }
+        .sync-avatar.small { width: 28px; height: 28px; font-size: 11px; }
+        .sync-name { font-size: 11px; color: var(--text-secondary); }
+        .sync-badge {
+            font-size: 9px;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+        .sync-badge.done { background: rgba(16,185,129,0.1); color: var(--success); }
+        .sync-badge.pending { background: rgba(245,158,11,0.1); color: var(--warning); }
+        
+        .calendar-container {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow);
+            margin-bottom: 12px;
+        }
+        .calendar-month-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        .cal-nav-btn {
+            width: 32px;
+            height: 32px;
+            background: var(--bg);
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        .cal-month-title { font-size: 16px; font-weight: 600; }
+        
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+        .weekday {
+            text-align: center;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-light);
+            padding: 4px;
+        }
+        .weekday.sun { color: #EF4444; }
+        .weekday.sat { color: #3B82F6; }
+        
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+        .cal-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        .cal-day.other { color: var(--text-light); opacity: 0.3; }
+        .cal-day.sun { color: #EF4444; }
+        .cal-day.sat { color: #3B82F6; }
+        .cal-day.busy { 
+            color: var(--text-light); 
+            text-decoration: line-through;
+            background: #FEE2E2;
+        }
+        .cal-day.available {
+            background: #DBEAFE;
+            color: #1D4ED8;
+            font-weight: 600;
+        }
+        .cal-day.available:hover {
+            background: #BFDBFE;
+        }
+        .cal-day.available.best {
+            background: #FEF3C7;
+            border: 2px solid #F59E0B;
+            color: #B45309;
+        }
+        .cal-day.selected {
+            background: var(--primary) !important;
+            color: white !important;
+            font-weight: 600;
+        }
+        
+        .calendar-legend {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 4px;
+        }
+        .legend-dot.available { background: #DBEAFE; }
+        .legend-dot.best { background: #FEF3C7; border: 2px solid #F59E0B; }
+        .legend-dot.busy { background: #FEE2E2; }
+        
+        .calendar-selected-info {
+            background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+            border: 1px solid #BBF7D0;
+            border-radius: var(--radius);
+            padding: 16px;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .selected-date { font-size: 18px; font-weight: 700; color: #166534; margin-bottom: 4px; }
+        .selected-status { font-size: 13px; color: #15803D; margin-bottom: 12px; }
+        .available-members {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+        .waiting-text { font-size: 11px; color: var(--text-light); margin-left: 4px; }
+
+        /* My Calendar Screen Styles */
+        .my-cal-month-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: var(--card);
+        }
+        .my-cal-month { font-size: 18px; font-weight: 600; }
+        
+        .my-cal-container {
+            background: var(--card);
+            padding: 0 16px 16px;
+        }
+        .my-cal-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+        }
+        .my-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            border-radius: 50%;
+            position: relative;
+        }
+        .my-day.sun { color: #EF4444; }
+        .my-day.sat { color: #3B82F6; }
+        .my-day.other { opacity: 0.3; }
+        .my-day.today {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        .my-day.has-event::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+        .my-day.today.has-event::after { background: white; }
+        
+        .my-events-section {
+            padding: 20px 16px;
+        }
+        .my-events-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+        
+        .my-event-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            background: var(--card);
+            border-radius: var(--radius);
+            margin-bottom: 10px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .my-event-card:hover { transform: translateX(4px); }
+        
+        .my-event-date {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .event-day { font-size: 20px; font-weight: 700; line-height: 1; }
+        .event-dow { font-size: 11px; opacity: 0.9; }
+        
+        .my-event-info { flex: 1; }
+        .my-event-name { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+        .my-event-detail { font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; }
+        .my-event-members { display: flex; align-items: center; gap: 2px; }
+        .member-count { font-size: 11px; color: var(--text-light); margin-left: 4px; }
+        
+        .my-event-status {
+            padding: 5px 10px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .my-event-status.confirmed { background: rgba(16,185,129,0.1); color: var(--success); }
+        .my-event-status.pending { background: rgba(245,158,11,0.1); color: var(--warning); }
+        
+        .upcoming-section {
+            padding: 0 16px 20px;
+        }
+        .upcoming-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
+            border: 1px solid #FED7AA;
+            border-radius: var(--radius);
+        }
+        .upcoming-dday {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+        }
+        .upcoming-info { flex: 1; }
+        .upcoming-name { font-size: 15px; font-weight: 600; color: var(--text); }
+        .upcoming-date { font-size: 12px; color: var(--text-secondary); }
+        .upcoming-btn {
+            padding: 8px 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Home Screen (Map) Styles */
+        .home-header {
+            padding: 12px 16px;
+            background: var(--card);
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: var(--bg);
+            border-radius: 12px;
+        }
+        .search-bar svg { width: 18px; height: 18px; stroke: var(--text-light); }
+        .search-bar input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--text-light);
+        }
+        .search-bar input:focus { outline: none; }
+
+        .map-container {
+            flex: 1;
+            position: relative;
+            background: #E8F4E8;
+            min-height: 250px;
+        }
+        .map-placeholder {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: 
+                linear-gradient(90deg, #d4e4d4 1px, transparent 1px),
+                linear-gradient(#d4e4d4 1px, transparent 1px),
+                #E8F4E8;
+            background-size: 30px 30px;
+        }
+        .my-location-marker {
+            position: absolute;
+            top: 40%;
+            left: 30%;
+            transform: translate(-50%, -50%);
+        }
+        .marker-pulse {
+            width: 60px;
+            height: 60px;
+            background: rgba(59, 130, 246, 0.2);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse-ring 2s ease-out infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+        }
+        .marker-dot {
+            width: 16px;
+            height: 16px;
+            background: #3B82F6;
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+        .destination-marker {
+            position: absolute;
+            top: 25%;
+            right: 25%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .dest-icon {
+            width: 36px;
+            height: 36px;
+            background: #3B82F6;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .dest-icon::after {
+            content: '★';
+            transform: rotate(45deg);
+        }
+        .dest-label {
+            margin-top: 8px;
+            padding: 6px 12px;
+            background: white;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            white-space: nowrap;
+        }
+        .route-line {
+            position: absolute;
+            top: 32%;
+            left: 32%;
+            width: 120px;
+            height: 3px;
+            background: repeating-linear-gradient(90deg, #3B82F6, #3B82F6 8px, transparent 8px, transparent 12px);
+            transform: rotate(-20deg);
+        }
+
+        .home-bottom-sheet {
+            background: var(--card);
+            border-radius: 24px 24px 0 0;
+            padding: 12px 20px 100px;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+        }
+        .sheet-handle {
+            width: 40px;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            margin: 0 auto 16px;
+        }
+        .departure-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .departure-label { font-size: 14px; font-weight: 600; }
+        .change-btn {
+            font-size: 13px;
+            color: var(--primary);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .members-status {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        .member-status-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            min-width: 70px;
+        }
+        .member-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+        }
+        .member-status-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .member-name { font-size: 12px; font-weight: 500; }
+        .member-time { font-size: 11px; color: var(--text-secondary); }
+        .departure-btn {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+        .departure-btn.ready {
+            background: var(--primary);
+            color: white;
+        }
+        .departure-btn.departed {
+            background: var(--success);
+            color: white;
+        }
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        .status-badge.moving { background: #DBEAFE; color: #1D4ED8; }
+        .status-badge.preparing { background: #FEF3C7; color: #B45309; }
+        .status-badge.waiting { background: var(--bg); color: var(--text-light); }
+
+        .today-meeting-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .today-label { font-size: 13px; color: var(--text-secondary); }
+        .view-more-btn {
+            font-size: 13px;
+            color: var(--primary);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .today-meeting-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px;
+            background: var(--bg);
+            border-radius: var(--radius);
+            cursor: pointer;
+        }
+        .today-meeting-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--card);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .today-meeting-detail { flex: 1; }
+        .today-meeting-name { font-size: 14px; font-weight: 600; }
+        .today-meeting-address { font-size: 12px; color: var(--text-secondary); }
+        .today-meeting-time {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Gallery Screen Styles */
+        .gallery-section {
+            padding: 16px;
+            border-bottom: 8px solid var(--bg);
+        }
+        .gallery-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        .gallery-section-title { font-size: 16px; font-weight: 600; }
+        .gallery-section-date { font-size: 12px; color: var(--text-secondary); }
+        .gallery-section-count { font-size: 13px; color: var(--text-light); }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 3px;
+        }
+        .gallery-item {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .gallery-item:hover { transform: scale(1.05); }
+        .gallery-item:first-child {
+            grid-column: span 2;
+            grid-row: span 2;
+            border-radius: 12px;
+        }
+        .gallery-item.more-photos {
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* My Page Styles */
+        .mypage-profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            background: var(--card);
+            border-bottom: 8px solid var(--bg);
+        }
+        .profile-avatar {
+            position: relative;
+            margin-bottom: 16px;
+        }
+        .avatar-image {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--border);
+        }
+        .avatar-image svg {
+            width: 50px;
+            height: 50px;
+            stroke: var(--text-light);
+        }
+        .avatar-edit {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--card);
+        }
+        .avatar-edit svg {
+            width: 14px;
+            height: 14px;
+            stroke: white;
+        }
+        .profile-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .profile-email {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .mypage-menu {
+            background: var(--card);
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        .menu-item:hover {
+            background: var(--bg);
+        }
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        .menu-label {
+            font-size: 15px;
+            color: var(--text);
+        }
+        .menu-item svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-light);
+        }
+
+        /* Chat */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .message { display: flex; gap: 8px; max-width: 80%; }
+        .message.sent { align-self: flex-end; flex-direction: row-reverse; }
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            flex-shrink: 0;
+        }
+        .message-content { display: flex; flex-direction: column; gap: 2px; }
+        .message.sent .message-content { align-items: flex-end; }
+        .message-name { font-size: 11px; color: var(--text-secondary); padding: 0 4px; }
+        .message-bubble {
+            padding: 10px 14px;
+            background: var(--card);
+            border-radius: 16px;
+            border-top-left-radius: 4px;
+            font-size: 14px;
+            line-height: 1.4;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .message.sent .message-bubble {
+            background: var(--primary);
+            color: white;
+            border-radius: 16px;
+            border-top-right-radius: 4px;
+        }
+        .message-time { font-size: 10px; color: var(--text-light); padding: 0 4px; }
+        .system-message {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+            padding: 6px 12px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 50px;
+            align-self: center;
+        }
+        .chat-input-area {
+            padding: 12px;
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+        }
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            background: var(--bg);
+            border: none;
+            border-radius: 50px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        .chat-input:focus { outline: none; }
+        .send-btn {
+            width: 44px;
+            height: 44px;
+            background: var(--primary);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .send-btn svg { width: 18px; height: 18px; fill: white; transform: rotate(-45deg); }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card);
+            padding: 10px 20px 24px;
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid var(--border);
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+        .nav-item.active { color: var(--primary); }
+        .nav-item svg { width: 22px; height: 22px; }
+        .nav-item span { font-size: 10px; }
+
+        /* Save Screen */
+        .save-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 24px;
+        }
+        .save-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent) 0%, #00B894 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+        .save-icon svg { width: 40px; height: 40px; stroke: white; fill: none; }
+        .save-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; text-align: center; }
+        .save-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-align: center;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+        .save-benefits { width: 100%; margin-bottom: 24px; }
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px;
+            background: var(--card);
+            border-radius: var(--radius);
+            margin-bottom: 10px;
+            box-shadow: var(--shadow);
+        }
+        .benefit-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(255,107,53,0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .benefit-icon svg { width: 22px; height: 22px; stroke: var(--primary); fill: none; }
+        .benefit-text { flex: 1; }
+        .benefit-title { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+        .benefit-desc { font-size: 12px; color: var(--text-secondary); }
+        .save-actions { width: 100%; margin-top: auto; }
+        .btn-save {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .btn-skip {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Auth Screen */
+        .auth-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 24px;
+        }
+        .auth-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+        .auth-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 32px;
+        }
+        .auth-options { display: flex; flex-direction: column; gap: 12px; }
+        .auth-btn {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+        }
+        .auth-btn:hover { border-color: var(--primary-light); }
+        .auth-btn-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .auth-btn-icon.kakao { background: #FEE500; }
+        .auth-btn-icon.google { background: #F5F5F5; }
+        .auth-btn-icon.phone { background: rgba(255,107,53,0.1); }
+        .auth-btn-icon svg { width: 24px; height: 24px; }
+        .auth-btn-text { flex: 1; text-align: left; }
+        .auth-btn-title { font-size: 15px; font-weight: 600; }
+        .auth-btn-desc { font-size: 12px; color: var(--text-secondary); }
+
+        /* Complete Screen */
+        .complete-screen {
+            background: linear-gradient(165deg, #3B82F6 0%, #2563EB 50%, #1D4ED8 100%);
+        }
+        .complete-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+            text-align: center;
+        }
+        .complete-icon {
+            width: 100px;
+            height: 100px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 28px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        .complete-icon svg { width: 50px; height: 50px; stroke: white; stroke-width: 3; fill: none; }
+        .complete-title { font-size: 26px; font-weight: 700; color: white; margin-bottom: 8px; }
+        .complete-subtitle {
+            font-size: 15px;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+        .complete-card {
+            width: 100%;
+            background: rgba(255,255,255,0.15);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 32px;
+        }
+        .complete-card-title { font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 4px; }
+        .complete-card-value { font-size: 17px; font-weight: 600; color: white; }
+        .btn-complete {
+            width: 100%;
+            padding: 18px;
+            background: white;
+            color: #2563EB;
+            font-size: 17px;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(50px);
+            background: var(--secondary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <!-- Screen 1: Landing -->
+        <div class="screen landing-screen active" id="screen-landing">
+            <div class="landing-content">
+                <div class="landing-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                </div>
+                <span class="landing-badge">초대받은 모임이 있어요</span>
+                <h1 class="landing-title">대학 동기 모임</h1>
+                <p class="landing-subtitle">민지님이 당신을 초대했어요<br>12월 21일 토요일 저녁</p>
+            </div>
+            <div class="landing-action">
+                <button class="btn-primary" onclick="goToScreen('summary')">모임 확인하기</button>
+            </div>
+        </div>
+
+        <!-- Screen 2: Summary -->
+        <div class="screen" id="screen-summary">
+            <header class="summary-header">
+                <button class="back-btn" onclick="goToScreen('landing')">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <h1 class="header-title">모임 정보</h1>
+            </header>
+            <div class="summary-content">
+                <div class="meeting-card">
+                    <div class="meeting-cover">
+                        <span class="meeting-type-badge">정기 모임</span>
+                        <div class="meeting-title-area">
+                            <h2 class="meeting-title">대학 동기 모임</h2>
+                            <p class="meeting-host">주최: 민지</p>
+                        </div>
+                    </div>
+                    <div class="meeting-details">
+                        <div class="detail-row">
+                            <div class="detail-icon">
+                                <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label">날짜</span>
+                                <p class="detail-value">12월 21일 (토)</p>
+                                <span class="detail-sub">오후 6시 30분</span>
+                            </div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-icon">
+                                <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label">장소</span>
+                                <p class="detail-value">강남역 근처</p>
+                                <span class="detail-sub">투표로 결정 예정</span>
+                            </div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-icon">
+                                <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label">참여자</span>
+                                <p class="detail-value">현재 5명 참여</p>
+                                <div class="avatar-stack">
+                                    <div class="avatar" style="background:#FF6B35">민</div>
+                                    <div class="avatar" style="background:#667EEA">수</div>
+                                    <div class="avatar" style="background:#00D4AA">지</div>
+                                    <div class="avatar" style="background:#F59E0B">현</div>
+                                    <div class="avatar" style="background:#EF4444">서</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="summary-footer">
+                <button class="btn-join" onclick="goToScreen('name')">이 모임에 참여하기</button>
+            </footer>
+        </div>
+
+        <!-- Screen 3: Name -->
+        <div class="screen" id="screen-name">
+            <header class="summary-header">
+                <button class="back-btn" onclick="goToScreen('summary')">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+            </header>
+            <div class="name-content">
+                <h1 class="name-title">반가워요! 👋<br>이름이 어떻게 되세요?</h1>
+                <p class="name-subtitle">모임에서 사용할 이름을 알려주세요.<br>다른 참여자들에게 보여지는 이름이에요.</p>
+                <div>
+                    <label class="input-label">이름 또는 닉네임</label>
+                    <input type="text" class="text-input" id="name-input" placeholder="예: 도희" oninput="checkNameInput()">
+                    <div class="quick-names">
+                        <span class="quick-name" onclick="setQuickName('도희')">도희</span>
+                        <span class="quick-name" onclick="setQuickName('익명')">익명</span>
+                    </div>
+                </div>
+                <div class="name-footer">
+                    <button class="btn-next" id="btn-name-next" onclick="goToScreen('main')">참여하기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 4: Main -->
+        <div class="screen" id="screen-main">
+            <header class="main-header">
+                <div class="main-header-left">
+                    <button class="back-btn" onclick="goToScreen('name')" style="width:36px;height:36px">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                    </button>
+                    <div class="main-header-info">
+                        <h2>대학 동기 모임</h2>
+                        <span>6명 참여 중</span>
+                    </div>
+                </div>
+            </header>
+            <nav class="tab-nav">
+                <button class="tab-btn" onclick="switchTab('info', this)">정보</button>
+                <button class="tab-btn" onclick="switchTab('calendar', this)">캘린더</button>
+                <button class="tab-btn" onclick="switchTab('vote', this)">투표<span class="badge">1</span></button>
+                <button class="tab-btn" onclick="switchTab('settle', this)">정산</button>
+                <button class="tab-btn" onclick="switchTab('photos', this)">사진</button>
+            </nav>
+            <div class="tab-content">
+                <!-- Info Tab -->
+                <div class="tab-panel" id="tab-info">
+                    <div class="notice-card">
+                        <div class="notice-header">
+                            <span class="notice-badge">📢 공지</span>
+                            <span class="notice-time">방금 전</span>
+                        </div>
+                        <p class="notice-content">안녕! 오랜만에 모이는 거라 다들 시간 잘 맞춰서 와줘~ 장소는 투표로 정할게!</p>
+                    </div>
+                    <div class="info-card">
+                        <p style="font-size:15px;font-weight:600;margin-bottom:12px">📅 모임 정보</p>
+                        <p style="font-size:14px;color:var(--text-secondary);margin-bottom:4px">일시</p>
+                        <p style="font-size:15px;font-weight:500;margin-bottom:12px">12월 21일 (토) 오후 6:30</p>
+                        <p style="font-size:14px;color:var(--text-secondary);margin-bottom:4px">장소</p>
+                        <p style="font-size:15px;font-weight:500">투표 진행 중</p>
+                    </div>
+                    <div class="info-card">
+                        <p style="font-size:15px;font-weight:600;margin-bottom:12px">👥 참여자 (6명)</p>
+                        <div class="avatar-stack">
+                            <div class="avatar" style="background:#FF6B35">민</div>
+                            <div class="avatar" style="background:#667EEA">수</div>
+                            <div class="avatar" style="background:#00D4AA">지</div>
+                            <div class="avatar" style="background:#F59E0B">현</div>
+                            <div class="avatar" style="background:#EF4444">서</div>
+                            <div class="avatar" style="background:#8B5CF6">도</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Calendar Tab -->
+                <div class="tab-panel" id="tab-calendar">
+                    <div class="calendar-header">
+                        <h3 class="calendar-title">📅 OO톡방 공유 캘린더</h3>
+                        <p class="calendar-desc">각자의 캘린더를 공유해서 모두가 가능한 날을 찾아요</p>
+                    </div>
+                    
+                    <!-- 캘린더 연동 상태 -->
+                    <div class="calendar-sync-status">
+                        <div class="sync-item synced">
+                            <div class="sync-avatar" style="background:#FF6B35">민</div>
+                            <span class="sync-name">민지</span>
+                            <span class="sync-badge done">연동완료</span>
+                        </div>
+                        <div class="sync-item synced">
+                            <div class="sync-avatar" style="background:#667EEA">수</div>
+                            <span class="sync-name">수현</span>
+                            <span class="sync-badge done">연동완료</span>
+                        </div>
+                        <div class="sync-item synced">
+                            <div class="sync-avatar" style="background:#00D4AA">지</div>
+                            <span class="sync-name">지우</span>
+                            <span class="sync-badge done">연동완료</span>
+                        </div>
+                        <div class="sync-item">
+                            <div class="sync-avatar" style="background:#F59E0B">현</div>
+                            <span class="sync-name">현수</span>
+                            <span class="sync-badge pending">대기중</span>
+                        </div>
+                        <div class="sync-item synced">
+                            <div class="sync-avatar" style="background:#8B5CF6">도</div>
+                            <span class="sync-name">나</span>
+                            <span class="sync-badge done">연동완료</span>
+                        </div>
+                    </div>
+
+                    <!-- 캘린더 뷰 -->
+                    <div class="calendar-container">
+                        <div class="calendar-month-header">
+                            <button class="cal-nav-btn" onclick="changeMonth(-1)">‹</button>
+                            <span class="cal-month-title">2024년 12월</span>
+                            <button class="cal-nav-btn" onclick="changeMonth(1)">›</button>
+                        </div>
+                        <div class="calendar-weekdays">
+                            <span class="weekday sun">Sun</span>
+                            <span class="weekday">Mon</span>
+                            <span class="weekday">Tue</span>
+                            <span class="weekday">Wed</span>
+                            <span class="weekday">Thu</span>
+                            <span class="weekday">Fri</span>
+                            <span class="weekday sat">Sat</span>
+                        </div>
+                        <div class="calendar-days">
+                            <div class="cal-day other">1</div>
+                            <div class="cal-day busy">2</div>
+                            <div class="cal-day busy">3</div>
+                            <div class="cal-day">4</div>
+                            <div class="cal-day">5</div>
+                            <div class="cal-day busy">6</div>
+                            <div class="cal-day sat">7</div>
+                            
+                            <div class="cal-day sun">8</div>
+                            <div class="cal-day busy">9</div>
+                            <div class="cal-day">10</div>
+                            <div class="cal-day busy">11</div>
+                            <div class="cal-day">12</div>
+                            <div class="cal-day available" onclick="selectCalDay(this)">13</div>
+                            <div class="cal-day available selected" onclick="selectCalDay(this)">14</div>
+                            
+                            <div class="cal-day sun">15</div>
+                            <div class="cal-day busy">16</div>
+                            <div class="cal-day">17</div>
+                            <div class="cal-day">18</div>
+                            <div class="cal-day busy">19</div>
+                            <div class="cal-day available" onclick="selectCalDay(this)">20</div>
+                            <div class="cal-day available best" onclick="selectCalDay(this)">21</div>
+                            
+                            <div class="cal-day sun">22</div>
+                            <div class="cal-day busy">23</div>
+                            <div class="cal-day busy">24</div>
+                            <div class="cal-day busy">25</div>
+                            <div class="cal-day">26</div>
+                            <div class="cal-day">27</div>
+                            <div class="cal-day available" onclick="selectCalDay(this)">28</div>
+                            
+                            <div class="cal-day sun">29</div>
+                            <div class="cal-day busy">30</div>
+                            <div class="cal-day busy">31</div>
+                            <div class="cal-day other"></div>
+                            <div class="cal-day other"></div>
+                            <div class="cal-day other"></div>
+                            <div class="cal-day other"></div>
+                        </div>
+                    </div>
+
+                    <!-- 범례 -->
+                    <div class="calendar-legend">
+                        <div class="legend-item">
+                            <span class="legend-dot available"></span>
+                            <span>모두 가능</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot best"></span>
+                            <span>추천일</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot busy"></span>
+                            <span>선약 있음</span>
+                        </div>
+                    </div>
+
+                    <!-- 선택된 날짜 정보 -->
+                    <div class="calendar-selected-info">
+                        <p class="selected-date">12월 21일 (토)</p>
+                        <p class="selected-status">✓ 4명 모두 가능한 날이에요!</p>
+                        <div class="available-members">
+                            <div class="sync-avatar small" style="background:#FF6B35">민</div>
+                            <div class="sync-avatar small" style="background:#667EEA">수</div>
+                            <div class="sync-avatar small" style="background:#00D4AA">지</div>
+                            <div class="sync-avatar small" style="background:#8B5CF6">도</div>
+                            <span class="waiting-text">+현수 대기중</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-vote" onclick="confirmCalendarDate()">일정 확인하기</button>
+                </div>
+                <!-- Vote Tab -->
+                <div class="tab-panel" id="tab-vote">
+                    <div class="vote-card">
+                        <h3 class="vote-title">🍽️ 장소 투표</h3>
+                        <p class="vote-meta">민지님이 생성 · 6명 중 3명 참여</p>
+                        <div class="vote-options">
+                            <div class="vote-option" onclick="selectVote(this)">
+                                <div class="vote-radio"></div>
+                                <div class="vote-option-content">
+                                    <p class="vote-option-title">역전할머니맥주 강남점</p>
+                                    <span class="vote-option-sub">강남역 3번 출구 도보 3분</span>
+                                </div>
+                                <span class="vote-count">2표</span>
+                            </div>
+                            <div class="vote-option" onclick="selectVote(this)">
+                                <div class="vote-radio"></div>
+                                <div class="vote-option-content">
+                                    <p class="vote-option-title">포장마차 골목</p>
+                                    <span class="vote-option-sub">강남역 10번 출구 도보 5분</span>
+                                </div>
+                                <span class="vote-count">1표</span>
+                            </div>
+                            <div class="vote-option" onclick="selectVote(this)">
+                                <div class="vote-radio"></div>
+                                <div class="vote-option-content">
+                                    <p class="vote-option-title">온더보더 강남점</p>
+                                    <span class="vote-option-sub">강남역 11번 출구 도보 2분</span>
+                                </div>
+                                <span class="vote-count">0표</span>
+                            </div>
+                        </div>
+                        <div class="soft-vote">
+                            <button class="soft-vote-btn" onclick="selectSoftVote(this)"><span class="emoji">👍</span>괜찮아요</button>
+                            <button class="soft-vote-btn" onclick="selectSoftVote(this)"><span class="emoji">🤷</span>상관없어요</button>
+                            <button class="soft-vote-btn" onclick="selectSoftVote(this)"><span class="emoji">😅</span>힘들어요</button>
+                        </div>
+                        <button class="btn-vote" onclick="submitVote()">투표하기</button>
+                    </div>
+                    <div class="ai-tip">
+                        <div class="ai-tip-icon">
+                            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        </div>
+                        <p class="ai-tip-text"><strong>AI 추천</strong><br>모두의 이동 거리를 고려하면 역전할머니맥주가 가장 공평해요</p>
+                    </div>
+                </div>
+                <!-- Settlement Tab -->
+                <div class="tab-panel" id="tab-settle">
+                    <div class="settlement-summary">
+                        <p class="settlement-label">총 정산 금액</p>
+                        <p class="settlement-amount">₩180,000</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width:66%"></div></div>
+                        <div class="progress-text"><span>4명 완료</span><span>2명 남음</span></div>
+                    </div>
+                    <div class="settlement-list">
+                        <div class="settlement-item">
+                            <div class="settlement-avatar" style="background:#FF6B35">민</div>
+                            <div class="settlement-info"><p class="settlement-name">민지 (총무)</p><p class="settlement-detail">받을 금액: ₩150,000</p></div>
+                            <span class="settlement-status done">수금 중</span>
+                        </div>
+                        <div class="settlement-item">
+                            <div class="settlement-avatar" style="background:#667EEA">수</div>
+                            <div class="settlement-info"><p class="settlement-name">수현</p><p class="settlement-detail">₩30,000</p></div>
+                            <span class="settlement-status done">완료</span>
+                        </div>
+                        <div class="settlement-item">
+                            <div class="settlement-avatar" style="background:#00D4AA">지</div>
+                            <div class="settlement-info"><p class="settlement-name">지우</p><p class="settlement-detail">₩30,000</p></div>
+                            <span class="settlement-status done">완료</span>
+                        </div>
+                        <div class="settlement-item">
+                            <div class="settlement-avatar" style="background:#F59E0B">현</div>
+                            <div class="settlement-info"><p class="settlement-name">현수</p><p class="settlement-detail">₩30,000</p></div>
+                            <span class="settlement-status done">완료</span>
+                        </div>
+                        <div class="settlement-item">
+                            <div class="settlement-avatar" style="background:#EF4444">서</div>
+                            <div class="settlement-info"><p class="settlement-name">서연</p><p class="settlement-detail">₩30,000</p></div>
+                            <span class="settlement-status pending">미완료</span>
+                        </div>
+                        <div class="settlement-item">
+                            <div class="settlement-avatar" style="background:#8B5CF6">도</div>
+                            <div class="settlement-info"><p class="settlement-name">도희 (나)</p><p class="settlement-detail">₩30,000</p></div>
+                            <span class="settlement-status pending">미완료</span>
+                        </div>
+                    </div>
+                    <button class="btn-vote" style="margin-top:16px" onclick="showToast('송금 페이지로 이동합니다')">💸 정산하기</button>
+                </div>
+                <!-- Photos Tab -->
+                <div class="tab-panel" id="tab-photos">
+                    <div class="photos-header">
+                        <h3 class="photos-title">📸 모임 사진</h3>
+                        <span class="photos-count">3장</span>
+                    </div>
+                    <div class="photos-grid">
+                        <div class="photo-item" style="background:linear-gradient(135deg,#667eea,#764ba2)"></div>
+                        <div class="photo-item" style="background:linear-gradient(135deg,#f093fb,#f5576c)"></div>
+                        <div class="photo-item" style="background:linear-gradient(135deg,#4facfe,#00f2fe)"></div>
+                        <div class="photo-item"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+                        <div class="photo-item"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+                        <div class="photo-item"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+                    </div>
+                    <button class="upload-btn" onclick="showToast('사진이 업로드되었습니다')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        사진 업로드
+                    </button>
+                </div>
+                <!-- Chat Tab (기본 화면) -->
+                <div class="tab-panel active" id="tab-chat" style="padding:0;flex-direction:column;height:calc(100% - 50px);display:flex">>
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="system-message">도희님이 참여했습니다</div>
+                        <div class="message">
+                            <div class="message-avatar" style="background:#FF6B35">민</div>
+                            <div class="message-content">
+                                <span class="message-name">민지</span>
+                                <div class="message-bubble">도희야 반가워! 오랜만이다 ㅎㅎ</div>
+                                <span class="message-time">오후 3:24</span>
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="message-avatar" style="background:#667EEA">수</div>
+                            <div class="message-content">
+                                <span class="message-name">수현</span>
+                                <div class="message-bubble">ㅋㅋ 진짜 오랜만! 다들 잘 지냈어?</div>
+                                <span class="message-time">오후 3:25</span>
+                            </div>
+                        </div>
+                        <div class="message sent">
+                            <div class="message-avatar" style="background:#8B5CF6">도</div>
+                            <div class="message-content">
+                                <div class="message-bubble">안녕 다들! 나도 반가워 😊</div>
+                                <span class="message-time">오후 3:27</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" class="chat-input" placeholder="메시지 입력..." id="chat-input" onkeypress="if(event.key==='Enter')sendMessage()">
+                        <button class="send-btn" onclick="sendMessage()">
+                            <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <nav class="bottom-nav">
+                <button class="nav-item" onclick="goToScreen('home')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>홈</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('mycalendar')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>캘린더</span>
+                </button>
+                <button class="nav-item active" onclick="showChatDefault()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>톡</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('gallery')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>갤러리</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('save')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>마이</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Screen 5: Home (지도 + 출발시간) -->
+        <div class="screen" id="screen-home">
+            <header class="home-header">
+                <div class="search-bar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="text" placeholder="Search for places" readonly>
+                </div>
+            </header>
+            
+            <!-- 지도 영역 -->
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <div class="map-grid"></div>
+                    <!-- 내 위치 마커 -->
+                    <div class="my-location-marker">
+                        <div class="marker-pulse"></div>
+                        <div class="marker-dot"></div>
+                    </div>
+                    <!-- 약속 장소 마커 -->
+                    <div class="destination-marker">
+                        <div class="dest-icon">★</div>
+                        <div class="dest-label">역전할머니맥주 강남점</div>
+                    </div>
+                    <!-- 경로 라인 -->
+                    <div class="route-line"></div>
+                </div>
+            </div>
+
+            <!-- 출발 위치 & 멤버 상태 -->
+            <div class="home-bottom-sheet">
+                <div class="sheet-handle"></div>
+                <div class="departure-header">
+                    <span class="departure-label">출발 위치: 우리집</span>
+                    <button class="change-btn" onclick="showToast('출발지 변경')">변경</button>
+                </div>
+
+                <!-- 멤버별 상태 -->
+                <div class="members-status">
+                    <div class="member-status-item me">
+                        <div class="member-avatar" style="background:#8B5CF6">도</div>
+                        <div class="member-status-info">
+                            <span class="member-name">나</span>
+                            <span class="member-time">15분</span>
+                        </div>
+                        <button class="departure-btn ready" onclick="startDeparture(this)">출발하기</button>
+                    </div>
+                    <div class="member-status-item">
+                        <div class="member-avatar" style="background:#FF6B35">민</div>
+                        <div class="member-status-info">
+                            <span class="member-name">민지</span>
+                            <span class="member-time">20분</span>
+                        </div>
+                        <span class="status-badge moving">이동중</span>
+                    </div>
+                    <div class="member-status-item">
+                        <div class="member-avatar" style="background:#667EEA">수</div>
+                        <div class="member-status-info">
+                            <span class="member-name">수현</span>
+                            <span class="member-time">25분</span>
+                        </div>
+                        <span class="status-badge preparing">준비중</span>
+                    </div>
+                    <div class="member-status-item">
+                        <div class="member-avatar" style="background:#00D4AA">지</div>
+                        <div class="member-status-info">
+                            <span class="member-name">지우</span>
+                            <span class="member-time">-</span>
+                        </div>
+                        <span class="status-badge waiting">대기</span>
+                    </div>
+                </div>
+
+                <!-- 오늘 모임 정보 -->
+                <div class="today-meeting-info">
+                    <div class="today-label">오늘 우리가 만날 장소</div>
+                    <button class="view-more-btn" onclick="goToScreen('main')">더보기</button>
+                </div>
+                <div class="today-meeting-card" onclick="goToScreen('main')">
+                    <div class="today-meeting-icon">🍺</div>
+                    <div class="today-meeting-detail">
+                        <p class="today-meeting-name">역전할머니맥주 강남점</p>
+                        <p class="today-meeting-address">강남역 3번 출구 도보 3분</p>
+                    </div>
+                    <div class="today-meeting-time">6:30 PM</div>
+                </div>
+            </div>
+
+            <nav class="bottom-nav">
+                <button class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>홈</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('mycalendar')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>캘린더</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('main');showChatDefault()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>톡</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('gallery')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>갤러리</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('save')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>마이</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Screen 6: Gallery (모임별 사진) -->
+        <div class="screen" id="screen-gallery">
+            <header class="main-header" style="justify-content: center; position: relative;">
+                <button class="back-btn" onclick="goToScreen('main')" style="position:absolute;left:16px;width:36px;height:36px">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <div class="main-header-info" style="text-align:center">
+                    <h2>갤러리</h2>
+                </div>
+            </header>
+            
+            <div style="flex:1;overflow-y:auto;padding-bottom:80px;">
+                <!-- 모임별 사진 섹션 -->
+                <div class="gallery-section">
+                    <div class="gallery-section-header">
+                        <div class="gallery-section-info">
+                            <h3 class="gallery-section-title">대학 동기 모임</h3>
+                            <span class="gallery-section-date">2024.12.21</span>
+                        </div>
+                        <span class="gallery-section-count">12장</span>
+                    </div>
+                    <div class="gallery-grid">
+                        <div class="gallery-item" style="background:linear-gradient(135deg,#667eea,#764ba2)"></div>
+                        <div class="gallery-item" style="background:linear-gradient(135deg,#f093fb,#f5576c)"></div>
+                        <div class="gallery-item" style="background:linear-gradient(135deg,#4facfe,#00f2fe)"></div>
+                        <div class="gallery-item" style="background:linear-gradient(135deg,#43e97b,#38f9d7)"></div>
+                        <div class="gallery-item more-photos">
+                            <span>+8</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-section">
+                    <div class="gallery-section-header">
+                        <div class="gallery-section-info">
+                            <h3 class="gallery-section-title">가족 크리스마스 모임</h3>
+                            <span class="gallery-section-date">2024.12.25</span>
+                        </div>
+                        <span class="gallery-section-count">8장</span>
+                    </div>
+                    <div class="gallery-grid">
+                        <div class="gallery-item" style="background:linear-gradient(135deg,#fa709a,#fee140)"></div>
+                        <div class="gallery-item" style="background:linear-gradient(135deg,#a8edea,#fed6e3)"></div>
+                        <div class="gallery-item" style="background:linear-gradient(135deg,#d299c2,#fef9d7)"></div>
+                        <div class="gallery-item" style="background:linear-gradient(135deg,#89f7fe,#66a6ff)"></div>
+                        <div class="gallery-item more-photos">
+                            <span>+4</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-section">
+                    <div class="gallery-section-header">
+                        <div class="gallery-section-info">
+                            <h3 class="gallery-section-title">11월 북클럽</h3>
+                            <span class="gallery-section-date">2024.11.15</span>
+                        </div>
+                        <span class="gallery-section-count">5장</span>
+                    </div>
+                    <div class="gallery-grid">
+                        <div class="gallery-item" style="background:linear-gradient(135deg,#c471f5,#fa71cd)"></div>
+                        <div class="gallery-item" style="background:linear-gradient(135deg,#48c6ef,#6f86d6)"></div>
+                        <div class="gallery-item" style="background:linear-gradient(135deg,#f6d365,#fda085)"></div>
+                        <div class="gallery-item" style="background:linear-gradient(135deg,#a1c4fd,#c2e9fb)"></div>
+                        <div class="gallery-item" style="background:linear-gradient(135deg,#d4fc79,#96e6a1)"></div>
+                    </div>
+                </div>
+
+                <div class="gallery-section">
+                    <div class="gallery-section-header">
+                        <div class="gallery-section-info">
+                            <h3 class="gallery-section-title">회사 워크샵</h3>
+                            <span class="gallery-section-date">2024.10.28</span>
+                        </div>
+                        <span class="gallery-section-count">23장</span>
+                    </div>
+                    <div class="gallery-grid">
+                        <div class="gallery-item" style="background:linear-gradient(135deg,#ff9a9e,#fecfef)"></div>
+                        <div class="gallery-item" style="background:linear-gradient(135deg,#a18cd1,#fbc2eb)"></div>
+                        <div class="gallery-item" style="background:linear-gradient(135deg,#ffecd2,#fcb69f)"></div>
+                        <div class="gallery-item" style="background:linear-gradient(135deg,#ff8177,#cf556c)"></div>
+                        <div class="gallery-item more-photos">
+                            <span>+19</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="bottom-nav">
+                <button class="nav-item" onclick="goToScreen('home')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>홈</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('mycalendar')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>캘린더</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('main');showChatDefault()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>톡</span>
+                </button>
+                <button class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>갤러리</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('save')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>마이</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Screen 7: My Calendar (개인 캘린더) -->
+        <div class="screen" id="screen-mycalendar">
+            <header class="main-header" style="justify-content: center; position: relative;">
+                <button class="back-btn" onclick="goToScreen('main')" style="position:absolute;left:16px;width:36px;height:36px">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <div class="main-header-info" style="text-align:center">
+                    <h2>내 캘린더</h2>
+                </div>
+            </header>
+            
+            <div style="flex:1;overflow-y:auto;padding-bottom:80px;">
+                <!-- 월 네비게이션 -->
+                <div class="my-cal-month-nav">
+                    <button class="cal-nav-btn" onclick="showToast('11월')">‹</button>
+                    <span class="my-cal-month">2024년 12월</span>
+                    <button class="cal-nav-btn" onclick="showToast('1월')">›</button>
+                </div>
+
+                <!-- 미니 캘린더 -->
+                <div class="my-cal-container">
+                    <div class="calendar-weekdays">
+                        <span class="weekday sun">S</span>
+                        <span class="weekday">M</span>
+                        <span class="weekday">T</span>
+                        <span class="weekday">W</span>
+                        <span class="weekday">T</span>
+                        <span class="weekday">F</span>
+                        <span class="weekday sat">S</span>
+                    </div>
+                    <div class="my-cal-days">
+                        <div class="my-day sun">1</div>
+                        <div class="my-day">2</div>
+                        <div class="my-day">3</div>
+                        <div class="my-day">4</div>
+                        <div class="my-day">5</div>
+                        <div class="my-day">6</div>
+                        <div class="my-day sat">7</div>
+                        
+                        <div class="my-day sun">8</div>
+                        <div class="my-day">9</div>
+                        <div class="my-day">10</div>
+                        <div class="my-day">11</div>
+                        <div class="my-day">12</div>
+                        <div class="my-day">13</div>
+                        <div class="my-day sat">14</div>
+                        
+                        <div class="my-day sun today">15</div>
+                        <div class="my-day">16</div>
+                        <div class="my-day">17</div>
+                        <div class="my-day">18</div>
+                        <div class="my-day">19</div>
+                        <div class="my-day">20</div>
+                        <div class="my-day sat has-event" onclick="scrollToEvent('event-21')">21</div>
+                        
+                        <div class="my-day sun">22</div>
+                        <div class="my-day">23</div>
+                        <div class="my-day">24</div>
+                        <div class="my-day has-event" onclick="scrollToEvent('event-25')">25</div>
+                        <div class="my-day">26</div>
+                        <div class="my-day">27</div>
+                        <div class="my-day sat">28</div>
+                        
+                        <div class="my-day sun">29</div>
+                        <div class="my-day">30</div>
+                        <div class="my-day has-event" onclick="scrollToEvent('event-31')">31</div>
+                        <div class="my-day other"></div>
+                        <div class="my-day other"></div>
+                        <div class="my-day other"></div>
+                        <div class="my-day other"></div>
+                    </div>
+                </div>
+
+                <!-- 이번 달 모임 목록 -->
+                <div class="my-events-section">
+                    <h3 class="my-events-title">이번 달 모임</h3>
+                    
+                    <div class="my-event-card" id="event-21" onclick="goToScreen('main')">
+                        <div class="my-event-date">
+                            <span class="event-day">21</span>
+                            <span class="event-dow">토</span>
+                        </div>
+                        <div class="my-event-info">
+                            <p class="my-event-name">대학 동기 모임</p>
+                            <p class="my-event-detail">오후 6:30 · 강남역</p>
+                            <div class="my-event-members">
+                                <div class="sync-avatar small" style="background:#FF6B35">민</div>
+                                <div class="sync-avatar small" style="background:#667EEA">수</div>
+                                <div class="sync-avatar small" style="background:#00D4AA">지</div>
+                                <span class="member-count">+3</span>
+                            </div>
+                        </div>
+                        <div class="my-event-status confirmed">확정</div>
+                    </div>
+
+                    <div class="my-event-card" id="event-25">
+                        <div class="my-event-date">
+                            <span class="event-day">25</span>
+                            <span class="event-dow">수</span>
+                        </div>
+                        <div class="my-event-info">
+                            <p class="my-event-name">가족 크리스마스 모임</p>
+                            <p class="my-event-detail">오후 12:00 · 본가</p>
+                            <div class="my-event-members">
+                                <div class="sync-avatar small" style="background:#EC4899">엄</div>
+                                <div class="sync-avatar small" style="background:#8B5CF6">아</div>
+                                <div class="sync-avatar small" style="background:#06B6D4">동</div>
+                            </div>
+                        </div>
+                        <div class="my-event-status confirmed">확정</div>
+                    </div>
+
+                    <div class="my-event-card" id="event-31">
+                        <div class="my-event-date">
+                            <span class="event-day">31</span>
+                            <span class="event-dow">화</span>
+                        </div>
+                        <div class="my-event-info">
+                            <p class="my-event-name">회사 송년회</p>
+                            <p class="my-event-detail">오후 7:00 · 장소 미정</p>
+                            <div class="my-event-members">
+                                <div class="sync-avatar small" style="background:#F59E0B">팀</div>
+                                <div class="sync-avatar small" style="background:#10B981">장</div>
+                                <span class="member-count">+8</span>
+                            </div>
+                        </div>
+                        <div class="my-event-status pending">조율중</div>
+                    </div>
+                </div>
+
+                <!-- 다가오는 모임 -->
+                <div class="upcoming-section">
+                    <h3 class="my-events-title">📌 다가오는 모임</h3>
+                    <div class="upcoming-card">
+                        <div class="upcoming-dday">D-6</div>
+                        <div class="upcoming-info">
+                            <p class="upcoming-name">대학 동기 모임</p>
+                            <p class="upcoming-date">12월 21일 (토) 오후 6:30</p>
+                        </div>
+                        <button class="upcoming-btn" onclick="goToScreen('main')">바로가기</button>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="bottom-nav">
+                <button class="nav-item" onclick="goToScreen('home')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>홈</span>
+                </button>
+                <button class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>캘린더</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('main');showChatDefault()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>톡</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('gallery')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>갤러리</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('save')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>마이</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Screen 8: My Page (마이페이지) -->
+        <div class="screen" id="screen-save">
+            <header class="main-header" style="justify-content: center; position: relative;">
+                <button class="back-btn" onclick="goToScreen('main')" style="position:absolute;left:16px;width:36px;height:36px">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <div class="main-header-info" style="text-align:center">
+                    <h2>마이 페이지</h2>
+                </div>
+            </header>
+            
+            <div style="flex:1;overflow-y:auto;padding-bottom:80px;">
+                <!-- 프로필 섹션 -->
+                <div class="mypage-profile">
+                    <div class="profile-avatar">
+                        <div class="avatar-image">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </div>
+                        <div class="avatar-edit">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        </div>
+                    </div>
+                    <h3 class="profile-name">도토리</h3>
+                    <p class="profile-email">dotori@example.com</p>
+                </div>
+
+                <!-- 메뉴 리스트 -->
+                <div class="mypage-menu">
+                    <div class="menu-item" onclick="showToast('회원정보')">
+                        <span class="menu-label">회원정보</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                    </div>
+                    <div class="menu-item" onclick="showToast('지도 설정')">
+                        <span class="menu-label">지도 설정</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                    </div>
+                    <div class="menu-item" onclick="showToast('친구/채팅방 설정')">
+                        <span class="menu-label">친구/채팅방 설정</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                    </div>
+                    <div class="menu-item" onclick="showToast('알림/푸시 설정')">
+                        <span class="menu-label">알림/푸시 설정</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                    </div>
+                    <div class="menu-item" onclick="showToast('캘린더 설정')">
+                        <span class="menu-label">캘린더 설정</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="bottom-nav">
+                <button class="nav-item" onclick="goToScreen('home')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>홈</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('mycalendar')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>캘린더</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('main');showChatDefault()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>톡</span>
+                </button>
+                <button class="nav-item" onclick="goToScreen('gallery')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>갤러리</span>
+                </button>
+                <button class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>마이</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Screen 9: Auth -->
+        <div class="screen" id="screen-auth">
+            <header class="summary-header">
+                <button class="back-btn" onclick="goToScreen('save')">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+            </header>
+            <div class="auth-content">
+                <h1 class="auth-title">간편하게 시작하기</h1>
+                <p class="auth-subtitle">3초면 가입 완료!<br>복잡한 입력 없이 바로 시작해요</p>
+                <div class="auth-options">
+                    <button class="auth-btn" onclick="goToScreen('complete')">
+                        <div class="auth-btn-icon kakao">
+                            <svg width="24" height="24" viewBox="0 0 24 24"><path fill="#3C1E1E" d="M12 3c-5.52 0-10 3.59-10 8 0 2.69 1.78 5.06 4.46 6.43-.13.47-.85 3.04-.87 3.25 0 0-.02.18.09.25.11.07.24.02.24.02.32-.05 3.72-2.43 4.3-2.86.58.09 1.18.13 1.78.13 5.52 0 10-3.59 10-8s-4.48-8-10-8z"/></svg>
+                        </div>
+                        <div class="auth-btn-text"><p class="auth-btn-title">카카오로 시작하기</p><p class="auth-btn-desc">가장 빠른 방법</p></div>
+                    </button>
+                    <button class="auth-btn" onclick="goToScreen('complete')">
+                        <div class="auth-btn-icon google">
+                            <svg width="24" height="24" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                        </div>
+                        <div class="auth-btn-text"><p class="auth-btn-title">Google로 시작하기</p><p class="auth-btn-desc">Gmail 계정으로</p></div>
+                    </button>
+                    <button class="auth-btn" onclick="goToScreen('complete')">
+                        <div class="auth-btn-icon phone">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                        </div>
+                        <div class="auth-btn-text"><p class="auth-btn-title">전화번호로 시작하기</p><p class="auth-btn-desc">인증번호로 간편하게</p></div>
+                    </button>
+                </div>
+                <button class="btn-skip" style="margin-top:24px" onclick="goToScreen('main')">나중에 할게요</button>
+            </div>
+        </div>
+
+        <!-- Screen 7: Complete -->
+        <div class="screen complete-screen" id="screen-complete">
+            <div class="complete-content">
+                <div class="complete-icon">
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <h1 class="complete-title">가입 완료! 🎉</h1>
+                <p class="complete-subtitle">이제 모든 모임을 오보톡에서<br>편하게 관리할 수 있어요</p>
+                <div class="complete-card">
+                    <p class="complete-card-title">저장된 모임</p>
+                    <p class="complete-card-value">대학 동기 모임</p>
+                </div>
+                <button class="btn-complete" onclick="goToScreen('main')">모임으로 돌아가기</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        function goToScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen-' + id).classList.add('active');
+            if (id === 'complete') createConfetti();
+        }
+
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(p => {
+                p.classList.remove('active');
+                p.style.display = 'none';
+            });
+            if (btn) btn.classList.add('active');
+            const panel = document.getElementById('tab-' + tabId);
+            panel.classList.add('active');
+            panel.style.display = tabId === 'chat' ? 'flex' : 'block';
+        }
+
+        function showChatDefault() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(p => {
+                p.classList.remove('active');
+                p.style.display = 'none';
+            });
+            const chatPanel = document.getElementById('tab-chat');
+            chatPanel.classList.add('active');
+            chatPanel.style.display = 'flex';
+        }
+
+        function checkNameInput() {
+            const input = document.getElementById('name-input');
+            const btn = document.getElementById('btn-name-next');
+            btn.classList.toggle('active', input.value.trim().length > 0);
+        }
+
+        function setQuickName(name) {
+            document.getElementById('name-input').value = name;
+            checkNameInput();
+        }
+
+        function selectVote(el) {
+            document.querySelectorAll('.vote-option').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        function selectSoftVote(el) {
+            document.querySelectorAll('.soft-vote-btn').forEach(b => b.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        function selectCalDay(el) {
+            if (el.classList.contains('available') || el.classList.contains('best')) {
+                document.querySelectorAll('.cal-day').forEach(d => d.classList.remove('selected'));
+                el.classList.add('selected');
+                const day = el.textContent;
+                document.querySelector('.selected-date').textContent = `12월 ${day}일 (${getDayName(parseInt(day))})`;
+                
+                // 21일은 추천일
+                if (day === '21') {
+                    document.querySelector('.selected-status').textContent = '⭐ AI 추천! 4명 모두 가능한 최적의 날이에요';
+                } else {
+                    document.querySelector('.selected-status').textContent = '✓ 4명 모두 가능한 날이에요!';
+                }
+            }
+        }
+
+        function getDayName(day) {
+            const days = {13: '금', 14: '토', 20: '금', 21: '토', 28: '토'};
+            return days[day] || '일';
+        }
+
+        function changeMonth(dir) {
+            showToast(dir > 0 ? '다음 달로 이동' : '이전 달로 이동');
+        }
+
+        function confirmCalendarDate() {
+            const selected = document.querySelector('.cal-day.selected');
+            if (selected) {
+                showToast('12월 ' + selected.textContent + '일로 일정이 확정되었습니다! 🎉');
+            }
+        }
+
+        function scrollToEvent(eventId) {
+            const el = document.getElementById(eventId);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                el.style.transform = 'scale(1.02)';
+                setTimeout(() => el.style.transform = '', 300);
+            }
+        }
+
+        function startDeparture(btn) {
+            btn.textContent = '이동중';
+            btn.classList.remove('ready');
+            btn.classList.add('departed');
+            showToast('출발! 도착 예정 시간이 공유되었습니다 🚗');
+        }
+
+        function submitVote() {
+            showToast(document.querySelector('.vote-option.selected') ? '투표 완료! ✓' : '장소를 선택해주세요');
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const msg = input.value.trim();
+            if (msg) {
+                const container = document.getElementById('chat-messages');
+                container.innerHTML += `<div class="message sent"><div class="message-avatar" style="background:#8B5CF6">도</div><div class="message-content"><div class="message-bubble">${msg}</div><span class="message-time">방금 전</span></div></div>`;
+                input.value = '';
+                container.scrollTop = container.scrollHeight;
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        function createConfetti() {
+            const colors = ['#FF6B35', '#00D4AA', '#667EEA', '#F59E0B', '#EF4444'];
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    const c = document.createElement('div');
+                    c.className = 'confetti';
+                    c.style.cssText = `left:${Math.random()*100}vw;width:${Math.random()*8+4}px;height:${Math.random()*8+4}px;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>.5?'50%':'2px'};animation:confetti-fall ${Math.random()*2+2}s linear forwards`;
+                    document.body.appendChild(c);
+                    setTimeout(() => c.remove(), 4000);
+                }, i * 40);
+            }
+        }
+    </script>
+</body>
+</html>

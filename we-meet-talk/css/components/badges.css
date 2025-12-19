@@ -1,0 +1,119 @@
+/* Badge Components */
+.landing-badge {
+    background: rgba(255,255,255,0.25);
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 500;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.meeting-type-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: rgba(255,255,255,0.2);
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 12px;
+    color: white;
+}
+
+.notice-badge {
+    background: var(--primary);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 50px;
+}
+
+.badge {
+    display: inline-flex;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 5px;
+    background: #EF4444;
+    color: white;
+    font-size: 10px;
+    border-radius: 8px;
+    margin-left: 4px;
+}
+
+.tab-btn.active .badge {
+    background: white;
+    color: var(--primary);
+}
+
+.sync-badge {
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 10px;
+}
+
+.sync-badge.done {
+    background: rgba(16,185,129,0.1);
+    color: var(--success);
+}
+
+.sync-badge.pending {
+    background: rgba(245,158,11,0.1);
+    color: var(--warning);
+}
+
+.settlement-status {
+    padding: 5px 10px;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.settlement-status.done {
+    background: rgba(16,185,129,0.1);
+    color: var(--success);
+}
+
+.settlement-status.pending {
+    background: rgba(245,158,11,0.1);
+    color: var(--warning);
+}
+
+.my-event-status {
+    padding: 5px 10px;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.my-event-status.confirmed {
+    background: rgba(16,185,129,0.1);
+    color: var(--success);
+}
+
+.my-event-status.pending {
+    background: rgba(245,158,11,0.1);
+    color: var(--warning);
+}
+
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.status-badge.moving {
+    background: #DBEAFE;
+    color: #1D4ED8;
+}
+
+.status-badge.preparing {
+    background: #FEF3C7;
+    color: #B45309;
+}
+
+.status-badge.waiting {
+    background: var(--bg);
+    color: var(--text-light);
+}

@@ -1,0 +1,61 @@
+/* Photos Tab Styles */
+.photos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.photo-item {
+    aspect-ratio: 1;
+    background: var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.photo-item svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--text-light);
+    fill: none;
+}
+
+.gallery-section {
+    padding: 16px;
+    border-bottom: 8px solid var(--bg);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 3px;
+}
+
+.gallery-item {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+}
+
+.gallery-item:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+    border-radius: 12px;
+}
+
+.gallery-item.more-photos {
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+}
