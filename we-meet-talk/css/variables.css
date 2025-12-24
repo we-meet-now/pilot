@@ -1,12 +1,14 @@
 /* CSS Variables - Design System */
 :root {
     --primary: #3B82F6;
+    --primary-dark: #2563EB;
     --primary-light: #60A5FA;
     --secondary: #2D3047;
     --accent: #00D4AA;
     --bg: #FAFAFA;
     --card: #FFFFFF;
     --text: #1A1A2E;
+    --text-primary: #1A1A2E;
     --text-secondary: #6B7280;
     --text-light: #9CA3AF;
     --border: #E5E7EB;

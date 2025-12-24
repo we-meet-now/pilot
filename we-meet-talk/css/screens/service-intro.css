@@ -1,6 +1,6 @@
 /* Service Introduction Screen */
 #screen-service-intro.active {
-    background: linear-gradient(180deg, #FFFBEB 0%, #FFF 100%);
+    background: linear-gradient(180deg, #FAFAFA 0%, #F5F5F5 100%);
     flex-direction: column;
     height: 100%;
 }
@@ -79,7 +79,7 @@
     flex-shrink: 0;
     padding: 20px 24px;
     padding-bottom: max(20px, env(safe-area-inset-bottom));
-    background: #FFFBEB;
+    background: #FAFAFA;
     z-index: 1000;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
     position: relative;
@@ -88,7 +88,7 @@
 .btn-intro-start:hover {
     background: var(--primary-dark);
     transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(255,107,53,0.3);
+    box-shadow: 0 4px 16px rgba(59,130,246,0.3);
 }
 
 .btn-intro-start:active {
@@ -108,9 +108,9 @@
 }
 
 .btn-signup:hover {
-    background: linear-gradient(135deg, #E55A2B 0%, #F07A35 100%);
+    background: linear-gradient(135deg, #2563EB 0%, #3B82F6 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255,107,53,0.35);
+    box-shadow: 0 6px 20px rgba(59,130,246,0.35);
 }
 
 .btn-signup:active {
