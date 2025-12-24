@@ -1,9 +1,8 @@
 /* Service Introduction Screen */
-#screen-service-intro {
+#screen-service-intro.active {
     background: linear-gradient(180deg, #FFFBEB 0%, #FFF 100%);
-    overflow: hidden;
-    display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 .service-intro-content {
@@ -13,6 +12,7 @@
     padding-bottom: 24px;
     flex: 1;
     overflow-y: auto;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
 }
 
@@ -80,8 +80,9 @@
     padding: 20px 24px;
     padding-bottom: max(20px, env(safe-area-inset-bottom));
     background: #FFFBEB;
-    z-index: 100;
+    z-index: 1000;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    position: relative;
 }
 
 .btn-intro-start:hover {
