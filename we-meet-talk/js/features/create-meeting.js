@@ -8,8 +8,61 @@ const meetingData = {
     date: null,
     time: null,
     type: null,
-    location: null
+    location: null,
+    dateDecided: true, // 날짜 정해짐 여부
+    dateRange: { start: null, end: null }, // 날짜 범위 (미정인 경우)
+    timeDecided: true, // 시간 정해짐 여부
+    locationDecided: true // 장소 정해짐 여부
 };
+
+/**
+ * 닉네임 설정 (로컬스토리지에서 가져오기)
+ */
+function setHostNickname() {
+    const nickname = localStorage.getItem('userName') || '주최자';
+    const nicknameElement = document.getElementById('host-nickname');
+    if (nicknameElement) {
+        nicknameElement.textContent = nickname;
+    }
+}
+
+/**
+ * 날짜 결정 상태 토글
+ */
+function toggleDateDecision(type) {
+    const decidedBtn = document.getElementById('btn-date-decided');
+    const undecidedBtn = document.getElementById('btn-date-undecided');
+    const decidedSection = document.getElementById('decided-date-section');
+    const undecidedSection = document.getElementById('undecided-date-section');
+
+    meetingData.dateDecided = (type === 'decided');
+
+    if (type === 'decided') {
+        // 날짜 정해진 경우
+        decidedBtn.style.background = '#E0F2FE';
+        decidedBtn.style.color = '#0284C7';
+        decidedBtn.style.borderColor = '#0284C7';
+        undecidedBtn.style.background = 'white';
+        undecidedBtn.style.color = 'var(--text-secondary)';
+        undecidedBtn.style.borderColor = '#E5E7EB';
+
+        decidedSection.style.display = 'block';
+        undecidedSection.style.display = 'none';
+    } else {
+        // 날짜 정하지 않은 경우
+        undecidedBtn.style.background = '#E0F2FE';
+        undecidedBtn.style.color = '#0284C7';
+        undecidedBtn.style.borderColor = '#0284C7';
+        decidedBtn.style.background = 'white';
+        decidedBtn.style.color = 'var(--text-secondary)';
+        decidedBtn.style.borderColor = '#E5E7EB';
+
+        decidedSection.style.display = 'none';
+        undecidedSection.style.display = 'block';
+    }
+
+    checkStep1Completion();
+}
 
 /**
  * Step 1: 시간 선택
@@ -23,12 +76,37 @@ function selectTime(button, time) {
     // 새로운 시간 선택
     button.classList.add('selected');
     meetingData.time = time;
+    meetingData.timeDecided = true;
 
     // 커스텀 시간 입력 숨기기
     const customInput = document.getElementById('meeting-time-custom');
     if (customInput) {
         customInput.style.display = 'none';
     }
+
+    // 다음 버튼 활성화 체크
+    checkStep1Completion();
+}
+
+/**
+ * 시간 선택 스킵
+ */
+function skipTimeSelection() {
+    // 시간 칩 선택 모두 해제
+    document.querySelectorAll('.time-chip').forEach(chip => {
+        chip.classList.remove('selected');
+    });
+
+    // 커스텀 시간 입력 숨기기
+    const customInput = document.getElementById('meeting-time-custom');
+    if (customInput) {
+        customInput.style.display = 'none';
+        customInput.value = '';
+    }
+
+    // 시간 미정으로 설정
+    meetingData.time = null;
+    meetingData.timeDecided = false;
 
     // 다음 버튼 활성화 체크
     checkStep1Completion();
@@ -60,34 +138,93 @@ function showCustomTimeInput() {
  * Step 1 완료 체크
  */
 function checkStep1Completion() {
-    const dateInput = document.getElementById('meeting-date');
     const nextBtn = document.getElementById('btn-step1-next');
 
-    if (dateInput && nextBtn) {
-        const hasDate = dateInput.value !== '';
-        const hasTime = meetingData.time !== null;
+    if (!nextBtn) return;
 
-        if (hasDate && hasTime) {
-            nextBtn.disabled = false;
-            meetingData.date = dateInput.value;
+    let isComplete = false;
+
+    if (meetingData.dateDecided) {
+        // 날짜가 정해진 경우
+        const dateInput = document.getElementById('meeting-date');
+        const hasDate = dateInput && dateInput.value !== '';
+
+        if (meetingData.timeDecided) {
+            // 시간도 정해진 경우: 날짜 + 시간 필요
+            const hasTime = meetingData.time !== null;
+            if (hasDate && hasTime) {
+                meetingData.date = dateInput.value;
+                isComplete = true;
+            }
         } else {
-            nextBtn.disabled = true;
+            // 시간 미정인 경우: 날짜만 있으면 OK
+            if (hasDate) {
+                meetingData.date = dateInput.value;
+                isComplete = true;
+            }
+        }
+    } else {
+        // 날짜가 정해지지 않은 경우
+        // 날짜 범위 저장 (선택사항)
+        const startInput = document.getElementById('meeting-date-start');
+        const endInput = document.getElementById('meeting-date-end');
+        if (startInput && endInput) {
+            meetingData.dateRange.start = startInput.value || null;
+            meetingData.dateRange.end = endInput.value || null;
+        }
+
+        if (meetingData.timeDecided) {
+            // 시간이 정해진 경우: 시간만 있으면 OK
+            const hasTime = meetingData.time !== null;
+            if (hasTime) {
+                meetingData.date = null; // 날짜 미정
+                isComplete = true;
+            }
+        } else {
+            // 시간도 미정인 경우: 바로 다음 단계 가능
+            meetingData.date = null; // 날짜 미정
+            isComplete = true;
         }
     }
+
+    nextBtn.disabled = !isComplete;
 }
 
 // 날짜 선택 이벤트
 document.addEventListener('DOMContentLoaded', function() {
+    // 닉네임 설정
+    setHostNickname();
+
+    // 오늘 날짜
+    const today = new Date().toISOString().split('T')[0];
+
+    // 확정 날짜 입력
     const dateInput = document.getElementById('meeting-date');
     if (dateInput) {
-        // 오늘 날짜를 최소값으로 설정
-        const today = new Date().toISOString().split('T')[0];
         dateInput.setAttribute('min', today);
-
         dateInput.addEventListener('change', function() {
             meetingData.date = this.value;
             checkStep1Completion();
         });
+    }
+
+    // 날짜 범위 입력
+    const startInput = document.getElementById('meeting-date-start');
+    const endInput = document.getElementById('meeting-date-end');
+
+    if (startInput) {
+        startInput.setAttribute('min', today);
+        startInput.addEventListener('change', function() {
+            if (endInput && this.value) {
+                endInput.setAttribute('min', this.value);
+            }
+            checkStep1Completion();
+        });
+    }
+
+    if (endInput) {
+        endInput.setAttribute('min', today);
+        endInput.addEventListener('change', checkStep1Completion);
     }
 });
 
@@ -304,6 +441,39 @@ function goToCreateStep3() {
 }
 
 /**
+ * 장소 결정 상태 토글
+ */
+function toggleLocationDecision(type) {
+    const decidedBtn = document.getElementById('btn-location-decided');
+    const undecidedBtn = document.getElementById('btn-location-undecided');
+    const decidedSection = document.getElementById('decided-location-section');
+    const undecidedSection = document.getElementById('undecided-location-section');
+
+    meetingData.locationDecided = (type === 'decided');
+
+    if (type === 'decided') {
+        // 장소 정해진 경우
+        decidedBtn.classList.add('active');
+        undecidedBtn.classList.remove('active');
+
+        decidedSection.style.display = 'block';
+        undecidedSection.style.display = 'none';
+    } else {
+        // 장소 투표로 정하는 경우
+        undecidedBtn.classList.add('active');
+        decidedBtn.classList.remove('active');
+
+        decidedSection.style.display = 'none';
+        undecidedSection.style.display = 'block';
+
+        // 장소 미정 상태로 설정
+        meetingData.location = null;
+    }
+
+    checkStep3Completion();
+}
+
+/**
  * 장소 검색 보이기
  */
 function showLocationSearch() {
@@ -483,9 +653,19 @@ function selectLocation(element, name, address) {
  */
 function checkStep3Completion() {
     const nextBtn = document.getElementById('btn-step3-next');
-    if (nextBtn) {
-        nextBtn.disabled = !meetingData.location;
+    if (!nextBtn) return;
+
+    let isComplete = false;
+
+    if (meetingData.locationDecided) {
+        // 장소가 정해진 경우: 장소 필수
+        isComplete = meetingData.location !== null;
+    } else {
+        // 장소 투표로 정하는 경우: 바로 진행 가능
+        isComplete = true;
     }
+
+    nextBtn.disabled = !isComplete;
 }
 
 /**
@@ -542,11 +722,14 @@ function completeMeetingCreation() {
 
 // 전역으로 내보내기
 window.selectTime = selectTime;
+window.skipTimeSelection = skipTimeSelection;
 window.showCustomTimeInput = showCustomTimeInput;
+window.toggleDateDecision = toggleDateDecision;
 window.goToCreateStep2 = goToCreateStep2;
 window.selectMeetingType = selectMeetingType;
 window.showMoreMeetingTypes = showMoreMeetingTypes;
 window.goToCreateStep3 = goToCreateStep3;
+window.toggleLocationDecision = toggleLocationDecision;
 window.showLocationSearch = showLocationSearch;
 window.showAILocationRecommendations = showAILocationRecommendations;
 window.requestLocationPermission = requestLocationPermission;

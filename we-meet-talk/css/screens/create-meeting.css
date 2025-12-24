@@ -326,6 +326,92 @@
 }
 
 /* Step 3: Location */
+.location-decision-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.location-decision-btn {
+    width: 100%;
+    padding: 18px 16px;
+    background: white;
+    border: 2px solid #E5E7EB;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.location-decision-btn:hover {
+    border-color: var(--primary);
+    background: #FFF7ED;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.location-decision-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.location-decision-btn.active .decision-text h3,
+.location-decision-btn.active .decision-text p {
+    color: white;
+}
+
+.location-decision-btn.active .decision-check {
+    opacity: 1;
+}
+
+.decision-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(255,107,53,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.location-decision-btn.active .decision-icon {
+    background: rgba(255,255,255,0.2);
+}
+
+.decision-text {
+    flex: 1;
+    text-align: left;
+}
+
+.decision-text h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 2px 0;
+}
+
+.decision-text p {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.decision-check {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    stroke: white;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
 .location-options {
     display: flex;
     flex-direction: column;
