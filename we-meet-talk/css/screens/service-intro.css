@@ -1,12 +1,19 @@
 /* Service Introduction Screen */
-.service-intro-content {
-    padding: 80px 24px 220px;
+#screen-service-intro {
+    background: linear-gradient(180deg, #FFFBEB 0%, #FFF 100%);
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    max-height: 100vh;
+}
+
+.service-intro-content {
+    padding-top: 80px;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 24px;
+    flex: 1;
     overflow-y: auto;
-    background: linear-gradient(180deg, #FFFBEB 0%, #FFF 100%);
+    -webkit-overflow-scrolling: touch;
 }
 
 .intro-logo {
@@ -69,14 +76,12 @@
 }
 
 .intro-footer-fixed {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    flex-shrink: 0;
     padding: 20px 24px;
     padding-bottom: max(20px, env(safe-area-inset-bottom));
     background: #FFFBEB;
     z-index: 100;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .btn-intro-start:hover {
