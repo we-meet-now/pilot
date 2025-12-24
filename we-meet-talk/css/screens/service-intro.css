@@ -1,9 +1,11 @@
 /* Service Introduction Screen */
 .service-intro-content {
-    padding: 80px 24px 40px;
+    padding: 80px 24px 220px;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
     background: linear-gradient(180deg, #FFFBEB 0%, #FFF 100%);
 }
 
@@ -62,8 +64,19 @@
 }
 
 .intro-footer {
-    margin-top: auto;
+    margin-top: 40px;
     padding-top: 24px;
+}
+
+.intro-footer-fixed {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 24px;
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+    background: #FFFBEB;
+    z-index: 100;
 }
 
 .btn-intro-start:hover {
@@ -85,5 +98,15 @@
 }
 
 .btn-create-meeting:active {
+    transform: translateY(0);
+}
+
+.btn-signup:hover {
+    background: linear-gradient(135deg, #E55A2B 0%, #F07A35 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255,107,53,0.35);
+}
+
+.btn-signup:active {
     transform: translateY(0);
 }
