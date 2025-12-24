@@ -14,7 +14,7 @@
 <body>
     <div class="phone-frame">
         <!-- Screen 1: Landing -->
-        <div class="screen landing-screen active" id="screen-landing">
+        <div class="screen landing-screen" id="screen-landing">
             <div class="landing-content">
                 <div class="landing-icon">
                     <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
@@ -797,13 +797,19 @@
         <!-- Screen 9: Auth -->
         <div class="screen" id="screen-auth">
             <header class="summary-header">
-                <button class="back-btn" onclick="goToScreen('save')">
+                <button class="back-btn" onclick="goToScreen('start-choice')">
                     <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
                 </button>
             </header>
             <div class="auth-content">
                 <h1 class="auth-title">간편하게 시작하기</h1>
                 <p class="auth-subtitle">3초면 가입 완료!<br>복잡한 입력 없이 바로 시작해요</p>
+                <div class="auth-notice" style="background:#FFF7ED;padding:16px;border-radius:12px;margin-bottom:24px;text-align:center;">
+                    <p style="margin:0;font-size:14px;color:#C2410C;line-height:1.5;">
+                        ✨ <strong>모임을 주최하려면 로그인이 필요해요!</strong><br>
+                        <span style="font-size:13px;color:#EA580C;">간편하게 로그인하고 모임을 만들어보세요</span>
+                    </p>
+                </div>
                 <div class="auth-options">
                     <button class="auth-btn" onclick="loginWithKakao()">
                         <div class="auth-btn-icon kakao">
@@ -845,7 +851,7 @@
         </div>
 
         <!-- Screen 8: Service Introduction (서비스 소개) -->
-        <div class="screen" id="screen-service-intro">
+        <div class="screen active" id="screen-service-intro">
             <header class="summary-header" style="background:transparent;position:absolute;top:0;left:0;right:0;z-index:10;">
                 <button class="back-btn" onclick="goToScreen('summary')">
                     <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
@@ -955,7 +961,7 @@
                 </div>
 
                 <div class="choice-options">
-                    <button class="choice-option-card" onclick="goToScreen('create-step1')" style="
+                    <button class="choice-option-card" onclick="goToScreen('auth')" style="
                         width:100%;
                         padding:32px 24px;
                         background:white;
@@ -976,7 +982,7 @@
                         </div>
                     </button>
 
-                    <button class="choice-option-card" onclick="goToScreen('summary')" style="
+                    <button class="choice-option-card" onclick="goToScreen('join-guide')" style="
                         width:100%;
                         padding:32px 24px;
                         background:white;
@@ -994,6 +1000,81 @@
                                 <p style="font-size:14px;color:var(--text-secondary);margin:0;line-height:1.5;">초대받은 모임에<br>참여해보세요</p>
                             </div>
                         </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen: Join Guide (모임 참여 안내) -->
+        <div class="screen" id="screen-join-guide">
+            <header class="main-header" style="justify-content: center; position: relative;">
+                <button class="back-btn" onclick="goToScreen('start-choice')" style="position:absolute;left:16px;">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <div class="main-header-info" style="text-align:center;">
+                    <h1 class="main-header-title">모임 참여하기</h1>
+                </div>
+            </header>
+            <div class="join-guide-content" style="padding:80px 24px 40px;display:flex;flex-direction:column;height:100%;background:linear-gradient(180deg,#FFFBEB 0%,#FFF 100%);">
+                <div style="text-align:center;margin-bottom:40px;">
+                    <div style="width:120px;height:120px;margin:0 auto 24px;background:linear-gradient(135deg,#EFF6FF 0%,#DBEAFE 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:60px;">
+                        🎉
+                    </div>
+                    <h2 style="font-size:24px;font-weight:700;margin:0 0 12px 0;color:var(--text-primary);">초대 링크로 참여하세요!</h2>
+                    <p style="font-size:15px;color:var(--text-secondary);margin:0;line-height:1.6;">주최자가 보낸 초대 링크를 통해<br>모임에 바로 참여할 수 있어요</p>
+                </div>
+
+                <div style="background:white;padding:24px;border-radius:16px;margin-bottom:24px;box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+                    <h3 style="font-size:16px;font-weight:700;margin:0 0 16px 0;color:var(--text-primary);display:flex;align-items:center;gap:8px;">
+                        <span style="font-size:20px;">📱</span>
+                        참여 방법
+                    </h3>
+                    <div style="display:flex;flex-direction:column;gap:16px;">
+                        <div style="display:flex;gap:12px;">
+                            <div style="width:28px;height:28px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">1</div>
+                            <div style="flex:1;">
+                                <p style="margin:0;font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:4px;">주최자에게 초대 링크 받기</p>
+                                <p style="margin:0;font-size:13px;color:var(--text-secondary);line-height:1.5;">카카오톡, 문자 등으로 받은 링크를 확인하세요</p>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:12px;">
+                            <div style="width:28px;height:28px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">2</div>
+                            <div style="flex:1;">
+                                <p style="margin:0;font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:4px;">링크 클릭하기</p>
+                                <p style="margin:0;font-size:13px;color:var(--text-secondary);line-height:1.5;">초대 링크를 클릭하면 자동으로 모임 페이지로 이동해요</p>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:12px;">
+                            <div style="width:28px;height:28px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">3</div>
+                            <div style="flex:1;">
+                                <p style="margin:0;font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:4px;">모임 참여 완료!</p>
+                                <p style="margin:0;font-size:13px;color:var(--text-secondary);line-height:1.5;">바로 모임 채팅방에 입장하여 대화를 시작하세요</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background:#FFF7ED;padding:16px;border-radius:12px;margin-bottom:auto;">
+                    <p style="margin:0;font-size:13px;color:#C2410C;line-height:1.6;text-align:center;">
+                        💡 <strong>아직 초대 링크가 없으신가요?</strong><br>
+                        <span style="font-size:12px;">주최자에게 초대 링크를 요청해보세요!</span>
+                    </p>
+                </div>
+
+                <div style="margin-top:32px;">
+                    <button onclick="goToScreen('service-intro')" style="
+                        width:100%;
+                        padding:16px 32px;
+                        background:white;
+                        color:var(--primary);
+                        border:2px solid var(--primary);
+                        border-radius:12px;
+                        font-size:16px;
+                        font-weight:700;
+                        cursor:pointer;
+                        transition:all 0.2s ease;
+                    ">
+                        돌아가기
                     </button>
                 </div>
             </div>
