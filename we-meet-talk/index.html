@@ -853,73 +853,148 @@
             </header>
             <div class="service-intro-content">
                 <div class="intro-logo">
-                    <h1 style="font-size:48px;margin:0;">📱</h1>
-                    <h2 style="margin:8px 0;font-size:28px;font-weight:700;">오보톡</h2>
-                    <p style="color:var(--text-secondary);font-size:14px;">모임을 온전히 담는 공간</p>
+                    <img src="images/wemeet-logo.png" alt="위밋톡 로고" style="width:80px;height:80px;margin:0 auto 16px;display:block;">
+                    <h2 style="margin:8px 0;font-size:28px;font-weight:700;">모임, 이제 쉽게 만나요</h2>
+                    <p style="color:var(--text-secondary);font-size:14px;">우리가 만나는 대화, 위밋톡</p>
+                </div>
+
+                <div style="text-align:center;margin:32px 0 24px 0;padding:0 20px;">
+                    <h3 style="margin:0 0 8px 0;font-size:22px;font-weight:700;color:var(--text-primary);">모임을 만들고, 소통해보세요.</h3>
+                    <p style="margin:0;font-size:15px;color:var(--text-secondary);line-height:1.5;">모임 장소 추천부터 정산까지, 위밋톡과 함께해요.</p>
                 </div>
 
                 <div class="intro-features">
                     <div class="intro-feature-item">
                         <div class="intro-feature-icon" style="background:#FFF7ED;">📅</div>
                         <div class="intro-feature-text">
-                            <h3>일정 조율이 쉬워요</h3>
-                            <p>모두의 캘린더를 공유해서<br>가능한 날을 한눈에 확인</p>
+                            <h3>"언제 만날까?" → 공유 캘린더로 일정 조율</h3>
+                            <p>모두의 일정을 한눈에 보고<br>가능한 날짜를 쉽게 찾아요</p>
+                        </div>
+                    </div>
+
+                    <div class="intro-feature-item">
+                        <div class="intro-feature-icon" style="background:#ECFDF5;">📍</div>
+                        <div class="intro-feature-text">
+                            <h3>"어디서 만날까?" → 위치 기반 장소 추천</h3>
+                            <p>멤버들의 위치를 고려해<br>최적의 만남 장소를 제안해드려요</p>
+                        </div>
+                    </div>
+
+                    <div class="intro-feature-item">
+                        <div class="intro-feature-icon" style="background:#EFF6FF;">💬</div>
+                        <div class="intro-feature-text">
+                            <h3>"무슨 얘기 나눴더라?" → 모임 전용 메신저</h3>
+                            <p>카톡처럼 편하게,<br>하지만 모임에만 집중할 수 있어요</p>
                         </div>
                     </div>
 
                     <div class="intro-feature-item">
                         <div class="intro-feature-icon" style="background:#F0FDF4;">💰</div>
                         <div class="intro-feature-text">
-                            <h3>정산이 간편해요</h3>
-                            <p>누가 얼마를 냈는지<br>자동으로 계산해드려요</p>
+                            <h3>"정산은 어떻게?" → 자동 정산</h3>
+                            <p>누가 얼마를 냈는지<br>복잡한 계산 없이 자동으로 정리해드려요</p>
                         </div>
                     </div>
 
                     <div class="intro-feature-item">
-                        <div class="intro-feature-icon" style="background:#EFF6FF;">📸</div>
+                        <div class="intro-feature-icon" style="background:#FDF2F8;">📸</div>
                         <div class="intro-feature-text">
-                            <h3>추억을 함께 모아요</h3>
-                            <p>모임 사진을 한곳에 모아<br>언제든 다시 볼 수 있어요</p>
-                        </div>
-                    </div>
-
-                    <div class="intro-feature-item">
-                        <div class="intro-feature-icon" style="background:#FDF2F8;">🗳️</div>
-                        <div class="intro-feature-text">
-                            <h3>투표로 결정해요</h3>
-                            <p>장소, 시간, 메뉴까지<br>모두 함께 정할 수 있어요</p>
+                            <h3>"그때 그 사진 어디갔지?" → 추억을 함께 모아요</h3>
+                            <p>모임의 모든 순간을 한곳에 모아<br>언제든 다시 볼 수 있어요</p>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="intro-footer">
-                    <button class="btn-intro-start" onclick="goToScreen('landing')" style="
+            <div class="intro-footer-fixed">
+                <button class="btn-intro-start" onclick="goToScreen('start-choice')" style="
+                    width:100%;
+                    padding:18px 32px;
+                    background:var(--primary);
+                    color:white;
+                    border:none;
+                    border-radius:12px;
+                    font-size:17px;
+                    font-weight:700;
+                    cursor:pointer;
+                    margin-bottom:12px;
+                ">위밋톡 시작하기</button>
+                <button class="btn-signup" onclick="goToScreen('phone-signup')" style="
+                    width:100%;
+                    padding:18px 32px;
+                    background:linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
+                    color:white;
+                    border:none;
+                    border-radius:12px;
+                    font-size:17px;
+                    font-weight:700;
+                    cursor:pointer;
+                    box-shadow:0 4px 16px rgba(255,107,53,0.25);
+                    margin-bottom:16px;
+                ">위밋톡 가입하기</button>
+                <p style="text-align:center;font-size:13px;color:var(--text-light);margin:0;">
+                    이미 계정이 있으신가요? <a href="#" onclick="goToScreen('auth');return false;" style="color:var(--primary);font-weight:600;text-decoration:none;">로그인</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Screen: Start Choice (시작 선택) -->
+        <div class="screen" id="screen-start-choice">
+            <header class="main-header" style="justify-content: center; position: relative;">
+                <button class="back-btn" onclick="goToScreen('service-intro')" style="position:absolute;left:16px;">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <div class="main-header-info" style="text-align:center;">
+                    <h1 class="main-header-title">시작하기</h1>
+                </div>
+            </header>
+            <div class="start-choice-content">
+                <div style="text-align:center;margin-bottom:40px;">
+                    <h2 style="font-size:24px;font-weight:700;margin:0 0 12px 0;color:var(--text-primary);">위밋톡과 함께 시작해요</h2>
+                    <p style="font-size:15px;color:var(--text-secondary);margin:0;">어떻게 시작하시겠어요?</p>
+                </div>
+
+                <div class="choice-options">
+                    <button class="choice-option-card" onclick="goToScreen('create-step1')" style="
                         width:100%;
-                        padding:18px 32px;
-                        background:var(--primary);
-                        color:white;
-                        border:none;
-                        border-radius:12px;
-                        font-size:17px;
-                        font-weight:700;
+                        padding:32px 24px;
+                        background:white;
+                        border:2px solid var(--primary);
+                        border-radius:16px;
                         cursor:pointer;
-                        margin-bottom:12px;
-                    ">오보톡 시작하기</button>
-                    <button class="btn-create-meeting" onclick="goToScreen('create-step1')" style="
+                        margin-bottom:20px;
+                        transition:all 0.2s ease;
+                    ">
+                        <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+                            <div style="width:80px;height:80px;background:linear-gradient(135deg,#FFF7ED 0%,#FFEDD5 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;">
+                                ✨
+                            </div>
+                            <div style="text-align:center;">
+                                <h3 style="font-size:20px;font-weight:700;margin:0 0 8px 0;color:var(--text-primary);">모임을 만들래요</h3>
+                                <p style="font-size:14px;color:var(--text-secondary);margin:0;line-height:1.5;">새로운 모임을 만들고<br>친구들을 초대해보세요</p>
+                            </div>
+                        </div>
+                    </button>
+
+                    <button class="choice-option-card" onclick="goToScreen('summary')" style="
                         width:100%;
-                        padding:16px 32px;
-                        background:#F0F9FF;
-                        color:#0284C7;
-                        border:2px solid #0284C7;
-                        border-radius:12px;
-                        font-size:16px;
-                        font-weight:600;
+                        padding:32px 24px;
+                        background:white;
+                        border:2px solid #E5E7EB;
+                        border-radius:16px;
                         cursor:pointer;
-                        margin-bottom:16px;
-                    ">모임 주최하기</button>
-                    <p style="text-align:center;font-size:13px;color:var(--text-light);">
-                        이미 계정이 있으신가요? <a href="#" onclick="goToScreen('auth');return false;" style="color:var(--primary);font-weight:600;text-decoration:none;">로그인</a>
-                    </p>
+                        transition:all 0.2s ease;
+                    ">
+                        <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+                            <div style="width:80px;height:80px;background:linear-gradient(135deg,#EFF6FF 0%,#DBEAFE 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;">
+                                🤝
+                            </div>
+                            <div style="text-align:center;">
+                                <h3 style="font-size:20px;font-weight:700;margin:0 0 8px 0;color:var(--text-primary);">모임에 참여할래요</h3>
+                                <p style="font-size:14px;color:var(--text-secondary);margin:0;line-height:1.5;">초대받은 모임에<br>참여해보세요</p>
+                            </div>
+                        </div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -984,18 +1059,69 @@
                         <div class="progress-step">3</div>
                     </div>
 
-                    <h1 class="create-title">주최자님, 언제 모이나요? 📅</h1>
+                    <h1 class="create-title"><span id="host-nickname">주최자</span>님, 언제 모이나요? 📅</h1>
                     <p class="create-subtitle">모임 날짜와 시간을 선택해주세요</p>
 
-                    <!-- Date Picker -->
-                    <div class="date-picker-section">
+                    <!-- Date Decision Toggle -->
+                    <div class="date-decision-section" style="margin-bottom:24px;">
+                        <div class="toggle-buttons" style="display:flex;gap:8px;">
+                            <button type="button" class="toggle-btn active" id="btn-date-decided" onclick="toggleDateDecision('decided')" style="
+                                flex:1;
+                                padding:12px 16px;
+                                background:#E0F2FE;
+                                color:#0284C7;
+                                border:2px solid #0284C7;
+                                border-radius:12px;
+                                font-size:15px;
+                                font-weight:600;
+                                cursor:pointer;
+                                transition:all 0.2s;
+                            ">날짜가 정해졌어요</button>
+                            <button type="button" class="toggle-btn" id="btn-date-undecided" onclick="toggleDateDecision('undecided')" style="
+                                flex:1;
+                                padding:12px 16px;
+                                background:white;
+                                color:var(--text-secondary);
+                                border:2px solid #E5E7EB;
+                                border-radius:12px;
+                                font-size:15px;
+                                font-weight:600;
+                                cursor:pointer;
+                                transition:all 0.2s;
+                            ">날짜를 정할래요</button>
+                        </div>
+                    </div>
+
+                    <!-- Date Picker (날짜 정해진 경우) -->
+                    <div class="date-picker-section" id="decided-date-section">
                         <label class="form-label">날짜 선택</label>
                         <input type="date" id="meeting-date" class="date-input" required>
                     </div>
 
+                    <!-- Date Range Picker (날짜 정하지 않은 경우) -->
+                    <div class="date-range-section" id="undecided-date-section" style="display:none;">
+                        <div class="info-box" style="
+                            padding:16px;
+                            background:#F0F9FF;
+                            border-radius:12px;
+                            margin-bottom:16px;
+                            border-left:4px solid #0284C7;
+                        ">
+                            <p style="margin:0;font-size:14px;color:var(--text-secondary);line-height:1.5;">
+                                💡 참여자들에게 가능한 날짜를 물어보고, 투표로 최종 날짜를 결정할 수 있어요!
+                            </p>
+                        </div>
+                        <label class="form-label">가능한 날짜 범위 (선택사항)</label>
+                        <div style="display:flex;gap:12px;align-items:center;">
+                            <input type="date" id="meeting-date-start" class="date-input" placeholder="시작일">
+                            <span style="color:var(--text-secondary);">~</span>
+                            <input type="date" id="meeting-date-end" class="date-input" placeholder="종료일">
+                        </div>
+                    </div>
+
                     <!-- Time Picker -->
                     <div class="time-picker-section">
-                        <label class="form-label">시간 선택</label>
+                        <label class="form-label">시간 선택 <span style="color:var(--text-light);font-size:13px;font-weight:400;">(선택사항)</span></label>
                         <div class="time-picker-grid">
                             <button type="button" class="time-chip" onclick="selectTime(this, '10:00')">오전 10:00</button>
                             <button type="button" class="time-chip" onclick="selectTime(this, '11:00')">오전 11:00</button>
@@ -1012,6 +1138,31 @@
                             직접 입력하기
                         </button>
                         <input type="time" id="meeting-time-custom" class="time-input-custom" style="display:none;">
+
+                        <div class="time-skip-section" style="margin-top:16px;">
+                            <button type="button" class="btn-skip-time" onclick="skipTimeSelection()" style="
+                                width:100%;
+                                padding:14px;
+                                background:white;
+                                color:var(--text-secondary);
+                                border:2px dashed #E5E7EB;
+                                border-radius:12px;
+                                font-size:14px;
+                                font-weight:600;
+                                cursor:pointer;
+                                transition:all 0.2s;
+                                display:flex;
+                                align-items:center;
+                                justify-content:center;
+                                gap:8px;
+                            ">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                                시간은 나중에 정할래요
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -1106,57 +1257,90 @@
                     <h1 class="create-title">어디에서 만나나요? 📍</h1>
                     <p class="create-subtitle">모임 장소를 선택해주세요</p>
 
-                    <!-- Location Options -->
-                    <div class="location-options">
-                        <button type="button" class="location-option-btn" onclick="showLocationSearch()">
-                            <div class="option-icon" style="background:#FFF7ED;">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                    <!-- Location Decision Toggle -->
+                    <div class="location-decision-section">
+                        <button type="button" class="location-decision-btn active" id="btn-location-decided" onclick="toggleLocationDecision('decided')">
+                            <div class="decision-icon">📍</div>
+                            <div class="decision-text">
+                                <h3>장소를 지금 정할게요</h3>
+                                <p>장소를 검색하거나 추천받을게요</p>
                             </div>
-                            <div class="option-text">
-                                <h3>생각해둔 곳이 있어요</h3>
-                                <p>장소를 검색해서 선택할게요</p>
-                            </div>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                            <svg class="decision-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
                         </button>
-
-                        <button type="button" class="location-option-btn" onclick="showAILocationRecommendations()">
-                            <div class="option-icon" style="background:#F0FDF4;">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        <button type="button" class="location-decision-btn" id="btn-location-undecided" onclick="toggleLocationDecision('undecided')">
+                            <div class="decision-icon">🗳️</div>
+                            <div class="decision-text">
+                                <h3>채팅방에서 투표로 정할게요</h3>
+                                <p>참여자들과 함께 결정할게요</p>
                             </div>
-                            <div class="option-text">
-                                <h3>아직 정하지 않았어요</h3>
-                                <p>AI가 추천해주는 장소를 볼래요</p>
-                            </div>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                            <svg class="decision-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
                         </button>
                     </div>
 
-                    <!-- Location Search (hidden by default) -->
-                    <div class="location-search-section" id="location-search" style="display:none;">
-                        <label class="form-label">장소 검색</label>
-                        <div class="search-input-wrapper">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                            <input type="text" id="location-search-input" class="form-input" placeholder="장소명이나 주소를 입력하세요">
+                    <!-- Decided Location Section -->
+                    <div id="decided-location-section">
+                        <!-- Location Options -->
+                        <div class="location-options">
+                            <button type="button" class="location-option-btn" onclick="showLocationSearch()">
+                                <div class="option-icon" style="background:#FFF7ED;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                                </div>
+                                <div class="option-text">
+                                    <h3>생각해둔 곳이 있어요</h3>
+                                    <p>장소를 검색해서 선택할게요</p>
+                                </div>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                            </button>
+
+                            <button type="button" class="location-option-btn" onclick="showAILocationRecommendations()">
+                                <div class="option-icon" style="background:#F0FDF4;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                </div>
+                                <div class="option-text">
+                                    <h3>아직 정하지 않았어요</h3>
+                                    <p>AI가 추천해주는 장소를 볼래요</p>
+                                </div>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                            </button>
                         </div>
-                        <div class="search-results" id="location-search-results">
-                            <!-- 검색 결과 동적 생성 -->
+
+                        <!-- Location Search (hidden by default) -->
+                        <div class="location-search-section" id="location-search" style="display:none;">
+                            <label class="form-label">장소 검색</label>
+                            <div class="search-input-wrapper">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                                <input type="text" id="location-search-input" class="form-input" placeholder="장소명이나 주소를 입력하세요">
+                            </div>
+                            <div class="search-results" id="location-search-results">
+                                <!-- 검색 결과 동적 생성 -->
+                            </div>
+                        </div>
+
+                        <!-- AI Location Recommendations (hidden by default) -->
+                        <div class="ai-location-section" id="ai-locations" style="display:none;">
+                            <div class="location-permission-notice">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                <p>내 주변 위치를 기반으로 추천해드려요</p>
+                                <button class="btn-allow-location" onclick="requestLocationPermission()">위치 정보 허용</button>
+                            </div>
+                            <div class="ai-location-grid" id="ai-location-recommendations">
+                                <!-- AI 추천 장소 동적 생성 -->
+                            </div>
+                            <button type="button" class="btn-more-types" onclick="showMoreLocations()">
+                                더 많은 장소 보기
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 9l-7 7-7-7"/></svg>
+                            </button>
                         </div>
                     </div>
 
-                    <!-- AI Location Recommendations (hidden by default) -->
-                    <div class="ai-location-section" id="ai-locations" style="display:none;">
-                        <div class="location-permission-notice">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                            <p>내 주변 위치를 기반으로 추천해드려요</p>
-                            <button class="btn-allow-location" onclick="requestLocationPermission()">위치 정보 허용</button>
+                    <!-- Undecided Location Section (Vote) -->
+                    <div id="undecided-location-section" style="display:none;">
+                        <div class="info-box" style="margin-top:24px;">
+                            💡 참여자들에게 장소 후보를 물어보고, 투표로 최종 장소를 결정할 수 있어요!
                         </div>
-                        <div class="ai-location-grid" id="ai-location-recommendations">
-                            <!-- AI 추천 장소 동적 생성 -->
-                        </div>
-                        <button type="button" class="btn-more-types" onclick="showMoreLocations()">
-                            더 많은 장소 보기
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 9l-7 7-7-7"/></svg>
-                        </button>
+                        <p style="color:var(--text-secondary);font-size:14px;margin-top:16px;line-height:1.6;">
+                            모임이 생성되면 채팅방 AI 매니저가 장소 투표를 시작하도록 안내해드릴게요.
+                        </p>
                     </div>
                 </div>
 
