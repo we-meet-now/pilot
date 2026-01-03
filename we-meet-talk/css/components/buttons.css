@@ -2,14 +2,14 @@
 .btn-primary {
     width: 100%;
     padding: 18px;
-    background: white;
-    color: var(--primary);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
     font-size: 17px;
     font-weight: 600;
     border: none;
     border-radius: var(--radius);
     cursor: pointer;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 30px rgba(59,130,246,0.3);
 }
 
 .btn-join {

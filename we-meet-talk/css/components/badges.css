@@ -1,11 +1,11 @@
 /* Badge Components */
 .landing-badge {
-    background: rgba(255,255,255,0.25);
+    background: rgba(59,130,246,0.1);
     padding: 8px 20px;
     border-radius: 50px;
     font-size: 13px;
     font-weight: 500;
-    color: white;
+    color: var(--primary);
     margin-bottom: 20px;
 }
 
