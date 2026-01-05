@@ -32,15 +32,28 @@ function switchTab(tabId, btn) {
  * (초기 진입 시 채팅 탭이 기본으로 열림)
  */
 function showChatDefault() {
+    // screen-main으로 화면 전환
+    if (typeof goToScreen === 'function') {
+        goToScreen('main');
+    }
+
+    // 탭 초기화
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-panel').forEach(p => {
         p.classList.remove('active');
         p.style.display = 'none';
     });
 
+    // 채팅 탭 버튼 활성화
+    const chatBtn = document.querySelector('.tab-btn[onclick*="chat"]');
+    if (chatBtn) chatBtn.classList.add('active');
+
+    // 채팅 패널 표시
     const chatPanel = document.getElementById('tab-chat');
-    chatPanel.classList.add('active');
-    chatPanel.style.display = 'flex';
+    if (chatPanel) {
+        chatPanel.classList.add('active');
+        chatPanel.style.display = 'flex';
+    }
 }
 
 // 전역으로 내보내기

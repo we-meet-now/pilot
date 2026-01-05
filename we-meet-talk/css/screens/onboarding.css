@@ -1,0 +1,99 @@
+/* Onboarding Screen Styles */
+#screen-onboarding {
+    background: white;
+}
+
+.onboarding-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.onboarding-slides {
+    flex: 1;
+    display: flex;
+    width: 500%; /* 5 slides */
+    overflow-x: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    transition: transform 0.3s ease;
+}
+
+.onboarding-slide {
+    width: 20%; /* 100% / 5 slides */
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    box-sizing: border-box;
+}
+
+.onboarding-content {
+    text-align: center;
+    max-width: 320px;
+}
+
+.onboarding-icon {
+    font-size: 80px;
+    margin-bottom: 32px;
+}
+
+.onboarding-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.onboarding-desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.onboarding-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 20px 0;
+}
+
+.onboarding-dots .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.onboarding-dots .dot.active {
+    width: 24px;
+    border-radius: 4px;
+    background: var(--primary);
+}
+
+.onboarding-actions {
+    padding: 0 24px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn-onboarding-next {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    font-size: 17px;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    box-shadow: 0 8px 30px rgba(59,130,246,0.3);
+}

@@ -134,7 +134,7 @@ function renderMonthlyEvents(container, events) {
             </div>
             <div class="my-event-actions">
                 <div class="my-event-status ${event.status}">${event.statusText}</div>
-                <button class="btn-goto-chat">대화하러가기</button>
+                <button class="btn-goto-chat">바로가기</button>
             </div>
         `;
 

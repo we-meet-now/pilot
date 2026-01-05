@@ -1,4 +1,13 @@
 /* Auth Screen Styles */
+#screen-login-create,
+#screen-auth-create,
+#screen-auth-join,
+#screen-phone-login,
+#screen-phone-signup,
+#screen-password-reset {
+    background: white;
+}
+
 .auth-content {
     flex: 1;
     display: flex;
@@ -10,6 +19,7 @@
     font-size: 24px;
     font-weight: 700;
     margin-bottom: 8px;
+    color: var(--text-primary);
 }
 
 .auth-subtitle {

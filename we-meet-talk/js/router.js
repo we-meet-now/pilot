@@ -29,6 +29,33 @@ function goToScreen(id) {
 }
 
 /**
+ * 메인 화면의 하단 네비게이션에서 '홈' 활성화
+ */
+function activateBottomNavHome() {
+    // 하단 네비게이션 버튼들의 active 클래스 제거
+    const navItems = document.querySelectorAll('#screen-main .bottom-nav .nav-item');
+    navItems.forEach(item => item.classList.remove('active'));
+
+    // 첫 번째 버튼(홈)에 active 클래스 추가
+    if (navItems.length > 0) {
+        navItems[0].classList.add('active');
+    }
+}
+
+/**
+ * 하단 네비게이션 버튼 활성화
+ * @param {HTMLElement} element - 클릭된 버튼 요소
+ */
+function activateBottomNav(element) {
+    // 모든 하단 네비게이션 버튼의 active 클래스 제거
+    const navItems = document.querySelectorAll('#screen-main .bottom-nav .nav-item');
+    navItems.forEach(item => item.classList.remove('active'));
+
+    // 클릭된 버튼에 active 클래스 추가
+    element.classList.add('active');
+}
+
+/**
  * 메인 화면에서 뒤로가기 처리
  * 첫 진입: name 화면으로
  * 재진입: mycalendar 화면으로
@@ -86,3 +113,4 @@ window.handleMainBack = handleMainBack;
 window.setCurrentMeeting = setCurrentMeeting;
 window.getCurrentMeeting = getCurrentMeeting;
 window.updateMainHeader = updateMainHeader;
+window.activateBottomNav = activateBottomNav;

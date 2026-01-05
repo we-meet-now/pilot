@@ -81,9 +81,65 @@ function formatPhoneNumber(input) {
  * 전화번호 로그인 - 가입 화면으로 이동
  */
 function loginWithPhone() {
-    // 전화번호 가입 화면으로 이동
+    // 전화번호 로그인 화면으로 이동
+    if (typeof goToScreen === 'function') {
+        goToScreen('phone-login');
+    }
+}
+
+function signupWithPhone() {
+    // 전화번호 회원가입 화면으로 이동
     if (typeof goToScreen === 'function') {
         goToScreen('phone-signup');
+    }
+}
+
+/**
+ * 전화번호 로그인 폼 제출
+ * @param {Event} event - 폼 제출 이벤트
+ */
+function submitPhoneLogin(event) {
+    event.preventDefault();
+
+    // 입력값 가져오기
+    const phone = document.getElementById('login-phone').value;
+    const password = document.getElementById('login-password').value;
+
+    // localStorage에서 등록된 사용자 목록 가져오기
+    const users = JSON.parse(localStorage.getItem('wemeet_users') || '{}');
+
+    // 전화번호로 사용자 찾기
+    const user = users[phone];
+
+    if (!user) {
+        // 등록되지 않은 전화번호
+        if (typeof showToast === 'function') {
+            showToast('등록되지 않은 전화번호입니다. 😢');
+        }
+        return;
+    }
+
+    // 비밀번호 확인
+    if (user.password !== password) {
+        // 비밀번호 불일치
+        if (typeof showToast === 'function') {
+            showToast('비밀번호가 일치하지 않습니다. 다시 시도해주세요. 🔒');
+        }
+        return;
+    }
+
+    // 로그인 성공
+    if (typeof login === 'function') {
+        login(user);
+
+        if (typeof showToast === 'function') {
+            showToast(`환영합니다, ${user.name}님! 👋`);
+        }
+
+        // 메인 화면으로 이동
+        if (typeof goToScreen === 'function') {
+            goToScreen('main');
+        }
     }
 }
 
@@ -98,6 +154,39 @@ function submitPhoneSignup(event) {
     const name = document.getElementById('signup-name').value;
     const email = document.getElementById('signup-email').value;
     const phone = document.getElementById('signup-phone').value;
+    const password = document.getElementById('signup-password').value;
+
+    // localStorage에서 기존 사용자 목록 가져오기
+    const users = JSON.parse(localStorage.getItem('wemeet_users') || '{}');
+
+    // 이미 등록된 전화번호인지 확인
+    if (users[phone]) {
+        if (typeof showToast === 'function') {
+            showToast('이미 가입된 전화번호입니다. 로그인 페이지로 이동합니다. 📱');
+        }
+
+        // 1초 후 로그인 화면으로 이동하면서 전화번호 자동 입력
+        setTimeout(() => {
+            if (typeof goToScreen === 'function') {
+                goToScreen('phone-login');
+
+                // 로그인 화면의 전화번호 필드에 자동으로 입력
+                setTimeout(() => {
+                    const loginPhoneInput = document.getElementById('login-phone');
+                    if (loginPhoneInput) {
+                        loginPhoneInput.value = phone;
+                        // 비밀번호 필드로 포커스 이동
+                        const loginPasswordInput = document.getElementById('login-password');
+                        if (loginPasswordInput) {
+                            loginPasswordInput.focus();
+                        }
+                    }
+                }, 100);
+            }
+        }, 1000);
+
+        return;
+    }
 
     // 유저 데이터 생성
     const userData = {
@@ -105,10 +194,15 @@ function submitPhoneSignup(event) {
         name: name,
         email: email,
         phone: phone,
+        password: password, // 실제로는 해시 처리 필요
         provider: 'phone'
     };
 
-    // localStorage에 저장 (DB 시뮬레이션)
+    // 전화번호를 키로 사용자 정보 저장
+    users[phone] = userData;
+    localStorage.setItem('wemeet_users', JSON.stringify(users));
+
+    // 로그인 처리
     if (typeof login === 'function') {
         login(userData);
 
@@ -123,6 +217,43 @@ function submitPhoneSignup(event) {
             }
         }, 500);
     }
+}
+
+/**
+ * 비밀번호 재설정 요청
+ * @param {Event} event - 폼 제출 이벤트
+ */
+function submitPasswordReset(event) {
+    event.preventDefault();
+
+    // 입력값 가져오기
+    const phone = document.getElementById('reset-phone').value;
+
+    // localStorage에서 사용자 찾기
+    const users = JSON.parse(localStorage.getItem('wemeet_users') || '{}');
+    const user = users[phone];
+
+    if (!user) {
+        if (typeof showToast === 'function') {
+            showToast('등록되지 않은 전화번호입니다. 😢');
+        }
+        return;
+    }
+
+    // 이메일로 재설정 링크 전송 (시뮬레이션)
+    if (typeof showToast === 'function') {
+        showToast(`${user.email}로 재설정 링크를 전송했습니다! 📧`);
+    }
+
+    // 실제로는 서버에서 이메일 발송 처리
+    console.log(`비밀번호 재설정 이메일 전송: ${user.email}`);
+
+    // 2초 후 로그인 화면으로 이동
+    setTimeout(() => {
+        if (typeof goToScreen === 'function') {
+            goToScreen('phone-login');
+        }
+    }, 2000);
 }
 
 /**
