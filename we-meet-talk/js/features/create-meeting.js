@@ -127,7 +127,7 @@ function showCustomTimeInput() {
         });
 
         // 커스텀 시간 입력 이벤트
-        customInput.addEventListener('change', function() {
+        customInput.addEventListener('change', function () {
             meetingData.time = this.value;
             checkStep1Completion();
         });
@@ -191,7 +191,7 @@ function checkStep1Completion() {
 }
 
 // 날짜 선택 이벤트
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // 닉네임 설정
     setHostNickname();
 
@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const dateInput = document.getElementById('meeting-date');
     if (dateInput) {
         dateInput.setAttribute('min', today);
-        dateInput.addEventListener('change', function() {
+        dateInput.addEventListener('change', function () {
             meetingData.date = this.value;
             checkStep1Completion();
         });
@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (startInput) {
         startInput.setAttribute('min', today);
-        startInput.addEventListener('change', function() {
+        startInput.addEventListener('change', function () {
             if (endInput && this.value) {
                 endInput.setAttribute('min', this.value);
             }
@@ -253,7 +253,15 @@ const meetingTypesByCategory = {
     events: [
         { emoji: '🎄', name: '연말 송년회', desc: '한 해를 마무리하는 특별한 시간', bg: '#FFF7ED' },
         { emoji: '🎂', name: '생일 파티', desc: '특별한 날을 축하해요', bg: '#FFEDD5' },
-        { emoji: '🎉', name: '기념일 모임', desc: '소중한 순간을 함께', bg: '#FEF3C7' }
+        { emoji: '🎉', name: '기념일 모임', desc: '소중한 순간을 함께', bg: '#FEF3C7' },
+        { emoji: '🏠', name: '집들이', desc: '새로운 보금자리 축하', bg: '#DBEAFE' },
+        { emoji: '👶', name: '돌잔치', desc: '첫 생일 축하해요', bg: '#FFF7ED' },
+        { emoji: '💌', name: '청첩장 모임', desc: '좋은 소식 전하는 날', bg: '#FFEDD5' },
+        { emoji: '🎓', name: '졸업 축하', desc: '새로운 시작을 응원해', bg: '#FEF3C7' },
+        { emoji: '👋', name: '송별회', desc: '아쉬운 작별의 시간', bg: '#E0E7FF' },
+        { emoji: '🤝', name: '환영회', desc: '새로운 만남을 반겨요', bg: '#F0FDF4' },
+        { emoji: '🎤', name: '세미나', desc: '지식과 경험의 공유', bg: '#DBEAFE' },
+        { emoji: '🌐', name: '네트워킹', desc: '새로운 인맥을 넓혀요', bg: '#EFF6FF' }
     ],
     hobby: [
         { emoji: '📚', name: '스터디 모임', desc: '함께 공부하고 성장해요', bg: '#DBEAFE' },
@@ -261,26 +269,52 @@ const meetingTypesByCategory = {
         { emoji: '🎨', name: '문화 모임', desc: '전시회, 공연 감상', bg: '#FFF7ED' },
         { emoji: '📖', name: '독서 모임', desc: '책으로 나누는 이야기', bg: '#FEF3C7' },
         { emoji: '🎤', name: '노래방 모임', desc: '신나게 노래 불러요', bg: '#FFEDD5' },
-        { emoji: '🎸', name: '밴드 연습', desc: '음악으로 하나되는 시간', bg: '#E0E7FF' }
+        { emoji: '🎸', name: '밴드 연습', desc: '음악으로 하나되는 시간', bg: '#E0E7FF' },
+        { emoji: '📸', name: '사진 출사', desc: '아름다운 순간 포착', bg: '#E0F2FE' },
+        { emoji: '💃', name: '댄스 모임', desc: '리듬에 몸을 맡겨요', bg: '#FFEDD5' },
+        { emoji: '🧶', name: '뜨개질/공예', desc: '손으로 만드는 즐거움', bg: '#FFF7ED' },
+        { emoji: '💻', name: '코딩 스터디', desc: '함께 성장하는 개발자', bg: '#DBEAFE' },
+        { emoji: '🗣️', name: '언어 교환', desc: '외국어 실력 쑥쑥', bg: '#FEF3C7' },
+        { emoji: '✍️', name: '글쓰기 모임', desc: '나만의 이야기 기록', bg: '#F0FDF4' },
+        { emoji: '🪴', name: '식집사 모임', desc: '반려식물 키우기', bg: '#DCFCE7' }
     ],
     sports: [
         { emoji: '🏃', name: '운동 모임', desc: '건강한 취미 생활', bg: '#DCFCE7' },
         { emoji: '⛰️', name: '등산 모임', desc: '자연을 즐기는 시간', bg: '#F0FDF4' },
         { emoji: '🚴', name: '자전거 라이딩', desc: '시원한 바람을 가르며', bg: '#DBEAFE' },
         { emoji: '🏊', name: '수영 모임', desc: '건강한 수영 시간', bg: '#E0E7FF' },
-        { emoji: '🧘', name: '요가 모임', desc: '몸과 마음의 균형', bg: '#F0FDF4' }
+        { emoji: '🧘', name: '요가 모임', desc: '몸과 마음의 균형', bg: '#F0FDF4' },
+        { emoji: '🎳', name: '볼링 한판', desc: '스트라이크의 쾌감', bg: '#E0E7FF' },
+        { emoji: '🏸', name: '배드민턴', desc: '가볍게 즐기는 운동', bg: '#FEF3C7' },
+        { emoji: '🎾', name: '테니스', desc: '다함께 랠리', bg: '#DCFCE7' },
+        { emoji: '🏀', name: '농구 모임', desc: '코트 위의 열정', bg: '#FFEDD5' },
+        { emoji: '⚽', name: '축구/풋살', desc: '팀워크를 다져요', bg: '#DBEAFE' },
+        { emoji: '🎱', name: '당구/포켓볼', desc: '집중력의 승부', bg: '#F1F5F9' },
+        { emoji: '🥊', name: '클라이밍', desc: '한계에 도전해요', bg: '#FFF7ED' }
     ],
     food: [
         { emoji: '☕', name: '카페 모임', desc: '따뜻한 음료와 함께', bg: '#FFF7ED' },
         { emoji: '🍽️', name: '식사 모임', desc: '맛있는 음식을 함께', bg: '#FFEDD5' },
         { emoji: '🍜', name: '맛집 탐방', desc: '새로운 맛을 찾아서', bg: '#FEF3C7' },
         { emoji: '🍰', name: '베이킹 모임', desc: '함께 만들고 나눠요', bg: '#FFF7ED' },
-        { emoji: '🥐', name: '브런치 모임', desc: '여유로운 아침 식사', bg: '#FFEDD5' }
+        { emoji: '🥐', name: '브런치 모임', desc: '여유로운 아침 식사', bg: '#FFEDD5' },
+        { emoji: '🍷', name: '와인 파티', desc: '우아한 테이스팅', bg: '#F3E8FF' },
+        { emoji: '🍺', name: '맥주 페스티벌', desc: '시원한 한 잔의 여유', bg: '#FEF3C7' },
+        { emoji: '🍗', name: '치맥 모임', desc: '진리의 치킨과 맥주', bg: '#FFEDD5' },
+        { emoji: '🥗', name: '비건 탐방', desc: '건강하고 맛있는 식사', bg: '#DCFCE7' },
+        { emoji: '🍱', name: '도시락 소풍', desc: '야외에서 즐기는 점심', bg: '#F0FDF4' },
+        { emoji: '🍵', name: '티 타임', desc: '향긋한 차의 여유', bg: '#F0FDF4' }
     ],
     entertainment: [
         { emoji: '🎬', name: '영화 관람', desc: '오후의 여유로운 영화 감상', bg: '#E0E7FF' },
         { emoji: '🎭', name: '연극 관람', desc: '문화 생활을 함께', bg: '#FFF7ED' },
-        { emoji: '🎲', name: '보드게임', desc: '재미있는 게임의 세계', bg: '#DBEAFE' }
+        { emoji: '🎲', name: '보드게임', desc: '재미있는 게임의 세계', bg: '#DBEAFE' },
+        { emoji: '🕵️', name: '방탈출 게임', desc: '두뇌 풀가동', bg: '#E0E7FF' },
+        { emoji: '🛍️', name: '쇼핑 투어', desc: '득템의 즐거움', bg: '#FFF7ED' },
+        { emoji: '🎢', name: '놀이공원', desc: '짜릿한 어트랙션', bg: '#FFEDD5' },
+        { emoji: '🎪', name: '축제/페스티벌', desc: '뜨거운 열기의 현장', bg: '#FEF3C7' },
+        { emoji: '⚾', name: '야구 관람', desc: '하나되는 응원전', bg: '#DBEAFE' },
+        { emoji: '🏕️', name: '캠핑/글램핑', desc: '자연 속 힐링', bg: '#DCFCE7' }
     ]
 };
 
@@ -291,24 +325,120 @@ function generateAIMeetingTypes() {
     const container = document.getElementById('ai-meeting-types');
     if (!container) return;
 
-    // 각 카테고리에서 랜덤하게 선택
-    const allTypes = [];
-
-    // 각 카테고리에서 1-2개씩 랜덤 선택
+    // 1. 전체 모임 리스트 평탄화
+    let candidates = [];
     Object.keys(meetingTypesByCategory).forEach(category => {
-        const categoryTypes = meetingTypesByCategory[category];
-        const shuffled = categoryTypes.sort(() => 0.5 - Math.random());
-        const selected = shuffled.slice(0, 1); // 각 카테고리에서 1개씩
-        allTypes.push(...selected);
+        candidates.push(...meetingTypesByCategory[category]);
     });
 
-    // 전체를 섞고 3개만 선택
-    const shuffledAll = allTypes.sort(() => 0.5 - Math.random());
-    const recommendations = shuffledAll.slice(0, 3);
+    // 2. 가중치 계산을 위한 시각 정보 분석
+    const now = new Date();
+    let month = now.getMonth() + 1; // 1-12
+    let hour = now.getHours(); // 0-23
+    let isWeekend = false;
 
-    // 카드 생성
+    // 사용자가 입력한 날짜가 있으면 그 정보를 우선 사용
+    if (meetingData.date) {
+        const dateObj = new Date(meetingData.date);
+        month = dateObj.getMonth() + 1;
+        const day = dateObj.getDay();
+        isWeekend = (day === 0 || day === 6); // 일(0), 토(6)
+    }
+
+    // 사용자가 입력한 시간이 있으면 그 정보를 사용
+    if (meetingData.time) {
+        hour = parseInt(meetingData.time.split(':')[0]);
+    }
+
+    // 3. 점수 부여 (기본 점수 10점)
+    candidates = candidates.map(item => {
+        let score = 10;
+        const name = item.name;
+
+        // --- 시간대별 규칙 ---
+        if (hour >= 5 && hour < 11) { // 아침/오전
+            if (name.includes('브런치') || name.includes('등산') || name.includes('요가') || name.includes('조깅')) score += 30;
+            if (name.includes('술') || name.includes('맥주') || name.includes('와인') || name.includes('노래방')) score -= 20;
+        } else if (hour >= 11 && hour < 14) { // 점심
+            if (name.includes('식사') || name.includes('맛집') || name.includes('브런치')) score += 20;
+        } else if (hour >= 14 && hour < 17) { // 오후
+            if (name.includes('카페') || name.includes('디저트') || name.includes('전시회') || name.includes('티 타임')) score += 25;
+            if (name.includes('술')) score -= 10;
+        } else if (hour >= 17) { // 저녁/밤
+            if (name.includes('술') || name.includes('맥주') || name.includes('와인') || name.includes('칵테일') || name.includes('저녁')) score += 30;
+            if (name.includes('야경') || name.includes('노래방') || name.includes('볼링')) score += 20;
+            if (name.includes('브런치')) score -= 20;
+        }
+
+        // --- 계절/월별 규칙 ---
+        if (month === 12) { // 12월
+            if (name.includes('연말') || name.includes('송년회') || name.includes('크리스마스')) score += 50;
+        } else if (month >= 3 && month <= 5) { // 봄
+            if (name.includes('꽃') || name.includes('피크닉') || name.includes('도시락') || name.includes('자전거')) score += 20;
+        } else if (month >= 6 && month <= 8) { // 여름
+            if (name.includes('수영') || name.includes('수상') || name.includes('냉면') || name.includes('맥주')) score += 20;
+            if (name.includes('등산')) score -= 10; // 너무 더움
+        } else if (month >= 9 && month <= 11) { // 가을
+            if (name.includes('독서') || name.includes('단풍') || name.includes('등산') || name.includes('캠핑')) score += 25;
+        }
+
+        // --- 요일별 규칙 ---
+        if (isWeekend) { // 주말
+            if (name.includes('결혼') || name.includes('돌잔치') || name.includes('여행') || name.includes('캠핑') || name.includes('등산')) score += 30;
+        } else { // 평일
+            if (name.includes('번개') || name.includes('간단') || name.includes('저녁')) score += 10;
+        }
+
+        return { ...item, score };
+    });
+
+    // 4. 가중치 기반 랜덤 선택 (Weighted Random Selection)
+    // 점수가 높을수록 뽑힐 확률이 높아짐 + 약간의 랜덤성(Noise) 추가하여 매번 똑같은 것만 나오지 않게 함
+    candidates.sort((a, b) => {
+        const scoreA = a.score + (Math.random() * 20); // 0~20점의 랜덤 변수 추가
+        const scoreB = b.score + (Math.random() * 20);
+        return scoreB - scoreA;
+    });
+
+    // 5. 상위 추천 선택 및 다양성 확보
+    // 단순히 상위 3개를 뽑기보다, 카테고리가 겹치지 않게 노력하면서 상위권을 추출
+    const recommendations = [];
+    const usedCategories = new Set();
+
+    // 카테고리를 역추적하기 위해 원본 데이터 참조가 필요하지만, 
+    // 여기서는 name으로 category를 찾는 대신 단순무식하게 상위권부터 훑되 중복 방지
+    for (let item of candidates) {
+        if (recommendations.length >= 3) break;
+
+        // 해당 아이템의 카테고리 찾기
+        let category = '';
+        for (const [cat, items] of Object.entries(meetingTypesByCategory)) {
+            if (items.some(i => i.name === item.name)) {
+                category = cat;
+                break;
+            }
+        }
+
+        // 카테고리 중복 피하기 (가능하면)
+        if (!usedCategories.has(category)) {
+            recommendations.push(item);
+            usedCategories.add(category);
+        }
+    }
+
+    // 만약 3개를 못 채웠으면(카테고리 중복 때문에), 그냥 점수 높은 순으로 나머지 채우기
+    if (recommendations.length < 3) {
+        for (let item of candidates) {
+            if (recommendations.length >= 3) break;
+            if (!recommendations.includes(item)) {
+                recommendations.push(item);
+            }
+        }
+    }
+
+    // 6. UI 렌더링
     container.innerHTML = '';
-    recommendations.forEach((rec, index) => {
+    recommendations.forEach((rec) => {
         const card = document.createElement('div');
         card.className = 'meeting-type-card';
         card.innerHTML = `
@@ -323,21 +453,26 @@ function generateAIMeetingTypes() {
         container.appendChild(card);
     });
 
-    // 직접 입력 이벤트
-    const customInput = document.getElementById('meeting-type-custom');
-    if (customInput) {
-        customInput.addEventListener('input', function() {
-            if (this.value.trim()) {
-                // 기존 선택 해제
-                document.querySelectorAll('.meeting-type-card').forEach(card => {
-                    card.classList.remove('selected');
-                });
-                meetingData.type = this.value.trim();
-                checkStep2Completion();
-            }
-        });
-    }
+    // 직접 입력 이벤트는 한 번만 바인딩되도록 체크하거나 기존 코드 유지
+    // (이 함수가 자주 호출된다면 이벤트 리스너 중복 방지가 필요하지만, 
+    // 현재 구조상 goToCreateStep2에서 호출되므로 괜찮음)
 }
+
+// 직접 입력 이벤트
+const customInput = document.getElementById('meeting-type-custom');
+if (customInput) {
+    customInput.addEventListener('input', function () {
+        if (this.value.trim()) {
+            // 기존 선택 해제
+            document.querySelectorAll('.meeting-type-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            meetingData.type = this.value.trim();
+            checkStep2Completion();
+        }
+    });
+}
+
 
 /**
  * 모임 타입 선택
@@ -490,7 +625,7 @@ function showLocationSearch() {
             searchInput.focus();
 
             // 검색 이벤트 (실제로는 API 연동 필요)
-            searchInput.addEventListener('input', function() {
+            searchInput.addEventListener('input', function () {
                 if (this.value.length >= 2) {
                     performLocationSearch(this.value);
                 }
