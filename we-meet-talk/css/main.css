@@ -16,6 +16,7 @@
 @import url('./components/navigation.css');
 @import url('./components/toast.css');
 @import url('./components/auth-notice.css');
+@import url('./components/modal.css');
 
 /* 3. Screens (page-specific styles) */
 @import url('./screens/landing.css');
@@ -31,6 +32,8 @@
 @import url('./screens/mypage.css');
 @import url('./screens/phone-signup.css');
 @import url('./screens/create-meeting.css');
+@import url('./screens/chat-list.css');
+@import url('./screens/meeting-created.css');
 
 /* 4. Tabs (tab content styles) */
 @import url('./tabs/info.css');
