@@ -35,6 +35,13 @@ function submitVote() {
 
     if (selected && typeof showToast === 'function') {
         showToast('투표 완료! ✓');
+
+        // 투표 완료 후 채팅 탭으로 돌아가기
+        setTimeout(() => {
+            if (typeof goBackToChatTab === 'function') {
+                goBackToChatTab();
+            }
+        }, 500);
     } else if (typeof showToast === 'function') {
         showToast('장소를 선택해주세요');
     }
