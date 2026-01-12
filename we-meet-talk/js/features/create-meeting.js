@@ -576,33 +576,48 @@ function goToCreateStep3() {
 }
 
 /**
- * 장소 결정 상태 토글
+ * 장소 옵션 선택
  */
-function toggleLocationDecision(type) {
-    const decidedBtn = document.getElementById('btn-location-decided');
-    const undecidedBtn = document.getElementById('btn-location-undecided');
+function selectLocationOption(type) {
+    // 모든 옵션 버튼 비활성화
+    document.querySelectorAll('.location-option-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+
+    // 모든 섹션 숨기기
+    const searchSection = document.getElementById('location-search');
+    const aiSection = document.getElementById('ai-recommendation-section');
+    const voteSection = document.getElementById('vote-location-section');
     const decidedSection = document.getElementById('decided-location-section');
-    const undecidedSection = document.getElementById('undecided-location-section');
 
-    meetingData.locationDecided = (type === 'decided');
+    if (searchSection) searchSection.style.display = 'none';
+    if (aiSection) aiSection.style.display = 'none';
+    if (voteSection) voteSection.style.display = 'none';
 
-    if (type === 'decided') {
-        // 장소 정해진 경우
-        decidedBtn.classList.add('active');
-        undecidedBtn.classList.remove('active');
+    if (type === 'undecided') {
+        // AI 추천 보기
+        const btn = document.getElementById('btn-location-undecided');
+        if (btn) btn.classList.add('active');
 
-        decidedSection.style.display = 'block';
-        undecidedSection.style.display = 'none';
-    } else {
-        // 장소 투표로 정하는 경우
-        undecidedBtn.classList.add('active');
-        decidedBtn.classList.remove('active');
-
-        decidedSection.style.display = 'none';
-        undecidedSection.style.display = 'block';
-
-        // 장소 미정 상태로 설정
+        meetingData.locationDecided = true;
         meetingData.location = null;
+
+        // AI 추천 섹션 표시
+        if (aiSection) {
+            aiSection.style.display = 'block';
+            // 자동으로 위치 권한 요청
+            requestLocationPermission();
+        }
+    } else if (type === 'vote') {
+        // 투표로 정하기
+        const btn = document.getElementById('btn-location-vote');
+        if (btn) btn.classList.add('active');
+
+        meetingData.locationDecided = false;
+        meetingData.location = null;
+
+        // 투표 섹션 표시
+        if (voteSection) voteSection.style.display = 'block';
     }
 
     checkStep3Completion();
@@ -612,12 +627,26 @@ function toggleLocationDecision(type) {
  * 장소 검색 보이기
  */
 function showLocationSearch() {
-    const searchSection = document.getElementById('location-search');
-    const aiSection = document.getElementById('ai-locations');
+    // 모든 옵션 버튼 비활성화
+    document.querySelectorAll('.location-option-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
 
-    if (searchSection && aiSection) {
+    // 검색 버튼 활성화
+    const searchBtn = document.getElementById('btn-location-search');
+    if (searchBtn) searchBtn.classList.add('active');
+
+    // 모든 섹션 숨기기
+    const searchSection = document.getElementById('location-search');
+    const aiSection = document.getElementById('ai-recommendation-section');
+    const voteSection = document.getElementById('vote-location-section');
+
+    if (aiSection) aiSection.style.display = 'none';
+    if (voteSection) voteSection.style.display = 'none';
+
+    // 검색 섹션 표시
+    if (searchSection) {
         searchSection.style.display = 'block';
-        aiSection.style.display = 'none';
 
         // 검색 입력 포커스
         const searchInput = document.getElementById('location-search-input');
@@ -632,6 +661,9 @@ function showLocationSearch() {
             });
         }
     }
+
+    meetingData.locationDecided = true;
+    checkStep3Completion();
 }
 
 /**
@@ -662,18 +694,6 @@ function performLocationSearch(query) {
     });
 }
 
-/**
- * AI 장소 추천 보이기
- */
-function showAILocationRecommendations() {
-    const searchSection = document.getElementById('location-search');
-    const aiSection = document.getElementById('ai-locations');
-
-    if (searchSection && aiSection) {
-        searchSection.style.display = 'none';
-        aiSection.style.display = 'block';
-    }
-}
 
 /**
  * 위치 정보 권한 요청
@@ -839,20 +859,92 @@ function showMoreLocations() {
 /**
  * 모임 만들기 완료
  */
-function completeMeetingCreation() {
+async function completeMeetingCreation() {
+    console.log('=== 모임 생성 시작 ===');
     console.log('모임 생성 데이터:', meetingData);
+    console.log('Firebase 초기화 상태:', {
+        firebase: typeof firebase !== 'undefined',
+        db: !!window.db,
+        auth: !!window.auth
+    });
 
-    // 실제로는 Firebase나 백엔드에 데이터 저장
-    if (typeof showToast === 'function') {
-        showToast('모임이 생성되었습니다! 🎉');
-    }
+    try {
+        // 현재 사용자 정보 가져오기
+        const currentUser = window.auth?.currentUser;
+        const userId = currentUser?.uid || 'anonymous';
+        const userName = currentUser?.displayName || localStorage.getItem('userName') || '익명';
 
-    // 홈 화면으로 이동
-    setTimeout(() => {
-        if (typeof goToScreen === 'function') {
-            goToScreen('home');
+        console.log('사용자 정보:', { userId, userName });
+
+        // Firestore에 채팅방 생성
+        if (!window.db) {
+            console.error('window.db가 없습니다!');
+            throw new Error('Firebase가 초기화되지 않았습니다.');
         }
-    }, 1000);
+
+        console.log('Firestore DB 확인 완료');
+
+        // 채팅방 데이터 구성
+        const chatRoomData = {
+            name: meetingData.type || '새 모임',
+            date: meetingData.date || null,
+            time: meetingData.time || null,
+            dateDecided: meetingData.dateDecided || false,
+            location: meetingData.location || null,
+            locationDecided: meetingData.locationDecided || false,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            createdBy: userId,
+            creatorName: userName,
+            participants: [{
+                userId: userId,
+                name: userName,
+                joinedAt: new Date().toISOString()
+            }],
+            participantCount: 1,
+            lastMessage: null,
+            lastMessageAt: null
+        };
+
+        console.log('채팅방 데이터:', chatRoomData);
+
+        if (typeof showToast === 'function') {
+            showToast('채팅방을 생성하는 중입니다...');
+        }
+
+        console.log('Firestore에 문서 추가 시작...');
+
+        // Firestore에 문서 추가
+        const docRef = await window.db.collection('chatrooms').add(chatRoomData);
+        const chatRoomId = docRef.id;
+
+        console.log('✅ 채팅방 생성 완료! ID:', chatRoomId);
+
+        // 초대 URL 생성
+        const chatRoomUrl = `https://wemeettalk.com/join/${chatRoomId}`;
+
+        if (typeof showToast === 'function') {
+            showToast('모임이 생성되었습니다! 🎉');
+        }
+
+        // 모임 생성 완료 화면으로 이동
+        setTimeout(() => {
+            if (typeof showMeetingCreatedScreen === 'function') {
+                showMeetingCreatedScreen(chatRoomUrl, chatRoomId);
+            }
+        }, 1000);
+
+    } catch (error) {
+        console.error('❌ 채팅방 생성 실패:', error);
+        console.error('에러 상세:', {
+            message: error.message,
+            code: error.code,
+            stack: error.stack
+        });
+
+        if (typeof showToast === 'function') {
+            showToast(`채팅방 생성 실패: ${error.message}`);
+        }
+    }
 }
 
 // 전역으로 내보내기
@@ -864,9 +956,8 @@ window.goToCreateStep2 = goToCreateStep2;
 window.selectMeetingType = selectMeetingType;
 window.showMoreMeetingTypes = showMoreMeetingTypes;
 window.goToCreateStep3 = goToCreateStep3;
-window.toggleLocationDecision = toggleLocationDecision;
+window.selectLocationOption = selectLocationOption;
 window.showLocationSearch = showLocationSearch;
-window.showAILocationRecommendations = showAILocationRecommendations;
 window.requestLocationPermission = requestLocationPermission;
 window.selectLocation = selectLocation;
 window.showMoreLocations = showMoreLocations;

@@ -137,3 +137,30 @@
     gap: 8px;
     margin-bottom: 8px;
 }
+
+.share-btn {
+    background: transparent;
+    border: none;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.share-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.share-btn:active {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.share-btn svg {
+    width: 22px;
+    height: 22px;
+    stroke: var(--text-primary);
+}

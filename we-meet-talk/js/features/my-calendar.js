@@ -140,7 +140,7 @@ function renderMonthlyEvents(container, events) {
 
         container.appendChild(card);
 
-        // 대화하러가기 버튼 클릭 이벤트 설정
+        // 바로가기 버튼 클릭 이벤트 설정
         const gotoBtn = card.querySelector('.btn-goto-chat');
         if (gotoBtn) {
             gotoBtn.onclick = (e) => {
@@ -151,14 +151,9 @@ function renderMonthlyEvents(container, events) {
                     setCurrentMeeting(event);
                 }
 
-                if (typeof goToScreen === 'function') {
-                    goToScreen('main');
-                    // 채팅 탭으로 전환
-                    setTimeout(() => {
-                        if (typeof showChatDefault === 'function') {
-                            showChatDefault();
-                        }
-                    }, 100);
+                // 채팅방으로 이동
+                if (typeof goToChatRoom === 'function') {
+                    goToChatRoom(event.id);
                 }
             };
         }
@@ -200,14 +195,9 @@ function renderUpcomingEvents(container, events) {
                     setCurrentMeeting(nearestEvent);
                 }
 
-                if (typeof goToScreen === 'function') {
-                    goToScreen('main');
-                    // 채팅 탭으로 전환
-                    setTimeout(() => {
-                        if (typeof showChatDefault === 'function') {
-                            showChatDefault();
-                        }
-                    }, 100);
+                // 채팅방으로 이동
+                if (typeof goToChatRoom === 'function') {
+                    goToChatRoom(nearestEvent.id);
                 }
             };
         }

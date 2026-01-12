@@ -75,6 +75,13 @@ function confirmCalendarDate() {
     if (selected && typeof showToast === 'function') {
         const day = selected.textContent;
         showToast(`12월 ${day}일로 일정이 확정되었습니다! 🎉`);
+
+        // 일정 확정 후 채팅 탭으로 돌아가기
+        setTimeout(() => {
+            if (typeof goBackToChatTab === 'function') {
+                goBackToChatTab();
+            }
+        }, 500);
     }
 }
 
