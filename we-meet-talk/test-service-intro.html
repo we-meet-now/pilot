@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Intro Test</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #1a1a2e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <!-- Service Introduction Screen -->
+        <div class="screen active" id="screen-service-intro">
+            <header class="summary-header" style="background:transparent;position:absolute;top:0;left:0;right:0;z-index:10;">
+                <button class="back-btn" onclick="alert('뒤로가기 클릭!')">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+            </header>
+            <div class="service-intro-content">
+                <div class="intro-logo">
+                    <img src="images/wemeet-logo.png" alt="위밋톡 로고" style="width:80px;height:80px;margin:0 auto 16px;display:block;">
+                    <h2 style="margin:8px 0;font-size:28px;font-weight:700;">모임, 이제 쉽게 만나요</h2>
+                    <p style="color:var(--text-secondary);font-size:14px;">우리가 만나는 대화, 위밋톡</p>
+                </div>
+
+                <div style="text-align:center;margin:32px 0 24px 0;padding:0 20px;">
+                    <h3 style="margin:0 0 8px 0;font-size:22px;font-weight:700;color:var(--text-primary);">모임을 만들고, 소통해보세요.</h3>
+                    <p style="margin:0;font-size:15px;color:var(--text-secondary);line-height:1.5;">모임 장소 추천부터 정산까지, 위밋톡과 함께해요.</p>
+                </div>
+
+                <div class="intro-features">
+                    <div class="intro-feature-item">
+                        <div class="intro-feature-icon" style="background:#FFF7ED;">📅</div>
+                        <div class="intro-feature-text">
+                            <h3>"언제 만날까?" → 공유 캘린더로 일정 조율</h3>
+                            <p>모두의 일정을 한눈에 보고<br>가능한 날짜를 쉽게 찾아요</p>
+                        </div>
+                    </div>
+
+                    <div class="intro-feature-item">
+                        <div class="intro-feature-icon" style="background:#ECFDF5;">📍</div>
+                        <div class="intro-feature-text">
+                            <h3>"어디서 만날까?" → 위치 기반 장소 추천</h3>
+                            <p>멤버들의 위치를 고려해<br>최적의 만남 장소를 제안해드려요</p>
+                        </div>
+                    </div>
+
+                    <div class="intro-feature-item">
+                        <div class="intro-feature-icon" style="background:#EFF6FF;">💬</div>
+                        <div class="intro-feature-text">
+                            <h3>"무슨 얘기 나눴더라?" → 모임 전용 메신저</h3>
+                            <p>카톡처럼 편하게,<br>하지만 모임에만 집중할 수 있어요</p>
+                        </div>
+                    </div>
+
+                    <div class="intro-feature-item">
+                        <div class="intro-feature-icon" style="background:#F0FDF4;">💰</div>
+                        <div class="intro-feature-text">
+                            <h3>"정산은 어떻게?" → 자동 정산</h3>
+                            <p>누가 얼마를 냈는지<br>복잡한 계산 없이 자동으로 정리해드려요</p>
+                        </div>
+                    </div>
+
+                    <div class="intro-feature-item">
+                        <div class="intro-feature-icon" style="background:#FDF2F8;">📸</div>
+                        <div class="intro-feature-text">
+                            <h3>"그때 그 사진 어디갔지?" → 추억을 함께 모아요</h3>
+                            <p>모임의 모든 순간을 한곳에 모아<br>언제든 다시 볼 수 있어요</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="intro-footer-fixed">
+                <button class="btn-intro-start" onclick="alert('위밋톡 시작하기 클릭!')" style="
+                    width:100%;
+                    padding:18px 32px;
+                    background:var(--primary);
+                    color:white;
+                    border:none;
+                    border-radius:12px;
+                    font-size:17px;
+                    font-weight:700;
+                    cursor:pointer;
+                    margin-bottom:12px;
+                ">위밋톡 시작하기</button>
+                <button class="btn-signup" onclick="alert('위밋톡 가입하기 클릭!')" style="
+                    width:100%;
+                    padding:18px 32px;
+                    background:linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
+                    color:white;
+                    border:none;
+                    border-radius:12px;
+                    font-size:17px;
+                    font-weight:700;
+                    cursor:pointer;
+                    box-shadow:0 4px 16px rgba(255,107,53,0.25);
+                    margin-bottom:16px;
+                ">위밋톡 가입하기</button>
+                <p style="text-align:center;font-size:13px;color:var(--text-light);margin:0;">
+                    이미 계정이 있으신가요? <a href="#" onclick="alert('로그인 클릭!');return false;" style="color:var(--primary);font-weight:600;text-decoration:none;">로그인</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

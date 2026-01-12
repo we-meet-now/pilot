@@ -714,3 +714,93 @@
 .meeting-type-card:nth-child(3) { animation-delay: 0.15s; }
 .meeting-type-card:nth-child(4) { animation-delay: 0.2s; }
 .meeting-type-card:nth-child(5) { animation-delay: 0.25s; }
+
+/* AI Recommendation Styles */
+.ai-loading {
+    padding: 30px;
+    text-align: center;
+    background: white;
+    border-radius: 12px;
+    border: 2px dashed #E5E7EB;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.loading-spinner {
+    width: 30px;
+    height: 30px;
+    border: 3px solid #E5E7EB;
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.ai-error {
+    padding: 24px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 14px;
+    background: #FEF2F2;
+    border-radius: 12px;
+    border: 1px solid #FECACA;
+}
+
+.btn-retry {
+    margin-top: 12px;
+    padding: 8px 16px;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-retry:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.ai-location-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.location-info {
+    flex: 1;
+}
+
+.btn-map-link {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F3F4F6;
+    border-radius: 50%;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.btn-map-link:hover {
+    background: #DBEAFE;
+    color: var(--primary);
+}
+
+.btn-map-link svg {
+    width: 20px;
+    height: 20px;
+}
+

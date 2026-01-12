@@ -414,7 +414,67 @@ function showRecentLoginMethod() {
     }
 
     // 최근 로그인 섹션 표시
+    // 최근 로그인 섹션 표시
     recentSection.style.display = 'block';
+}
+
+/**
+ * 앱 초기화 시 인증 상태 확인
+ */
+/**
+ * 앱 초기화 시 인증 상태 확인
+ */
+function initAuth() {
+    // 1. Firebase Auth 대신 로컬 스토리지 기반 인증 확인 (js/utils/auth.js와 연동)
+    // utils/auth.js가 먼저 로드되므로 checkAuthStatus()가 이미 실행되었을 수 있음.
+    // 안전하게 localStorage를 직접 확인.
+
+    const authData = localStorage.getItem('wemeettalk_auth');
+    let isLoggedIn = false;
+    let currentUser = null;
+
+    if (authData) {
+        try {
+            const parsed = JSON.parse(authData);
+            isLoggedIn = parsed.isLoggedIn;
+            currentUser = parsed.user;
+        } catch (e) {
+            console.error('Auth data parse error', e);
+        }
+    }
+
+    if (isLoggedIn && currentUser) {
+        console.log('✅ Auto-login: User detected (Local)', currentUser.id);
+
+        // localStorage에서 마지막 채팅방 확인
+        const lastChatRoomId = localStorage.getItem('lastChatRoomId');
+
+        // 이미 로그인된 상태에서 랜딩 페이지나 로그인 페이지에 있다면 이동
+        const currentScreen = document.querySelector('.screen.active');
+        // 화면이 로드되는 시점이라 active 클래스가 없을 수도 있음, 혹은 기본이 landing
+        const isLandingOrLogin = !currentScreen || currentScreen.id === 'screen-landing' || currentScreen.id.includes('login');
+
+        if (isLandingOrLogin) {
+            if (lastChatRoomId) {
+                console.log('🔄 Redirecting to last chat room:', lastChatRoomId);
+
+                // goToChatRoom이 비동기 데이터 로딩을 포함하므로 호출
+                if (typeof goToChatRoom === 'function') {
+                    // 약간의 지연을 주어 DOM이 완전히 준비된 후 실행되도록 함
+                    setTimeout(() => {
+                        goToChatRoom(lastChatRoomId);
+                    }, 100);
+                } else {
+                    if (typeof goToScreen === 'function') goToScreen('home');
+                }
+            } else {
+                console.log('🔄 Redirecting to home');
+                if (typeof goToScreen === 'function') goToScreen('home');
+            }
+        }
+    } else {
+        console.log('ℹ️ No active session (Local)');
+    }
 }
 
 // 전역으로 내보내기
@@ -427,3 +487,4 @@ window.continueAsGuest = continueAsGuest;
 window.handleLogout = handleLogout;
 window.loginWithRecentMethod = loginWithRecentMethod;
 window.showRecentLoginMethod = showRecentLoginMethod;
+window.initAuth = initAuth;
