@@ -1,4 +1,5 @@
 /* Auth Screen Styles */
+#screen-login,
 #screen-login-create,
 #screen-auth-create,
 #screen-auth-join,
@@ -33,4 +34,29 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+}
+
+.recent-login-section {
+    margin-bottom: 8px;
+}
+
+.auth-btn.recent {
+    background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
+    border: none;
+    position: relative;
+    justify-content: space-between;
+}
+
+.auth-btn.recent .auth-btn-text {
+    flex: 1;
+}
+
+.auth-btn.recent .auth-btn-title,
+.auth-btn.recent .auth-btn-desc {
+    color: white;
+}
+
+.auth-btn.recent svg {
+    stroke: white;
+    opacity: 0.8;
 }

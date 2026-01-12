@@ -7,23 +7,48 @@
  * 카카오 로그인
  */
 function loginWithKakao() {
-    // 실제 구현 시 카카오 SDK 연동
-    // 데모용으로 임시 로그인 처리
-    const userData = {
-        id: 'kakao_' + Date.now(),
-        name: '카카오 사용자',
-        email: 'kakao@example.com',
-        provider: 'kakao'
-    };
+    // 최근 로그인 수단 저장
+    saveRecentLoginMethod('kakao');
 
-    if (typeof login === 'function') {
-        login(userData);
-        // 완료 화면으로 이동
-        setTimeout(() => {
-            if (typeof goToScreen === 'function') {
-                goToScreen('complete');
+    // 실제 구현 시 카카오 SDK 연동
+    // localStorage에서 기존 사용자인지 확인
+    const existingUser = localStorage.getItem('wemeet_kakao_user');
+
+    if (existingUser) {
+        // 기존 회원 - 바로 홈으로
+        const userData = JSON.parse(existingUser);
+        if (typeof login === 'function') {
+            login(userData);
+            if (typeof showToast === 'function') {
+                showToast(`다시 오셨군요, ${userData.name}님! 👋`);
             }
-        }, 500);
+            setTimeout(() => {
+                if (typeof goToScreen === 'function') {
+                    goToScreen('home');
+                }
+            }, 500);
+        }
+    } else {
+        // 신규 회원 - 가입 완료 및 온보딩
+        const userData = {
+            id: 'kakao_' + Date.now(),
+            name: '카카오 사용자',
+            email: 'kakao@example.com',
+            provider: 'kakao'
+        };
+
+        // 사용자 정보 저장
+        localStorage.setItem('wemeet_kakao_user', JSON.stringify(userData));
+
+        if (typeof login === 'function') {
+            login(userData);
+            // 완료 화면으로 이동
+            setTimeout(() => {
+                if (typeof goToScreen === 'function') {
+                    goToScreen('complete');
+                }
+            }, 500);
+        }
     }
 }
 
@@ -31,23 +56,48 @@ function loginWithKakao() {
  * 구글 로그인
  */
 function loginWithGoogle() {
-    // 실제 구현 시 구글 SDK 연동
-    // 데모용으로 임시 로그인 처리
-    const userData = {
-        id: 'google_' + Date.now(),
-        name: '구글 사용자',
-        email: 'google@example.com',
-        provider: 'google'
-    };
+    // 최근 로그인 수단 저장
+    saveRecentLoginMethod('google');
 
-    if (typeof login === 'function') {
-        login(userData);
-        // 완료 화면으로 이동
-        setTimeout(() => {
-            if (typeof goToScreen === 'function') {
-                goToScreen('complete');
+    // 실제 구현 시 구글 SDK 연동
+    // localStorage에서 기존 사용자인지 확인
+    const existingUser = localStorage.getItem('wemeet_google_user');
+
+    if (existingUser) {
+        // 기존 회원 - 바로 홈으로
+        const userData = JSON.parse(existingUser);
+        if (typeof login === 'function') {
+            login(userData);
+            if (typeof showToast === 'function') {
+                showToast(`다시 오셨군요, ${userData.name}님! 👋`);
             }
-        }, 500);
+            setTimeout(() => {
+                if (typeof goToScreen === 'function') {
+                    goToScreen('home');
+                }
+            }, 500);
+        }
+    } else {
+        // 신규 회원 - 가입 완료 및 온보딩
+        const userData = {
+            id: 'google_' + Date.now(),
+            name: '구글 사용자',
+            email: 'google@example.com',
+            provider: 'google'
+        };
+
+        // 사용자 정보 저장
+        localStorage.setItem('wemeet_google_user', JSON.stringify(userData));
+
+        if (typeof login === 'function') {
+            login(userData);
+            // 완료 화면으로 이동
+            setTimeout(() => {
+                if (typeof goToScreen === 'function') {
+                    goToScreen('complete');
+                }
+            }, 500);
+        }
     }
 }
 
@@ -81,6 +131,9 @@ function formatPhoneNumber(input) {
  * 전화번호 로그인 - 가입 화면으로 이동
  */
 function loginWithPhone() {
+    // 최근 로그인 수단 저장
+    saveRecentLoginMethod('phone');
+
     // 전화번호 로그인 화면으로 이동
     if (typeof goToScreen === 'function') {
         goToScreen('phone-login');
@@ -136,9 +189,9 @@ function submitPhoneLogin(event) {
             showToast(`환영합니다, ${user.name}님! 👋`);
         }
 
-        // 메인 화면으로 이동
+        // 기존 회원 로그인이므로 바로 홈(지도)으로 이동
         if (typeof goToScreen === 'function') {
-            goToScreen('main');
+            goToScreen('home');
         }
     }
 }
@@ -264,10 +317,10 @@ function continueAsGuest() {
         showToast('게스트 모드로 계속합니다');
     }
 
-    // 메인 화면으로 이동
+    // 홈(지도) 화면으로 이동
     setTimeout(() => {
         if (typeof goToScreen === 'function') {
-            goToScreen('main');
+            goToScreen('home');
         }
     }, 500);
 }
@@ -287,6 +340,83 @@ function handleLogout() {
     }
 }
 
+/**
+ * 최근 로그인 수단 저장
+ * @param {string} provider - 'kakao', 'google', 'phone'
+ */
+function saveRecentLoginMethod(provider) {
+    localStorage.setItem('wemeet_recent_login', provider);
+}
+
+/**
+ * 최근 로그인 수단 불러오기
+ * @returns {string|null} - 'kakao', 'google', 'phone' 또는 null
+ */
+function getRecentLoginMethod() {
+    return localStorage.getItem('wemeet_recent_login');
+}
+
+/**
+ * 최근 로그인 수단으로 빠른 로그인
+ */
+function loginWithRecentMethod() {
+    const recent = getRecentLoginMethod();
+
+    if (recent === 'kakao') {
+        loginWithKakao();
+    } else if (recent === 'google') {
+        loginWithGoogle();
+    } else if (recent === 'phone') {
+        loginWithPhone();
+    }
+}
+
+/**
+ * 로그인 화면 진입 시 최근 로그인 수단 표시
+ */
+function showRecentLoginMethod() {
+    const recent = getRecentLoginMethod();
+    const recentSection = document.getElementById('recent-login-method');
+
+    if (!recent || !recentSection) return;
+
+    // 타이틀과 서브타이틀 변경
+    const loginTitle = document.getElementById('login-title');
+    const loginSubtitle = document.getElementById('login-subtitle');
+
+    if (loginTitle) {
+        loginTitle.textContent = '다시 오셨네요! 👋';
+    }
+
+    if (loginSubtitle) {
+        loginSubtitle.textContent = '최근 사용한 방법으로 빠르게 로그인하세요';
+    }
+
+    const recentIcon = document.getElementById('recent-icon');
+    const recentTitle = document.getElementById('recent-title');
+    const recentDesc = document.getElementById('recent-desc');
+
+    if (recent === 'kakao') {
+        recentIcon.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24"><path fill="#3C1E1E" d="M12 3c-5.52 0-10 3.59-10 8 0 2.69 1.78 5.06 4.46 6.43-.13.47-.85 3.04-.87 3.25 0 0-.02.18.09.25.11.07.24.02.24.02.32-.05 3.72-2.43 4.3-2.86.58.09 1.18.13 1.78.13 5.52 0 10-3.59 10-8s-4.48-8-10-8z"/></svg>';
+        recentIcon.className = 'auth-btn-icon kakao';
+        recentTitle.textContent = '카카오로 계속하기';
+        recentDesc.textContent = '마지막으로 사용한 방법';
+    } else if (recent === 'google') {
+        recentIcon.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>';
+        recentIcon.className = 'auth-btn-icon google';
+        recentTitle.textContent = 'Google로 계속하기';
+        recentDesc.textContent = '마지막으로 사용한 방법';
+    } else if (recent === 'phone') {
+        recentIcon.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>';
+        recentIcon.className = 'auth-btn-icon phone';
+        recentTitle.textContent = '전화번호로 계속하기';
+        recentDesc.textContent = '마지막으로 사용한 방법';
+    }
+
+    // 최근 로그인 섹션 표시
+    recentSection.style.display = 'block';
+}
+
 // 전역으로 내보내기
 window.formatPhoneNumber = formatPhoneNumber;
 window.loginWithKakao = loginWithKakao;
@@ -295,3 +425,5 @@ window.loginWithPhone = loginWithPhone;
 window.submitPhoneSignup = submitPhoneSignup;
 window.continueAsGuest = continueAsGuest;
 window.handleLogout = handleLogout;
+window.loginWithRecentMethod = loginWithRecentMethod;
+window.showRecentLoginMethod = showRecentLoginMethod;
