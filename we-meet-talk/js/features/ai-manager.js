@@ -3,7 +3,10 @@
  * AI 매니저 탭 기능 관리 (장소 추천 및 투표 연동)
  */
 
-let currentChatData = null;
+// currentChatData is already declared in global scope or another file if integrated tightly,
+// but let's check if it's uniquely needed here.
+// The error says it's already declared.
+// I will check where else it's declared.
 
 /**
  * AI 매니저 초기화
@@ -170,8 +173,53 @@ async function addCandidateToVote(btn, name, address) {
     }
 }
 
+/**
+ * AI 매니저 진행 상황 업데이트
+ * @param {Object} chatRoomData - 채팅방 데이터
+ */
+function updateAIProgress(chatRoomData) {
+    if (!chatRoomData) return;
+
+    const status = chatRoomData.status || 'ready';
+    const statusDescEl = document.getElementById('ai-status-desc');
+
+    // 모든 스텝 비활성화 및 완료 처리 초기화
+    document.querySelectorAll('.step-item').forEach(item => {
+        item.classList.remove('active', 'done');
+    });
+
+    if (statusDescEl) {
+        if (status === 'finalized') {
+            // 1단계 완료, 2단계 활성
+            const step1 = document.getElementById('step-1');
+            const step2 = document.getElementById('step-2');
+            if (step1) step1.classList.add('done');
+            if (step2) step2.classList.add('active');
+
+            statusDescEl.innerHTML = '약속 장소가 <strong>확정</strong>되었어요! 🎉';
+        } else if (status === 'settling') {
+            // 1, 2단계 완료, 3단계 활성
+            const step1 = document.getElementById('step-1');
+            const step2 = document.getElementById('step-2');
+            const step3 = document.getElementById('step-3');
+            if (step1) step1.classList.add('done');
+            if (step2) step2.classList.add('done');
+            if (step3) step3.classList.add('active');
+
+            statusDescEl.innerHTML = '즐거운 모임 되셨나요? <strong>정산</strong>을 시작해요 💸';
+        } else {
+            // 기본: 1단계 활성
+            const step1 = document.getElementById('step-1');
+            if (step1) step1.classList.add('active');
+
+            statusDescEl.innerHTML = '현재 <strong>장소 선정</strong> 중이에요 📍';
+        }
+    }
+}
+
 // 전역 내보내기
 window.initAIManager = initAIManager;
 window.triggerAIRecommendation = triggerAIRecommendation;
 window.addCandidateToVote = addCandidateToVote;
 window.closeAIRecommendations = closeAIRecommendations;
+window.updateAIProgress = updateAIProgress;
