@@ -1,4 +1,33 @@
 /* Calendar Tab Styles */
+.btn-sync-calendar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    background: white;
+    border: 1px solid #DADCE0;
+    border-radius: 50px;
+    color: #3C4043;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+}
+
+.btn-sync-calendar:hover {
+    background: #F8F9FA;
+    border-color: #D2D4D7;
+}
+
+.btn-sync-calendar:active {
+    background: #E8EAED;
+    box-shadow: none;
+}
+
 .calendar-sync-status {
     display: flex;
     gap: 8px;
@@ -85,7 +114,15 @@
 .cal-day.busy {
     color: var(--text-light);
     text-decoration: line-through;
+    background: #F1F3F4;
+    /* 가벼운 회색으로 변경 (비활성 느낌) */
+}
+
+.cal-day.my-busy {
     background: #FEE2E2;
+    border: 1.5px solid #EF4444;
+    color: #B91C1C;
+    font-weight: 600;
 }
 
 .cal-day.available {
@@ -108,6 +145,8 @@
     background: var(--primary) !important;
     color: white !important;
     font-weight: 600;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    z-index: 2;
 }
 
 .calendar-legend {
@@ -140,8 +179,13 @@
     border: 2px solid #F59E0B;
 }
 
-.legend-dot.busy {
+.legend-dot.my-busy {
     background: #FEE2E2;
+    border: 1px solid #EF4444;
+}
+
+.legend-dot.busy {
+    background: #F1F3F4;
 }
 
 .calendar-selected-info {
