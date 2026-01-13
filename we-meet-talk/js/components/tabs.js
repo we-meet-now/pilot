@@ -25,6 +25,28 @@ function switchTab(tabId, btn) {
     const panel = document.getElementById('tab-' + tabId);
     panel.classList.add('active');
     panel.style.display = tabId === 'chat' ? 'flex' : 'block';
+
+    // 투표 탭 진입 시 데이터 갱신
+    if (tabId === 'vote' && window.currentChatRoomId && window.db) {
+        refreshVoteTab(window.currentChatRoomId);
+    }
+}
+
+/**
+ * 투표 탭 데이터 갱신
+ */
+async function refreshVoteTab(chatRoomId) {
+    try {
+        const doc = await window.db.collection('chatrooms').doc(chatRoomId).get();
+        if (doc.exists) {
+            const data = doc.data();
+            if (typeof renderVoteOptions === 'function') {
+                renderVoteOptions(data.locationCandidates || []);
+            }
+        }
+    } catch (error) {
+        console.error('Failed to refresh vote tab:', error);
+    }
 }
 
 /**
@@ -60,6 +82,15 @@ async function goToChatRoom(chatRoomId) {
                 const mainScreen = document.getElementById('screen-main');
                 if (mainScreen) {
                     const titleEl = mainScreen.querySelector('.main-header-info h2');
+
+                    if (titleEl) {
+                        titleEl.textContent = chatRoomData.name || '새 모임';
+                    }
+
+                    // 투표 탭 데이터 렌더링
+                    if (typeof renderVoteOptions === 'function') {
+                        renderVoteOptions(chatRoomData.locationCandidates || []);
+                    }
                     const participantCountEl = mainScreen.querySelector('.main-header-info span');
 
                     if (titleEl) {
@@ -72,6 +103,9 @@ async function goToChatRoom(chatRoomId) {
 
                     // 현재 채팅방 ID 저장
                     window.currentChatRoomId = chatRoomId;
+
+                    // 세션 유지를 위해 로컬 스토리지에 저장
+                    localStorage.setItem('lastChatRoomId', chatRoomId);
                 }
             } else {
                 console.error('채팅방을 찾을 수 없습니다:', chatRoomId);

@@ -42,7 +42,7 @@
     background: #3B82F6;
     border: 3px solid white;
     border-radius: 50%;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     position: relative;
     z-index: 1;
 }
@@ -67,7 +67,7 @@
     justify-content: center;
     color: white;
     font-size: 14px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .dest-icon::after {
@@ -82,7 +82,7 @@
     border-radius: 8px;
     font-size: 12px;
     font-weight: 500;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     white-space: nowrap;
 }
 
@@ -97,10 +97,21 @@
 }
 
 .home-bottom-sheet {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 50;
     background: var(--card);
     border-radius: 24px 24px 0 0;
     padding: 12px 20px 100px;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(0);
+}
+
+.home-bottom-sheet.collapsed {
+    transform: translateY(calc(100% - 140px));
 }
 
 .sheet-handle {

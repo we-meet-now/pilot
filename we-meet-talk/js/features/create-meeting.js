@@ -730,39 +730,69 @@ function requestLocationPermission() {
 /**
  * AI 장소 추천 생성
  */
-function generateAILocationRecommendations(lat, lng) {
+async function generateAILocationRecommendations(lat, lng) {
     const container = document.getElementById('ai-location-recommendations');
     if (!container) return;
 
-    // 모임 타입과 시간대를 기반으로 추천
-    const timeHour = parseInt(meetingData.time.split(':')[0]);
-    let recommendations = [];
+    // Loading State 표시
+    container.innerHTML = `
+        <div class="ai-loading">
+            <div class="loading-spinner"></div>
+            <p>AI가 찰떡같은 장소를 찾고 있어요...</p>
+        </div>
+    `;
 
-    if (meetingData.type.includes('카페') || meetingData.type.includes('브런치')) {
-        recommendations = [
-            { name: '스타벅스 강남점', address: '서울 강남구 강남대로 396', reason: '조용한 분위기' },
-            { name: '블루보틀 성수점', address: '서울 성동구 아차산로 64', reason: '감성적인 공간' },
-            { name: '커피빈 신사점', address: '서울 강남구 압구정로 173', reason: '접근성 좋음' }
-        ];
-    } else if (meetingData.type.includes('식사') || meetingData.type.includes('저녁')) {
-        recommendations = [
-            { name: '한우마을 강남점', address: '서울 강남구 테헤란로 152', reason: '모임에 적합' },
-            { name: '스시 사토', address: '서울 강남구 논현로 652', reason: '분위기 좋음' },
-            { name: '마포갈매기 강남점', address: '서울 강남구 강남대로 428', reason: '단체 예약 가능' }
-        ];
-    } else if (meetingData.type.includes('영화') || meetingData.type.includes('문화')) {
-        recommendations = [
-            { name: 'CGV 강남', address: '서울 강남구 강남대로 428', reason: '최신 시설' },
-            { name: '메가박스 코엑스점', address: '서울 강남구 영동대로 513', reason: '다양한 상영관' },
-            { name: '롯데시네마 월드타워점', address: '서울 송파구 올림픽로 300', reason: '프리미엄 좌석' }
-        ];
-    } else {
-        // 기본 추천
-        recommendations = [
-            { name: '강남역 근처 카페거리', address: '서울 강남구 강남대로 지하 396', reason: '접근성 우수' },
-            { name: '코엑스몰', address: '서울 강남구 영동대로 513', reason: '다양한 선택지' },
-            { name: '가로수길', address: '서울 강남구 신사동', reason: '여유로운 분위기' }
-        ];
+    try {
+        // 위치 정보 (좌표 -> 주소 변환이 이상적이나 번거로우므로 일단 '내 주변' 또는 좌표 사용)
+        // 실제 서비스에서는 Reverse Geocoding API가 필요할 수 있음
+        const locationStr = `${lat},${lng}`;
+        const timeStr = meetingData.time || '시간 미정';
+
+        // AI 서비스 호출
+        const recommendations = await AIService.getRecommendations(meetingData.type, locationStr, timeStr);
+
+        // 결과 렌더링
+        container.innerHTML = '';
+
+        if (recommendations.length === 0) {
+            container.innerHTML = '<div class="no-result">추천 결과가 없습니다.</div>';
+            return;
+        }
+
+        recommendations.forEach((rec) => {
+            const card = document.createElement('div');
+            card.className = 'ai-location-card';
+
+            // 지도 검색 링크 생성 (카카오맵 등)
+            const mapLink = `https://map.kakao.com/link/search/${encodeURIComponent(rec.name)}`;
+
+            card.innerHTML = `
+                <div class="location-info">
+                    <div class="location-name">${rec.name}</div>
+                    <div class="location-address">${rec.address}</div>
+                    <span class="location-reason">✨ ${rec.reason}</span>
+                </div>
+                <a href="${mapLink}" target="_blank" class="btn-map-link" onclick="event.stopPropagation()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 11a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 0 1-2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z"/></svg>
+                </a>
+            `;
+
+            // 카드 클릭 시 선택 처리
+            card.onclick = () => selectLocation(card, rec.name, rec.address);
+            container.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error('AI Recommendation failed:', error);
+        container.innerHTML = `
+            <div class="ai-error">
+                <p>추천을 불러오지 못했어요 😢</p>
+                <button class="btn-retry" onclick="requestLocationPermission()">다시 시도</button>
+            </div>
+        `;
+
+        // Fallback: 에러 시 기존 Mock 데이터라도 보여줄지 고민
+        // 여기서는 그냥 에러 표시
     }
 
     // 권한 안내 숨기기
@@ -770,21 +800,6 @@ function generateAILocationRecommendations(lat, lng) {
     if (permissionNotice) {
         permissionNotice.style.display = 'none';
     }
-
-    // 카드 생성
-    container.innerHTML = '';
-    recommendations.forEach((rec, index) => {
-        const card = document.createElement('div');
-        card.className = 'ai-location-card';
-        card.innerHTML = `
-            <div class="location-name">${rec.name}</div>
-            <div class="location-address">${rec.address}</div>
-            <span class="location-reason">✨ ${rec.reason}</span>
-        `;
-
-        card.onclick = () => selectLocation(card, rec.name, rec.address);
-        container.appendChild(card);
-    });
 }
 
 /**
@@ -888,10 +903,13 @@ async function completeMeetingCreation() {
         const chatRoomData = {
             name: meetingData.type || '새 모임',
             date: meetingData.date || null,
+            dateRange: meetingData.dateRange || null, // 날짜 범위 저장
             time: meetingData.time || null,
+            timeDecided: meetingData.timeDecided !== false, // 시간 확정 여부 저장
             dateDecided: meetingData.dateDecided || false,
             location: meetingData.location || null,
-            locationDecided: meetingData.locationDecided || false,
+            locationDecided: false, // 투표를 위해 false로 설정
+            locationCandidates: meetingData.location ? [meetingData.location] : [], // 선택된 장소를 후보로 추가
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             createdBy: userId,
             creatorName: userName,
