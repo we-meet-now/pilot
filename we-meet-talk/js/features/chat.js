@@ -86,35 +86,148 @@ async function loadChatRoomList() {
 /**
  * 메시지 전송
  */
-function sendMessage() {
+async function sendMessage() {
     const input = document.getElementById('chat-input');
-    if (!input) return;
+    if (!input || !window.currentChatRoomId || !window.db) return;
 
     const msg = input.value.trim();
     if (!msg) return;
 
+    const currentUser = window.auth?.currentUser;
+    const userName = currentUser?.displayName || '나';
+    const userPhoto = currentUser?.photoURL || '';
+    const userId = currentUser?.uid || 'anonymous';
+
+    const messageData = {
+        text: msg,
+        senderId: userId,
+        senderName: userName,
+        senderPhoto: userPhoto,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        type: 'text'
+    };
+
+    try {
+        // Firestore에 저장
+        await window.db.collection('chatrooms').doc(window.currentChatRoomId)
+            .collection('messages').add(messageData);
+
+        // 입력창 초기화
+        input.value = '';
+
+        // 실시간 리스너가 아니므로 수동 갱신 (사용자 경험을 위해)
+        loadChatMessages(window.currentChatRoomId);
+    } catch (error) {
+        console.error('메시지 전송 실패:', error);
+        if (typeof showToast === 'function') showToast('메시지 전송에 실패했습니다.');
+    }
+}
+
+/**
+ * AI 매니저 카드 메시지 전송 (DB 저장 포함)
+ * @param {string} htmlContent - 메시지 버블 안에 들어갈 HTML 내용
+ */
+async function sendRichAIMessage(htmlContent) {
+    if (!window.currentChatRoomId || !window.db) return;
+
+    const messageData = {
+        text: htmlContent,
+        senderId: 'ai-manager',
+        senderName: 'AI 매니저',
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        type: 'rich-ai'
+    };
+
+    try {
+        await window.db.collection('chatrooms').doc(window.currentChatRoomId)
+            .collection('messages').add(messageData);
+
+        loadChatMessages(window.currentChatRoomId);
+    } catch (error) {
+        console.error('AI 메시지 저장 실패:', error);
+    }
+}
+
+/**
+ * 채팅방 메시지 로드
+ */
+async function loadChatMessages(chatRoomId) {
+    if (!chatRoomId || !window.db) return;
+
     const container = document.getElementById('chat-messages');
     if (!container) return;
 
-    // 메시지 HTML 생성
-    const messageHtml = `
-        <div class="message sent">
-            <div class="message-avatar" style="background:#8B5CF6">도</div>
-            <div class="message-content">
-                <div class="message-bubble">${msg}</div>
-                <span class="message-time">방금 전</span>
+    try {
+        const snapshot = await window.db.collection('chatrooms').doc(chatRoomId)
+            .collection('messages').orderBy('timestamp', 'asc').get();
+
+        container.innerHTML = '';
+
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            renderMessage(data);
+        });
+
+        // 스크롤 최하단
+        container.scrollTop = container.scrollHeight;
+    } catch (error) {
+        console.error('메시지 로드 실패:', error);
+    }
+}
+
+/**
+ * 개별 메시지 렌더링
+ */
+function renderMessage(data) {
+    const container = document.getElementById('chat-messages');
+    if (!container) return;
+
+    const currentUser = window.auth?.currentUser;
+    const isMine = data.senderId === (currentUser?.uid || 'anonymous');
+    const time = data.timestamp ? new Date(data.timestamp.toDate()).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' }) : '방금 전';
+
+    let html = '';
+
+    if (data.type === 'rich-ai') {
+        html = `
+            <div class="message ai-message">
+                <div class="message-avatar" style="background:#EEF2FF; border:1px solid #C7D2FE">✨</div>
+                <div class="message-content">
+                    <span class="message-name">AI 매니저</span>
+                    <div class="message-bubble ai-bubble">${data.text}</div>
+                    <span class="message-time">${time}</span>
+                </div>
             </div>
-        </div>
-    `;
+        `;
+    } else {
+        const initial = data.senderName ? data.senderName.charAt(0) : '익';
+        const color = isMine ? '#C084FC' : '#8B5CF6'; // 단순화를 위해
 
-    // 메시지 추가
-    container.innerHTML += messageHtml;
+        if (isMine) {
+            html = `
+                <div class="message sent">
+                    <div class="message-content">
+                        <div class="message-bubble">${data.text}</div>
+                        <span class="message-time">${time}</span>
+                    </div>
+                    <div class="message-avatar" style="background:${color}; color:white">${initial}</div>
+                </div>
+            `;
+        } else {
+            html = `
+                <div class="message">
+                    <div class="message-avatar" style="background:#F3F4F6; border:1px solid #E5E7EB">${initial}</div>
+                    <div class="message-content">
+                        <span class="message-name">${data.senderName}</span>
+                        <div class="message-bubble">${data.text}</div>
+                        <span class="message-time">${time}</span>
+                    </div>
+                </div>
+            `;
+        }
+    }
 
-    // 입력창 초기화
-    input.value = '';
-
-    // 스크롤을 최하단으로
-    container.scrollTop = container.scrollHeight;
+    container.insertAdjacentHTML('beforeend', html);
 }
 
 /**
@@ -233,3 +346,10 @@ window.closeAddFriendModal = closeAddFriendModal;
 window.inviteViaKakao = inviteViaKakao;
 window.inviteViaContacts = inviteViaContacts;
 window.inviteViaEmail = inviteViaEmail;
+window.sendRichAIMessage = sendRichAIMessage;
+window.loadChatMessages = loadChatMessages;
+
+// 페이지 로드 시 구글 캘린더 서비스 초기화
+if (typeof initGoogleCalendar === 'function') {
+    initGoogleCalendar();
+}
