@@ -408,23 +408,23 @@
                             <h3 class="progress-title">진행 상황</h3>
                             <div class="meeting-progress-card">
                                 <div class="progress-steps">
-                                    <div class="step-item active">
+                                    <div class="step-item active" id="step-1">
                                         <div class="step-circle">1</div>
                                         <span class="step-label">모임 준비</span>
                                     </div>
                                     <div class="step-line"></div>
-                                    <div class="step-item">
+                                    <div class="step-item" id="step-2">
                                         <div class="step-circle">2</div>
                                         <span class="step-label">확정</span>
                                     </div>
                                     <div class="step-line"></div>
-                                    <div class="step-item">
+                                    <div class="step-item" id="step-3">
                                         <div class="step-circle">3</div>
                                         <span class="step-label">정산</span>
                                     </div>
                                 </div>
                                 <div class="current-status-box">
-                                    <p class="status-desc">현재 <strong>장소 선정</strong> 중이에요 📍</p>
+                                    <p class="status-desc" id="ai-status-desc">현재 <strong>장소 선정</strong> 중이에요 📍</p>
                                 </div>
                             </div>
                         </div>
@@ -446,6 +446,18 @@
                     <div class="calendar-header">
                         <h3 class="calendar-title">📅 OO톡방 공유 캘린더</h3>
                         <p class="calendar-desc">각자의 캘린더를 공유해서 모두가 가능한 날을 찾아요</p>
+                        <button class="btn-sync-calendar" onclick="syncGoogleCalendar()">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path
+                                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                                    fill="#4285F4" />
+                                <path
+                                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                                    fill="#34A853" />
+                            </svg>
+                            내 일정 불러와서 빈 시간 찾기
+                        </button>
                     </div>
 
                     <!-- 캘린더 연동 상태 -->
@@ -547,8 +559,12 @@
                             <span>추천일</span>
                         </div>
                         <div class="legend-item">
+                            <span class="legend-dot my-busy"></span>
+                            <span>나의 선약</span>
+                        </div>
+                        <div class="legend-item">
                             <span class="legend-dot busy"></span>
-                            <span>선약 있음</span>
+                            <span>타인의 선약</span>
                         </div>
                     </div>
 
@@ -565,7 +581,8 @@
                         </div>
                     </div>
 
-                    <button class="btn-vote" onclick="confirmCalendarDate()">일정 확인하기</button>
+                    <button class="btn-vote" id="btn-confirm-calendar" onclick="handleCalendarAction()" disabled>날짜를
+                        선택해주세요</button>
                 </div>
                 <!-- Vote Tab -->
                 <div class="tab-panel" id="tab-vote">
@@ -584,6 +601,16 @@
                             <p class="ai-tip-text"><strong>AI 추천</strong><br>장소 후보를 분석 중이에요...</p>
                         </div>
 
+                        <!-- 최종 확정된 장소 표시 (기본 숨김) -->
+                        <div id="final-location-banner" class="final-banner" style="display: none;">
+                            <div class="final-banner-icon">📍</div>
+                            <div class="final-banner-content">
+                                <p class="final-label">최종 약속 장소 확정!</p>
+                                <p class="final-name" id="final-location-name">장소명</p>
+                                <p class="final-address" id="final-location-address">주소 정보</p>
+                            </div>
+                        </div>
+
                         <div class="vote-options">
                             <!-- JS로 동적 생성됨 -->
                         </div>
@@ -595,71 +622,206 @@
                             <button class="soft-vote-btn" onclick="selectSoftVote(this)"><span
                                     class="emoji">😅</span>힘들어요</button>
                         </div>
-                        <button class="btn-vote" onclick="submitVote()">투표하기</button>
+
+                        <!-- 투표 참여 버튼 -->
+                        <button class="btn-vote" id="btn-vote-submit" onclick="submitVote()">투표하기</button>
+
+                        <!-- 방장 전용 관리 도구 -->
+                        <div id="host-vote-actions" class="host-actions" style="display: none;">
+                            <button class="btn-secondary" id="btn-close-vote" onclick="closeVote()">투표 마감하기</button>
+                        </div>
                     </div>
                 </div>
                 <!-- Settlement Tab -->
                 <div class="tab-panel" id="tab-settle">
-                    <div class="settlement-summary">
-                        <p class="settlement-label">총 정산 금액</p>
-                        <p class="settlement-amount">₩180,000</p>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width:66%"></div>
-                        </div>
-                        <div class="progress-text"><span>4명 완료</span><span>2명 남음</span></div>
+                    <div class="settle-header">
+                        <button class="btn-prev-step" onclick="prevSettlementStep()"><svg width="20" height="20"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 12H5M12 19l-7-7 7-7" />
+                            </svg></button>
+                        <span>위밋톡 정산 요청하기</span>
                     </div>
-                    <div class="settlement-list">
-                        <div class="settlement-item">
-                            <div class="settlement-avatar" style="background:#FF6B35">민</div>
-                            <div class="settlement-info">
-                                <p class="settlement-name">민지 (총무)</p>
-                                <p class="settlement-detail">받을 금액: ₩150,000</p>
+
+                    <div class="settle-content">
+                        <!-- Settlement Status View (Visible when settling) -->
+                        <div id="settle-status-view" class="step">
+                            <div class="settle-final-card">
+                                <div class="settle-final-badge" style="background:#FEE2E2; color:#EF4444;">정산 진행 중</div>
+                                <h2 id="status-store">위밋 식당</h2>
+                                <div class="settle-final-amount" id="status-amount">0원</div>
+                                <div class="settle-account-info">
+                                    <div class="settle-info-row">
+                                        <span class="info-label">요청자</span> <b id="status-requester">고도희</b>
+                                    </div>
+                                    <div class="settle-info-row">
+                                        <span class="info-label">계좌정보</span> <b id="status-account">카카오뱅크 3333...</b>
+                                    </div>
+                                </div>
+                                <button class="btn-settle-toss" onclick="copyAndOpenTossFromStatus()">송금하기</button>
+                                <div id="settle-completion-container"></div>
+                                <button class="btn-settle-outline"
+                                    style="margin-top:12px; border-color:#E2E8F0; color:#64748B;"
+                                    onclick="resetSettlement()">정산 취소/종료</button>
                             </div>
-                            <span class="settlement-status done">수금 중</span>
                         </div>
-                        <div class="settlement-item">
-                            <div class="settlement-avatar" style="background:#667EEA">수</div>
-                            <div class="settlement-info">
-                                <p class="settlement-name">수현</p>
-                                <p class="settlement-detail">₩30,000</p>
+
+                        <!-- Step 1: Member Selection -->
+                        <div id="settle-step1" class="step active">
+                            <h2>누구와 함께했나요?</h2>
+                            <p class="sub-desc">함께한 멤버를 모두 선택해주세요.</p>
+
+                            <div class="settle-select-all">
+                                <label class="settle-member-item">
+                                    <input type="checkbox" id="settle-select-all-check"
+                                        onchange="toggleAllSettlementMembers(this)">
+                                    <span style="font-weight: 700;">전체 선택</span>
+                                </label>
                             </div>
-                            <span class="settlement-status done">완료</span>
+
+                            <div class="settle-member-list">
+                                <label class="settle-member-item"><input type="checkbox" value="고도희" checked disabled>
+                                    고도희 (나)</label>
+                                <label class="settle-member-item"><input type="checkbox" value="민지"
+                                        class="settle-member-check"> 민지</label>
+                                <label class="settle-member-item"><input type="checkbox" value="수현"
+                                        class="settle-member-check"> 수현</label>
+                                <label class="settle-member-item"><input type="checkbox" value="지혜"
+                                        class="settle-member-check"> 지혜</label>
+                                <label class="settle-member-item"><input type="checkbox" value="현우"
+                                        class="settle-member-check"> 현우</label>
+                                <label class="settle-member-item"><input type="checkbox" value="서연"
+                                        class="settle-member-check"> 서연</label>
+                            </div>
+                            <button class="btn-settle-next" onclick="nextSettlementStep(2)">다음으로</button>
                         </div>
-                        <div class="settlement-item">
-                            <div class="settlement-avatar" style="background:#00D4AA">지</div>
-                            <div class="settlement-info">
-                                <p class="settlement-name">지우</p>
-                                <p class="settlement-detail">₩30,000</p>
+
+                        <!-- Step 2: Receipt Upload -->
+                        <div id="settle-step2" class="step">
+                            <h2>영수증을 등록할까요?</h2>
+                            <p class="sub-desc">사진을 찍으면 내용을 보며 입력할 수 있어요.</p>
+                            <div class="settle-photo-upload"
+                                onclick="document.getElementById('settle-fileInput').click()">
+                                <div id="settle-upload-placeholder">📸 사진 촬영 또는 업로드</div>
+                                <img id="settle-preview-img">
                             </div>
-                            <span class="settlement-status done">완료</span>
+                            <input type="file" id="settle-fileInput" style="display:none"
+                                onchange="handleReceiptImage(event)">
+                            <button class="btn-settle-outline" style="margin-top: 20px;"
+                                onclick="nextSettlementStep(3)">영수증 없이 직접 입력</button>
                         </div>
-                        <div class="settlement-item">
-                            <div class="settlement-avatar" style="background:#F59E0B">현</div>
-                            <div class="settlement-info">
-                                <p class="settlement-name">현수</p>
-                                <p class="settlement-detail">₩30,000</p>
+
+                        <!-- Step 3: Amount Confirmation -->
+                        <div id="settle-step3" class="step">
+                            <h2>정산 정보를 확인해주세요</h2>
+                            <div class="settle-input-group">
+                                <label>상호명</label>
+                                <input type="text" id="settle-storeName" class="settle-input-field"
+                                    placeholder="예: 위밋 식당">
                             </div>
-                            <span class="settlement-status done">완료</span>
+                            <div class="settle-input-group">
+                                <label>총 결제 금액</label>
+                                <input type="number" id="settle-totalAmount" class="settle-input-field" placeholder="0">
+                            </div>
+                            <button class="btn-settle-next" onclick="nextSettlementStep(4)">금액 확인 완료</button>
                         </div>
-                        <div class="settlement-item">
-                            <div class="settlement-avatar" style="background:#EF4444">서</div>
-                            <div class="settlement-info">
-                                <p class="settlement-name">서연</p>
-                                <p class="settlement-detail">₩30,000</p>
+
+                        <!-- Step 4: Account Info Input -->
+                        <div id="settle-step4" class="step">
+                            <h2>어느 계좌로 받을까요?</h2>
+                            <p class="sub-desc">정산 받을 계좌 정보를 입력해주세요.</p>
+
+                            <div class="settle-input-group">
+                                <label>예금주명</label>
+                                <input type="text" id="settle-account-name" class="settle-input-field"
+                                    placeholder="예) 고도희">
                             </div>
-                            <span class="settlement-status pending">미완료</span>
+                            <div class="settle-input-group">
+                                <label>은행</label>
+                                <input type="text" id="settle-bank-name" class="settle-input-field"
+                                    placeholder="예) 카카오뱅크">
+                            </div>
+                            <div class="settle-input-group">
+                                <label>계좌번호</label>
+                                <input type="text" id="settle-account-number" class="settle-input-field"
+                                    placeholder="'-' 없이 입력">
+                            </div>
+
+                            <button class="btn-settle-next" onclick="confirmAccountInfo()">다음으로</button>
                         </div>
-                        <div class="settlement-item">
-                            <div class="settlement-avatar" style="background:#8B5CF6">도</div>
-                            <div class="settlement-info">
-                                <p class="settlement-name">도희 (나)</p>
-                                <p class="settlement-detail">₩30,000</p>
+
+                        <!-- Step 5: Split Mode Selection -->
+                        <div id="settle-step5" class="step" style="justify-content: center;">
+                            <h2>어떻게 나눌까요?</h2>
+                            <button class="btn-settle-outline" onclick="initN1Settlement()">1/N 정산 (똑같이 나누기)</button>
+                            <button class="btn-settle-outline" onclick="initIndividualSettlement()">개별 정산 (따로
+                                입력하기)</button>
+                        </div>
+
+                        <!-- Step 6: Individual Amount Entry -->
+                        <div id="settle-step6" class="step">
+                            <h2>개별 금액 입력</h2>
+                            <div class="settle-receipt-viewer">
+                                <img id="settle-receipt-view-img" alt="영수증 미리보기">
+                                <span id="no-receipt-text" style="color: #888;">등록된 영수증이 없습니다.</span>
                             </div>
-                            <span class="settlement-status pending">미완료</span>
+                            <div id="individual-inputs" style="flex: 1; overflow-y: auto;"></div>
+                            <div style="margin-top: 10px; font-weight: bold; text-align: right;">
+                                남은 금액: <span id="remaining-amount" style="color: #6366f1;">0</span>원
+                            </div>
+                            <button class="btn-settle-next" id="indiv-next-btn"
+                                onclick="finishSettlement('individual')">입력 완료</button>
+                        </div>
+
+                        <!-- Step 7: Final Summary & Share -->
+                        <div id="settle-step7" class="step">
+                            <div class="settle-final-card">
+                                <div class="settle-final-badge">정산 요청 준비 완료</div>
+                                <h2 id="final-store">위밋 식당</h2>
+                                <div class="settle-final-amount" id="final-amount">0원</div>
+
+                                <div class="settle-account-info">
+                                    <div class="settle-info-row">
+                                        <span class="info-label">예금주</span> <b>고도희</b>
+                                    </div>
+                                    <div class="settle-info-row">
+                                        <span class="info-label">입금처</span> <b id="final-account">카카오뱅크
+                                            3333111834594</b>
+                                    </div>
+                                </div>
+
+                                <button class="btn-settle-toss" onclick="copyAndOpenToss()">정산 요청 보내기</button>
+                                <p class="sub-desc" style="margin-top: 15px;">계좌와 금액이 복사되며 토스로 연결됩니다.</p>
+                            </div>
                         </div>
                     </div>
-                    <button class="btn-vote" style="margin-top:16px" onclick="showToast('송금 페이지로 이동합니다')">💸
-                        정산하기</button>
+
+                    <!-- Calculator Modal -->
+                    <div id="calculator-modal" class="settle-calculator-modal">
+                        <div class="calc-header">
+                            금액 입력 (<span id="calc-target-name"></span>)
+                            <span class="close-calc" onclick="closeSettlementCalculator()">✕</span>
+                        </div>
+                        <div class="calc-display" id="calc-display">0</div>
+                        <div class="calc-grid">
+                            <button class="calc-btn" onclick="appendSettlementCalc('7')">7</button>
+                            <button class="calc-btn" onclick="appendSettlementCalc('8')">8</button>
+                            <button class="calc-btn" onclick="appendSettlementCalc('9')">9</button>
+                            <button class="calc-btn op" onclick="setSettlementOperation('/')">÷</button>
+                            <button class="calc-btn" onclick="appendSettlementCalc('4')">4</button>
+                            <button class="calc-btn" onclick="appendSettlementCalc('5')">5</button>
+                            <button class="calc-btn" onclick="appendSettlementCalc('6')">6</button>
+                            <button class="calc-btn op" onclick="setSettlementOperation('*')">×</button>
+                            <button class="calc-btn" onclick="appendSettlementCalc('1')">1</button>
+                            <button class="calc-btn" onclick="appendSettlementCalc('2')">2</button>
+                            <button class="calc-btn" onclick="appendSettlementCalc('3')">3</button>
+                            <button class="calc-btn op" onclick="setSettlementOperation('-')">-</button>
+                            <button class="calc-btn" onclick="clearSettlementCalc()">C</button>
+                            <button class="calc-btn" onclick="appendSettlementCalc('0')">0</button>
+                            <button class="calc-btn op" onclick="calculateSettlementResult()">=</button>
+                            <button class="calc-btn op" onclick="setSettlementOperation('+')">+</button>
+                            <button class="calc-btn done" onclick="applySettlementCalculation()">입력 완료</button>
+                        </div>
+                    </div>
                 </div>
                 <!-- Photos Tab -->
                 <div class="tab-panel" id="tab-photos">
@@ -2537,6 +2699,7 @@
 
     <!-- 2.5. Services -->
     <script src="js/services/ai-service.js"></script>
+    <script src="js/services/calendar-service.js"></script>
 
     <!-- 3. Features -->
     <script src="js/features/auth.js"></script>
@@ -2555,7 +2718,10 @@
     <!-- 4. Router -->
     <script src="js/router.js"></script>
 
-    <!-- 5. Main -->
+    <!-- 5. Features -->
+    <script src="js/features/settle.js"></script>
+
+    <!-- 6. Main -->
     <script src="js/main.js"></script>
     <script>
         function toggleBottomSheet() {
