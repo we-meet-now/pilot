@@ -30,6 +30,41 @@ function switchTab(tabId, btn) {
     if (tabId === 'vote' && window.currentChatRoomId && window.db) {
         refreshVoteTab(window.currentChatRoomId);
     }
+
+    // 캘린더 탭 진입 시 데이터 갱신
+    if (tabId === 'calendar' && window.currentChatRoomId && window.db) {
+        if (typeof refreshCalendar === 'function') refreshCalendar();
+    }
+
+    // 정산 탭 진입 시 데이터 갱신 및 상태 확인
+    if (tabId === 'settle' && window.currentChatRoomId && window.db) {
+        refreshSettleTab();
+    }
+}
+
+/**
+ * 정산 탭 데이터 갱신
+ */
+async function refreshSettleTab() {
+    if (!window.currentChatRoomId || !window.db) return;
+    try {
+        const doc = await window.db.collection('chatrooms').doc(window.currentChatRoomId).get();
+        if (doc.exists) {
+            const data = doc.data();
+            if (data.status === 'settling' && data.settlementData) {
+                if (typeof renderSettlementStatus === 'function') {
+                    renderSettlementStatus(data.settlementData);
+                }
+            } else {
+                // 정산 중이 아니면 1단계(또는 초기상태) 표시
+                if (typeof nextSettlementStep === 'function') {
+                    nextSettlementStep(1);
+                }
+            }
+        }
+    } catch (error) {
+        console.error('Failed to refresh settle tab:', error);
+    }
 }
 
 /**
@@ -41,7 +76,10 @@ async function refreshVoteTab(chatRoomId) {
         if (doc.exists) {
             const data = doc.data();
             if (typeof renderVoteOptions === 'function') {
-                renderVoteOptions(data.locationCandidates || []);
+                renderVoteOptions(data);
+            }
+            if (typeof updateAIProgress === 'function') {
+                updateAIProgress(data);
             }
         }
     } catch (error) {
@@ -89,7 +127,11 @@ async function goToChatRoom(chatRoomId) {
 
                     // 투표 탭 데이터 렌더링
                     if (typeof renderVoteOptions === 'function') {
-                        renderVoteOptions(chatRoomData.locationCandidates || []);
+                        renderVoteOptions(chatRoomData);
+                    }
+                    // AI 매니저 진행 상황 업데이트
+                    if (typeof updateAIProgress === 'function') {
+                        updateAIProgress(chatRoomData);
                     }
                     const participantCountEl = mainScreen.querySelector('.main-header-info span');
 
@@ -103,6 +145,11 @@ async function goToChatRoom(chatRoomId) {
 
                     // 현재 채팅방 ID 저장
                     window.currentChatRoomId = chatRoomId;
+
+                    // 메시지 로드
+                    if (typeof loadChatMessages === 'function') {
+                        loadChatMessages(chatRoomId);
+                    }
 
                     // 세션 유지를 위해 로컬 스토리지에 저장
                     localStorage.setItem('lastChatRoomId', chatRoomId);
